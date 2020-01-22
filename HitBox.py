@@ -11,34 +11,36 @@ class HitBox(object):
         self.layer = layer
         self.callbacks = []
 
-    def getLeft(self):
+    @property
+    def left(self):
         return self.pos.x
 
-    def setLeft(self, left):
+    @left.setter
+    def left(self, left):
         self.setX(left)
 
-    left = property(getLeft, setLeft)
-
-    def getRight(self):
+    @property
+    def right(self):
         return self.pos.x + self.size.x
 
-    def setRight(self, right):
+    @right.setter
+    def right(self, right):
         self.setX(right - self.size.x)
 
-    right = property(getRight, setRight)
-
-    def getTop(self):
+    @property
+    def top(self):
         return self.pos.y
 
-    def setTop(self, top):
+    @top.setter
+    def top(self, top):
         self.setY(top)
 
-    top = property(getTop, setTop)
-
-    def getBottom(self):
+    @property
+    def bottom(self):
         return self.pos.y + self.size.y
 
-    def setBottom(self,  bottom):
+    @bottom.setter
+    def bottom(self,  bottom):
         self.setY(bottom - self.size.y)
 
     def setX(self, x):
@@ -46,8 +48,6 @@ class HitBox(object):
 
     def setY(self, y):
         self.setPos(Vec2(self.pos.x, y))
-
-    bottom = property(getBottom, setBottom)
 
     def setPos(self, pos):
         self.pos = pos
