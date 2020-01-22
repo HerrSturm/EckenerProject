@@ -2,8 +2,8 @@ class Vec2:
     def __init__(self, *args):
         """ Create a vector, example: v = Vector(1,2) """
         if len(args) > 2: raise ValueError("Only two dimensional Vec2's")
-        if len(args) == 1: self.values = (args[0], args[0])
-        if len(args) == 0: self.values = (0,0)
+        elif len(args) == 1: self.values = (args[0], args[0])
+        elif len(args) == 0: self.values = (0,0)
         else: self.values = args
 
     def norm(self):
