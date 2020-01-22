@@ -123,3 +123,13 @@ class Vec2:
 
     def sqrLen(self):
         return self * self.norm()
+
+    def getX(self):
+        return self.values[0]
+
+    x = property(getX)
+
+    def getY(self):
+        return self.values[1]
+
+    y = property(getY)
