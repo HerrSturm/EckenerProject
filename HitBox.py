@@ -1,4 +1,5 @@
 import Vec2
+from Vec2 import Vec2
 
 class HitBox:
     def __init__(self, pos, size):
