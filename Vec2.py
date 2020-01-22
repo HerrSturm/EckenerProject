@@ -129,9 +129,17 @@ class Vec2:
     def getX(self):
         return self.values[0]
 
-    x = property(getX)
+    def setX(self, x):
+        (oldX, y) = self.values
+        self.values = (x, y)
+
+    x = property(getX, setX)
 
     def getY(self):
         return self.values[1]
 
-    y = property(getY)
+    def setY(self, y):
+        (x, oldY) = self.values
+        self.values = (x, y)
+
+    y = property(getY, setY)
