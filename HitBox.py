@@ -1,5 +1,6 @@
 from Vec2 import Vec2
 from Layer import Layer
+from CollisionManager import CollisionManager
 
 ## TODO: destructor
 
@@ -11,6 +12,7 @@ class HitBox(object):
         self.static = static
         self.layer = layer
         self.callbacks = []
+        CollisionManager().add(self)
 
     @property
     def left(self):
