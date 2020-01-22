@@ -1,7 +1,6 @@
 from Vec2 import Vec2
 
 class HitBox(object):
-    def __init__(self, pos, size):
     def __init__(self, pos, size, static, layer):
         self.pos = pos
         self.size = size
