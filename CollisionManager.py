@@ -1,3 +1,5 @@
+from Layer import LayerMap
+
 DT = 1 / 60
 
 class CollisionManager(object):
@@ -6,6 +8,7 @@ class CollisionManager(object):
 
         def __init__(self):
             self.hitBoxes = set()
+            self.layerMap = LayerMap()
             self.acc = 0
 
         def add(self, hitBox):
