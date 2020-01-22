@@ -1,12 +1,11 @@
-import Vec2
 from Vec2 import Vec2
 
-class HitBox:
 class HitBox(object):
     def __init__(self, pos, size):
         self.pos = pos
         self.size = size
         self.vel = Vec2()
+        self.callbacks = []
 
     def getLeft(self):
         return self.pos.x
@@ -48,6 +47,10 @@ class HitBox(object):
 
     def setPos(self, pos):
         self.pos = pos
+        [callback(self) for (type, callback) in self.callbacks if type == "pos"]
+
+    def onPosChanged(self, callback):
+        self.callbacks.append(("pos", callback))
 
     def overlap(self, other):
         return (
