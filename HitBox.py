@@ -2,9 +2,12 @@ from Vec2 import Vec2
 
 class HitBox(object):
     def __init__(self, pos, size):
+    def __init__(self, pos, size, static, layer):
         self.pos = pos
         self.size = size
         self.vel = Vec2()
+        self.static = static
+        self.layer = layer
         self.callbacks = []
 
     def getLeft(self):
@@ -58,3 +61,8 @@ class HitBox(object):
             self.right > other.left and
             self.top > other.bottom and
             self.bottom < other.top)
+
+class Layer:
+
+    def __init__(self, name):
+        self.name = name
