@@ -2,7 +2,7 @@
 #21.01.2020
 #Ole, Philippe
 
-import sys, pygame
+import sys, pygame, Vec2
 from HitBox import *
 
 class block(object):
