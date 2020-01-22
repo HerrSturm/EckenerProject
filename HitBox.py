@@ -2,6 +2,7 @@ import Vec2
 from Vec2 import Vec2
 
 class HitBox:
+class HitBox(object):
     def __init__(self, pos, size):
         self.pos = pos
         self.size = size
