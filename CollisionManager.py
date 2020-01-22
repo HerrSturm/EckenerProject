@@ -1,7 +1,7 @@
 class CollisionManager:
 
     def __init__(self):
-        self.hitboxs = []
+        self.hitboxes = []
 
     def update(self, dt):
         pass # TODO
