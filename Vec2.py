@@ -1,6 +1,8 @@
+import math
+
 class Vec2:
     def __init__(self, *args):
-        """ Create a vector, example: v = Vector(1,2) """
+        """ Create a vector, example: v = Vec2(1,2) """
         if len(args) > 2: raise ValueError("Only two dimensional Vec2's")
         elif len(args) == 1: self.values = (args[0], args[0])
         elif len(args) == 0: self.values = (0,0)
@@ -12,7 +14,7 @@ class Vec2:
 
     def argument(self):
         """ Returns the argument of the vector, the angle clockwise from +y."""
-        arg_in_rad = math.acos(Vector(0,1)*self/self.norm())
+        arg_in_rad = math.acos(Vec2(0,1)*self/self.norm())
         arg_in_deg = math.degrees(arg_in_rad)
         if self.values[0]<0: return 360 - arg_in_deg
         else: return arg_in_deg
@@ -21,7 +23,7 @@ class Vec2:
         """ Returns a normalized unit vector """
         norm = self.norm()
         normed = tuple( comp/norm for comp in self )
-        return Vector(*normed)
+        return Vec2(*normed)
 
     def rotate(self, *args):
         """ Rotate this vector. If passed a number, assumes this is a
@@ -35,7 +37,7 @@ class Vec2:
             return self._rotate2D(*args)
         elif len(args)==1:
             matrix = args[0]
-            if not all(len(row) == len(v) for row in matrix) or not len(matrix)==len(self):
+            if not all(len(row) == len(self.values) for row in matrix) or not len(matrix)==len(self):
                 raise ValueError("Rotation matrix must be square and same dimensions as vector")
             return self.matrix_mult(matrix)
 
@@ -49,24 +51,24 @@ class Vec2:
         dc, ds = math.cos(theta), math.sin(theta)
         x, y = self.values
         x, y = dc*x - ds*y, ds*x + dc*y
-        return Vector(x, y)
+        return Vec2(x, y)
 
     def matrix_mult(self, matrix):
         """ Multiply this vector by a matrix.  Assuming matrix is a list of lists.
 
             Example:
             mat = [[1,2,3],[-1,0,1],[3,4,5]]
-            Vector(1,2,3).matrix_mult(mat) ->  (14, 2, 26)
+            Vec2(1,2,3).matrix_mult(mat) ->  (14, 2, 26)
 
         """
         if not all(len(row) == len(self) for row in matrix):
             raise ValueError('Matrix must match vector dimensions')
 
-        # Grab a row from the matrix, make it a Vector, take the dot product,
+        # Grab a row from the matrix, make it a Vec2, take the dot product,
         # and store it as the first component
-        product = tuple(Vector(*row)*self for row in matrix)
+        product = tuple(Vec2(*row)*self for row in matrix)
 
-        return Vector(*product)
+        return Vec2(*product)
 
     def inner(self, other):
         """ Returns the dot product (inner product) of self and other vector
@@ -75,14 +77,14 @@ class Vec2:
 
     def __mul__(self, other):
         """ Returns the dot product of self and other if multiplied
-            by another Vector.  If multiplied by an int or float,
+            by another Vec2.  If multiplied by an int or float,
             multiplies each component by other.
         """
         if type(other) == type(self):
             return self.inner(other)
         elif type(other) == type(1) or type(other) == type(1.0):
             product = tuple( a * other for a in self )
-            return Vector(*product)
+            return Vec2(*product)
 
     def __rmul__(self, other):
         """ Called if 4*self for instance """
@@ -91,17 +93,17 @@ class Vec2:
     def __div__(self, other):
         if type(other) == type(1) or type(other) == type(1.0):
             divided = tuple( a / other for a in self )
-            return Vector(*divided)
+            return Vec2(*divided)
 
     def __add__(self, other):
         """ Returns the vector addition of self and other """
         added = tuple( a + b for a, b in zip(self, other) )
-        return Vector(*added)
+        return Vec2(*added)
 
     def __sub__(self, other):
         """ Returns the vector difference of self and other """
         subbed = tuple( a - b for a, b in zip(self, other) )
-        return Vector(*subbed)
+        return Vec2(*subbed)
 
     def __iter__(self):
         return self.values.__iter__()
@@ -117,11 +119,11 @@ class Vec2:
 
     def round(self):
         rounded = tuple(int(round(a)) for a in self.values)
-        return Vector(*rounded)
+        return Vec2(*rounded)
 
     def compMul(self, other):
         muled = tuple( a * b for a, b in zip(self, other) )
-        return Vector(*muled)
+        return Vec2(*muled)
 
     def sqrLen(self):
         return self * self.norm()
