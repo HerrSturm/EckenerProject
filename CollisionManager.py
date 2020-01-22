@@ -24,7 +24,35 @@ class CollisionManager(object):
                 self.acc -= DT
 
         def _physics(self, dt):
-            pass
+            for hitBox in self.hitBoxes:
+                if hitBox.static:
+                    continue
+                near = self.getNearHitBoxes(hitBox)
+                hitBox.pos.x += hitBox.vel.x * dt
+                for other in near:
+                    if not self.layerMap.matches(hitBox.layer, other.layer):
+                        continue
+                    if hitBox.overlap(other):
+                        if hitBox.right > other.left and hitBox.vel.x > 0:
+                            hitBox.right = other.left
+                            hitBox.vel.x = 0
+                        if hitBox.left < other.right and hitBox.vel.x < 0:
+                            hitBox.left = other.right
+                            hitBox.vel.x = 0
+                hitBox.pos.y += hitBox.vel.y * dt
+                for other in near:
+                    if not self.layerMap.matches(hitBox.layer, other.layer):
+                        continue
+                    if hitBox.overlap(other):
+                        if hitBox.bottom > other.top and hitBox.vel.y > 0:
+                            hitBox.bottom = other.top
+                            hitBox.vel.y = 0
+                        if hitBox.top < other.bottom and hitBox.vel.y < 0:
+                            hitBox.top = other.bottom
+                            hitBox.vel.y = 0
+
+        def getNearHitBoxes(self, hitBox):
+            return list(filter(lambda h: h != hitBox, self.hitBoxes))
 
     instance = None
 
