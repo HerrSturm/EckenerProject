@@ -10,7 +10,7 @@ class HitBox:
         return self.pos.x
 
     def setLeft(self, left):
-        self.pos.x = left
+        self.setX(left)
 
     left = property(getLeft, setLeft)
 
@@ -18,7 +18,7 @@ class HitBox:
         return self.pos.x + self.size.x
 
     def setRight(self, right):
-        self.pos.x = right - self.size.x
+        self.setX(right - self.size.x)
 
     right = property(getRight, setRight)
 
@@ -26,7 +26,7 @@ class HitBox:
         return self.pos.y
 
     def setTop(self, top):
-        self.pos.y = top
+        self.setY(top)
 
     top = property(getTop, setTop)
 
@@ -34,9 +34,18 @@ class HitBox:
         return self.pos.y + self.size.y
 
     def setBottom(self,  bottom):
-        self.pos.y = bottom - self.size.y
+        self.setY(bottom - self.size.y)
+
+    def setX(self, x):
+        self.setPos(Vec2(x, self.pos.y))
+
+    def setY(self, y):
+        self.setPos(Vec2(self.pos.x, y))
 
     bottom = property(getBottom, setBottom)
+
+    def setPos(self, pos):
+        self.pos = pos
 
     def overlap(self, other):
         return (
