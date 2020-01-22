@@ -67,8 +67,8 @@ class HitBox(object):
         return (
             self.left < other.right and
             self.right > other.left and
-            self.top > other.bottom and
-            self.bottom < other.top)
+            self.top < other.bottom and
+            self.bottom > other.top)
 
 class Layer:
 
