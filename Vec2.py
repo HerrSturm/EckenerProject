@@ -128,20 +128,20 @@ class Vec2:
     def sqrLen(self):
         return self * self.norm()
 
-    def getX(self):
+    @property
+    def x(self):
         return self.values[0]
 
-    def setX(self, x):
+    @x.setter
+    def x(self, x):
         (oldX, y) = self.values
         self.values = (x, y)
 
-    x = property(getX, setX)
-
-    def getY(self):
+    @property
+    def y(self):
         return self.values[1]
 
-    def setY(self, y):
+    @y.setter
+    def y(self, y):
         (x, oldY) = self.values
         self.values = (x, y)
-
-    y = property(getY, setY)
