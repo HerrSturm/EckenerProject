@@ -57,6 +57,10 @@ class HitBox(object):
     def onCollide(self, callback):
         self.callbacks.append(("collide", callback))
 
+    def _collide(self, other):
+        [callback(self, other) for (type, callback) in self.callbacks
+            if type == "collide"]
+
     def overlap(self, other):
         return (
             self.left < other.right and
