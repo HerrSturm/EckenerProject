@@ -1,4 +1,5 @@
 from Vec2 import Vec2
+from Layer import Layer
 
 ## TODO: destructor
 
@@ -69,8 +70,3 @@ class HitBox(object):
             self.right > other.left and
             self.top < other.bottom and
             self.bottom > other.top)
-
-class Layer:
-
-    def __init__(self, name):
-        self.name = name
