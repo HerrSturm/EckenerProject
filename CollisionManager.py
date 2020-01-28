@@ -36,9 +36,11 @@ class CollisionManager(object):
                         if hitBox.right > other.left and hitBox.vel.x > 0:
                             hitBox.right = other.left
                             hitBox.vel.x = 0
+                            hitBox._collide(other)
                         if hitBox.left < other.right and hitBox.vel.x < 0:
                             hitBox.left = other.right
                             hitBox.vel.x = 0
+                            hitBox._collide(other)
                 hitBox.pos.y += hitBox.vel.y * dt
                 for other in near:
                     if not self.layerMap.matches(hitBox.layer, other.layer):
@@ -47,9 +49,11 @@ class CollisionManager(object):
                         if hitBox.bottom > other.top and hitBox.vel.y > 0:
                             hitBox.bottom = other.top
                             hitBox.vel.y = 0
+                            hitBox._collide(other)
                         if hitBox.top < other.bottom and hitBox.vel.y < 0:
                             hitBox.top = other.bottom
                             hitBox.vel.y = 0
+                            hitBox._collide(other)
 
         def getNearHitBoxes(self, hitBox):
             return list(filter(lambda h: h != hitBox, self.hitBoxes))
