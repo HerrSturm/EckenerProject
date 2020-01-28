@@ -94,10 +94,15 @@ class Vec2:
         """ Called if 4*self for instance """
         return self.__mul__(other)
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         if type(other) == type(1) or type(other) == type(1.0):
             divided = tuple( a / other for a in self )
             return Vec2(*divided)
+
+    def __floordiv__(self, other):
+        other = Vec2(other)
+        floordived = tuple( a // b for a, b in zip(self, other) )
+        return Vec2(*floordived)
 
     def __add__(self, other):
         """ Returns the vector addition of self and other """
@@ -108,6 +113,12 @@ class Vec2:
         """ Returns the vector difference of self and other """
         subbed = tuple( a - b for a, b in zip(self, other) )
         return Vec2(*subbed)
+
+    def __mod__(self, other):
+        """ Returns the vector modulo other """
+        other = Vec2(other)
+        moduloed = tuple( a % b for a, b in zip(self, other) )
+        return Vec2(*moduloed)
 
     def __iter__(self):
         return self.values.__iter__()
