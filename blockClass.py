@@ -20,5 +20,5 @@ class block(object):
         pygame.draw.rect(self.screen, self.color, [self.position[0],self.position[1], self.size[0],self.size[1]])
 
     def move(self,position):
-        self.position = (self.position+position[0]*24,self.position+postition[1]*24)
+        self.position = (self.position[0]+position[0],self.position[1]+position[1])
         pygame.draw.rect(self.screen, self.color, [self.position[0],self.position[1], self.size[0],self.size[1]])

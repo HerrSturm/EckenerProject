@@ -13,19 +13,34 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
+b1 = blockClass.block((10, 10), (0,26), brown)
+b2 = blockClass.block((10, 1), (0,25), green)
+b3 = blockClass.block((10, 20), (14,20), brown)
+b4 = blockClass.block((10, 1), (14,19), green)
+b5 = blockClass.block((5, 1), (30,19), brown)
+b6 = blockClass.block((5, 1), (30,18), green)
+b7 = blockClass.block((30, 20), (37,23), brown)
+b8 = blockClass.block((30, 1), (37,22), green)
+
+
+
 while True:
+
+    screen.fill((80,150,255))
+    blockClass.block.move(b1,(1,-1))
+    blockClass.block.update(b2)
+    blockClass.block.update(b3)
+    blockClass.block.update(b4)
+    blockClass.block.update(b5)
+    blockClass.block.update(b6)
+    blockClass.block.update(b7)
+    blockClass.block.update(b8)
     #handles the shutting down of the programm, ignorieren!
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-    b1 = blockClass.block((10, 10), (0,26), brown)
-    b2 = blockClass.block((10, 1), (0,25), green)
-    b3 = blockClass.block((10, 20), (14,20), brown)
-    b4 = blockClass.block((10, 1), (14,19), green)
-    b5 = blockClass.block((5, 1), (30,19), brown)
-    b6 = blockClass.block((5, 1), (30,18), green)
-    b7 = blockClass.block((30, 20), (37,23), brown)
-    b8 = blockClass.block((30, 1), (37,22), green)
+
+
 
     clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
 
