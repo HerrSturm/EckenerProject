@@ -4,7 +4,11 @@ class Vec2:
     def __init__(self, *args):
         """ Create a vector, example: v = Vec2(1,2) """
         if len(args) > 2: raise ValueError("Only two dimensional Vec2's")
-        elif len(args) == 1: self.values = (args[0], args[0])
+        elif len(args) == 1:
+            if type(args[0]) is Vec2:
+                self.values = tuple( v for v in args[0].values )
+            else:
+                self.values = (args[0], args[0])
         elif len(args) == 0: self.values = (0,0)
         else: self.values = args
 
