@@ -14,6 +14,9 @@ class HitBox(object):
         self.callbacks = []
         CollisionManager().add(self)
 
+    def remove(self):
+        CollisionManager().remove(self)
+
     @property
     def left(self):
         return self.pos.x
