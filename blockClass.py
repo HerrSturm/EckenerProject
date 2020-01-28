@@ -2,7 +2,8 @@
 #21.01.2020
 #Ole, Philippe
 
-import sys, pygame, Vec2
+import sys, pygame
+from Vec2 import Vec2
 from HitBox import *
 
 class block(object):
@@ -12,7 +13,7 @@ class block(object):
         self.position = Vec2(position[0]*24,position[1]*24)
         self.color = color
         self.screen = pygame.display.get_surface()
-        self.hitbox = HitBox(Vec2(self.position[0],self.position[1])),Vec2(self.length,self.height), True, Layer("platform"))
+        self.hitbox = HitBox(Vec2(self.position[0],self.position[1]),Vec2(self.length,self.height), True, Layer("platform"))
         pygame.draw.rect(self.screen, self.color, [self.position[0],self.position[1], self.size])
 
     def update(self):
