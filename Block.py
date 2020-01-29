@@ -9,8 +9,8 @@ from HitBox import *
 class Block(object):
     def __init__(self, size, position, color):
         super(Block, self).__init__()
-        self.size = Vec2(size[0]*24,size[1]*24)
-        self.position = Vec2(position[0]*24,position[1]*24)
+        self.size = size * 24
+        self.position = position * 24
         self.color = color
         self.screen = pygame.display.get_surface()
         self.hitbox = HitBox(self.position,self.size, True, Layer("solid"))
