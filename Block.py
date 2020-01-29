@@ -6,7 +6,7 @@ import sys, pygame
 from Vec2 import Vec2
 from HitBox import *
 
-class block(object):
+class Block(object):
     def __init__(self, size, position, color):
         super(block, self).__init__()
         self.size = Vec2(size[0]*24,size[1]*24)
