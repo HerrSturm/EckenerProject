@@ -2,8 +2,6 @@ from Vec2 import Vec2
 from Layer import Layer
 from CollisionManager import CollisionManager
 
-## TODO: destructor
-
 class HitBox(object):
     def __init__(self, pos, size, static, layer, vel = Vec2()):
         self.pos = pos
