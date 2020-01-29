@@ -8,7 +8,7 @@ from HitBox import *
 
 class Block(object):
     def __init__(self, size, position, color):
-        super(block, self).__init__()
+        super(Block, self).__init__()
         self.size = Vec2(size[0]*24,size[1]*24)
         self.position = Vec2(position[0]*24,position[1]*24)
         self.color = color

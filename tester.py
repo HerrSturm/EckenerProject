@@ -28,14 +28,14 @@ b8 = Block((30, 1), (37,22), green)
 while True:
 
     screen.fill((80,150,255))
-    Block.move(b1,(1,-1))
-    Block.update(b2)
-    Block.update(b3)
-    Block.update(b4)
-    Block.update(b5)
-    Block.update(b6)
-    Block.update(b7)
-    Block.update(b8)
+    b1.move((1,-1))
+    b2.update()
+    b3.update()
+    b4.update()
+    b5.update()
+    b6.update()
+    b7.update()
+    b8.update()
     #handles the shutting down of the programm, ignorieren!
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
