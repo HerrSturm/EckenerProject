@@ -11,8 +11,8 @@ def drawHitBox(hitBox):
 
 hitBoxes = []
 
-def collided(self, other):
-    print(self, other)
+def collided(self, other, dir):
+    print(self, other, dir.name)
 
 for i in range(50):
     hitBox = None
