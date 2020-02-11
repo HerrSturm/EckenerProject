@@ -1,4 +1,5 @@
 from Layer import LayerMap
+from Direction import Direction
 
 DT = 1 / 60
 
@@ -38,11 +39,11 @@ class CollisionManager(object):
                         if hitBox.right > other.left and hitBox.vel.x > 0:
                             hitBox.right = other.left
                             hitBox.vel.x = 0
-                            hitBox._collide(other)
+                            hitBox._collide(other, Direction.RIGHT)
                         if hitBox.left < other.right and hitBox.vel.x < 0:
                             hitBox.left = other.right
                             hitBox.vel.x = 0
-                            hitBox._collide(other)
+                            hitBox._collide(other, Direction.LEFT)
                 hitBox.pos.y += hitBox.vel.y * dt
                 for other in near:
                     if not self.layerMap.matches(hitBox.layer, other.layer):
@@ -51,11 +52,11 @@ class CollisionManager(object):
                         if hitBox.bottom > other.top and hitBox.vel.y > 0:
                             hitBox.bottom = other.top
                             hitBox.vel.y = 0
-                            hitBox._collide(other)
+                            hitBox._collide(other, Direction.DOWN)
                         if hitBox.top < other.bottom and hitBox.vel.y < 0:
                             hitBox.top = other.bottom
                             hitBox.vel.y = 0
-                            hitBox._collide(other)
+                            hitBox._collide(other, Direction.UP)
             self._callCallbacks("afterUpdate")
 
         def _callCallbacks(self, event):
