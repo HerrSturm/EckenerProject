@@ -10,6 +10,7 @@ class CollisionManager(object):
             self.hitBoxes = set()
             self.layerMap = LayerMap()
             self.acc = 0
+            self.callbacks = []
 
         def add(self, hitBox):
             self.hitBoxes.add(hitBox)
@@ -24,6 +25,7 @@ class CollisionManager(object):
                 self.acc -= DT
 
         def _physics(self, dt):
+            self._callCallbacks("beforeUpdate")
             for hitBox in self.hitBoxes:
                 if hitBox.static:
                     continue
@@ -54,6 +56,17 @@ class CollisionManager(object):
                             hitBox.top = other.bottom
                             hitBox.vel.y = 0
                             hitBox._collide(other)
+            self._callCallbacks("afterUpdate")
+
+        def _callCallbacks(self, event):
+            [callback() for (type, callback) in self.callbacks
+                if type == event]
+
+        def onBeforeUpdate(self, callback):
+            self.callbacks.append(("beforeUpdate", callback))
+
+        def onAfterUpdate(self, callback):
+            self.callbacks.append(("afterUpdate", callback))
 
         def getNearHitBoxes(self, hitBox):
             return list(filter(lambda h: h != hitBox, self.hitBoxes))
