@@ -79,7 +79,7 @@ class Vec2:
         """
         return sum(a * b for a, b in zip(self, other))
 
-    def __mul__(self, other):
+    def dot(self, other):
         """ Returns the dot product of self and other if multiplied
             by another Vec2.  If multiplied by an int or float,
             multiplies each component by other.
@@ -136,7 +136,7 @@ class Vec2:
         rounded = tuple(int(round(a)) for a in self.values)
         return Vec2(*rounded)
 
-    def compMul(self, other):
+    def __mul__(self, other):
         muled = tuple( a * b for a, b in zip(self, other) )
         return Vec2(*muled)
 
