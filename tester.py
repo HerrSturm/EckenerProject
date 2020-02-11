@@ -1,5 +1,6 @@
 import sys, pygame, time
 from Block import Block
+from Vec2 import Vec2
 pygame.init()
 
 brown = (150,80,50)
@@ -14,14 +15,14 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
-b1 = Block((10, 10), (0,26), brown)
-b2 = Block((10, 1), (0,25), green)
-b3 = Block((10, 20), (14,20), brown)
-b4 = Block((10, 1), (14,19), green)
-b5 = Block((5, 1), (30,19), brown)
-b6 = Block((5, 1), (30,18), green)
-b7 = Block((30, 20), (37,23), brown)
-b8 = Block((30, 1), (37,22), green)
+b1 = Block(Vec2(10, 10), Vec2(0,26), brown)
+b2 = Block(Vec2(10, 1), Vec2(0,25), green)
+b3 = Block(Vec2(10, 20), Vec2(14,20), brown)
+b4 = Block(Vec2(10, 1), Vec2(14,19), green)
+b5 = Block(Vec2(5, 1), Vec2(30,19), brown)
+b6 = Block(Vec2(5, 1), Vec2(30,18), green)
+b7 = Block(Vec2(30, 20), Vec2(37,23), brown)
+b8 = Block(Vec2(30, 1), Vec2(37,22), green)
 
 
 
