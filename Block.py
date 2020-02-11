@@ -22,3 +22,7 @@ class Block(object):
     def move(self,position):
         self.position += position
         pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
+
+    #def setvelocity(self, velocity):
+    #    self.hitbox.vel = velocity
+    #    pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
