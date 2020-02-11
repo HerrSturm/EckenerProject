@@ -17,7 +17,7 @@ class Block(object):
         pygame.draw.rect(self.screen, self.color, [self.position[0],self.position[1], self.size[0],self.size[1]])
 
     def update(self):
-        pygame.draw.rect(self.screen, self.color, [self.position[0],self.position[1], self.size[0],self.size[1]])
+        pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size[0],self.size[1]])
 
     def move(self,position):
         self.position += position
