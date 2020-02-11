@@ -1,8 +1,8 @@
-import sys, pygame
+import sys, pygame, characterClass
 pygame.init()
 mainScreenSize = width, height = 1280, 720
 mainScreen = pygame.display.set_mode(mainScreenSize)
-
+character=characterClass.Character()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
