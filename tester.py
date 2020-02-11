@@ -1,6 +1,8 @@
 import sys, pygame, time
 from Block import Block
 from Vec2 import Vec2
+from characterClass import Character
+from CollisionManager import CollisionManager
 pygame.init()
 
 brown = (150,80,50)
@@ -24,12 +26,12 @@ b6 = Block(Vec2(5, 1), Vec2(30,18), green)
 b7 = Block(Vec2(30, 20), Vec2(37,23), brown)
 b8 = Block(Vec2(30, 1), Vec2(37,22), green)
 
-
+tom = Character()
 
 while True:
-
     screen.fill((80,150,255))
-    b1.move((1,-1))
+    tom.draw()
+    b1.update()
     b2.update()
     b3.update()
     b4.update()
@@ -42,9 +44,19 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
+        tom.standstill()
+    if keys[pygame.K_a]:
+        tom.moveleft()
+    if keys[pygame.K_d]:
+        tom.moveright()
 
 
+    dt = clock.get_time() / 1000.0
     clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
+
+    CollisionManager().update(dt)
 
 
     pygame.display.flip()
