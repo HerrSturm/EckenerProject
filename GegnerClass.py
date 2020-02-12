@@ -2,7 +2,7 @@ import pygame, HitBox, Vec2
 from HitBox import *
 class Gegner(object):
     def __init__(self, pos,startRange, endRange):
-        self.hitBox = HitBox(pos, Vec2(100,100), False, Layer("player"))
+        self.hitBox = HitBox(pos, Vec2(100,100), False, Layer("player"), Vec2(100,0))
         self.startRange = startRange
         self.endRange = endRange
         self.mainScreen = pygame.display.get_surface()
@@ -15,3 +15,8 @@ class Gegner(object):
                 self.hitBox.vel.x = 100
             if self.hitBox.pos.x > self.endRange:
                 self.hitBox.vel.x = -100
+        if self.startRange > self.endRange:
+            if self.hitBox.pos.x > self.startRange:
+                self.hitBox.vel.x = -100
+            if self.hitBox.pos.x < self.endRange:
+                self.hitBox.vel.x = 100

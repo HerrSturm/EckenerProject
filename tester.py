@@ -3,6 +3,7 @@ from Block import Block
 from Vec2 import Vec2
 from characterClass import Character
 from CollisionManager import CollisionManager
+from GegnerClass import *
 pygame.init()
 
 brown = (150,80,50)
@@ -28,8 +29,13 @@ b8 = Block(Vec2(30, 1), Vec2(37,22), green)
 
 tom = Character()
 
+gegner = Gegner(Vec2(50,300),100, 600)
+
+
 while True:
     screen.fill((80,150,255))
+    gegner.move()
+    gegner.draw()
     tom.draw()
     b1.update()
     b2.update()
