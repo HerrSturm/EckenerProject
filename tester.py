@@ -52,11 +52,9 @@ while True:
     if keys[pygame.K_d]:
         tom.moveright()
 
-
     dt = clock.get_time() / 1000.0
     clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
 
     CollisionManager().update(dt)
-
 
     pygame.display.flip()
