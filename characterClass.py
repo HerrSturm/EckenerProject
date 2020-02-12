@@ -10,10 +10,10 @@ class Character():
 
 
     def moveright(self):                           #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
-        self.hitBox.vel = Vec2(100,0)            #hitbox bewegt sich nach rechts
+        self.hitBox.vel = Vec2(300,0)            #hitbox bewegt sich nach rechts
 
     def moveleft(self):                             #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel = Vec2(-100,0)          #hitbox bewegt sich nach links
+        self.hitBox.vel = Vec2(-300,0)          #hitbox bewegt sich nach links
 
     def standstill(self):                           #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
         self.hitBox.vel = Vec2(0,0)               #Hitbox bleibt stehen
