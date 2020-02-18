@@ -2,9 +2,11 @@ import pygame, HitBox, Vec2
 from HitBox import *
 class Gegner(object):
     def __init__(self, pos, size, startRange, endRange):
-        self.hitBox = HitBox(pos, size * 24, False, Layer("player"), Vec2(100,0))
-        self.startRange = startRange
-        self.endRange = endRange
+        pos *= 24
+        size *= 24
+        self.hitBox = HitBox(pos, size, False, Layer("player"), Vec2(100,0))
+        self.startRange = pos.x + startRange * 24
+        self.endRange = pos.x + endRange * 24
         self.mainScreen = pygame.display.get_surface()
     def draw(self):
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
