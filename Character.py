@@ -3,13 +3,13 @@ from HitBox import*
 from Direction import Direction
 #CONST gravity
 class Character():
-    GRAVITY = 10
-    JUMPVEL = 50
-    MOVEVEL = 40
+    GRAVITY = 130
+    JUMPVEL = 180
+    MOVEVEL = 80
     def __init__(self, position): #Vec2 position
         self.isGrounded = False
         self.isGrounded_ = False
-        size = Vec2(50,150)
+        size = Vec2(40,75)
         self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
