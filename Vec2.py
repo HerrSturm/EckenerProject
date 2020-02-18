@@ -79,16 +79,13 @@ class Vec2:
         """
         return sum(a * b for a, b in zip(self, other))
 
-    def __mul__(self, other):
+    def dot(self, other):
         """ Returns the dot product of self and other if multiplied
             by another Vec2.  If multiplied by an int or float,
             multiplies each component by other.
         """
-        if type(other) == type(self):
-            return self.inner(other)
-        elif type(other) == type(1) or type(other) == type(1.0):
-            product = tuple( a * other for a in self )
-            return Vec2(*product)
+        return self.inner(other)
+
 
     def __rmul__(self, other):
         """ Called if 4*self for instance """
@@ -136,9 +133,13 @@ class Vec2:
         rounded = tuple(int(round(a)) for a in self.values)
         return Vec2(*rounded)
 
-    def compMul(self, other):
-        muled = tuple( a * b for a, b in zip(self, other) )
-        return Vec2(*muled)
+    def __mul__(self, other):
+        if type(other) == type(self):
+            muled = tuple( a * b for a, b in zip(self, other) )
+            return Vec2(*muled)
+        elif type(other) == type(1) or type(other) == type(1.0):
+            product = tuple( a * other for a in self )
+            return Vec2(*product)
 
     def sqrLen(self):
         return self * self.norm()
