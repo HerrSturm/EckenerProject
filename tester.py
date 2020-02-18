@@ -30,7 +30,7 @@ b4_2 = Block(Vec2(30, 1), Vec2(37,22), green)
 b5 = Block(Vec2(6, 3), Vec2(44, 20), brown)
 b5_2 = Block(Vec2(6, 1), Vec2(44, 19), green)
 
-tom = Character(Vec2(100,100))
+tom = Character(Vec2(10,400))
 
 # Spielschleife
 while True:
