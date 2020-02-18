@@ -7,6 +7,7 @@ class Character():
     MOVEVEL = 10
     def __init__(self, position): #Vec2 position
         self.isGrounded = False
+        self.isGrounded_ = False
         size = Vec2(150,150)
         self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
@@ -17,8 +18,7 @@ class Character():
     #checks if hitbox collided with ground
     def check_Grounded(self, other, dir):
         if dir == Direction.DOWN:
-            self.isGrounded = True
-
+            self.isGrounded_ = True
     #draws the character on the screen
     def draw(self):
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
@@ -28,29 +28,26 @@ class Character():
         self.draw()
 
     #gets called before the collisionmanager does stuff
-    def beforeCollisionManager():
-        self.isGrounded = False
+    def beforeCollisionManager(dt):
+        self.isGrounded_ = False
         self.vel += Vec2(0, -self.GRAVITY*dt)
 
     #gets called after the collisionmanager did stuff
-    def afterCollisionManager():
+    def afterCollisionManager(dt):
         #after col update
-        self.testGrounded = False
-        if isGrounded:
-            self.vel.y = 0
-            if jump: #jump command given
-                self.vel += Vec2(0, self.JUMPVEL)
+        self.isGrounded = self.isGrounded_
 
     def moveright(self):                           #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
-        self.hitBox.vel = Vec2(self.MOVEVEL,0)            #hitbox bewegt sich nach rechts
+        self.hitBox.vel += Vec2(self.MOVEVEL,0)            #hitbox bewegt sich nach rechts
 
     def moveleft(self):                             #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel = Vec2(-self.MOVEVEL,0)          #hitbox bewegt sich nach links
+        self.hitBox.vel += Vec2(-self.MOVEVEL,0)          #hitbox bewegt sich nach links
 
     def standstill(self):                           #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
-        self.hitBox.vel = Vec2(0,0)               #Hitbox bleibt stehen
+        self.hitBox.vel.y = 0               #Hitbox bleibt stehen
 
     #makes the player jump:only when grounded
     def jump(self):
         if isGrounded:
+            self.vel.y = 0
             self.vel += Vec2(0, self.JUMPVEL)
