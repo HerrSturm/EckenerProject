@@ -5,11 +5,12 @@ from Character import Character
 from CollisionManager import CollisionManager
 pygame.init()
 
+# Variabeln für Farben werden kreiert
 brown = (150,80,50)
 blue = (80,150,255)
 green = (50,100,50)
 
-
+# Pygame wird initialisiert
 size = width, heigth = 1400, 800
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode(size)
@@ -17,33 +18,44 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
+# Alle Blöcke werden mit Größe, Position und Farbe kreiert (Vec2)
 b1 = Block(Vec2(10, 10), Vec2(0,26), brown)
-b2 = Block(Vec2(10, 1), Vec2(0,25), green)
-b3 = Block(Vec2(10, 20), Vec2(14,20), brown)
-b4 = Block(Vec2(10, 1), Vec2(14,19), green)
-b5 = Block(Vec2(5, 1), Vec2(30,19), brown)
-b6 = Block(Vec2(5, 1), Vec2(30,18), green)
-b7 = Block(Vec2(30, 20), Vec2(37,23), brown)
-b8 = Block(Vec2(30, 1), Vec2(37,22), green)
+b1_2 = Block(Vec2(10, 1), Vec2(0,25), green)
+b2 = Block(Vec2(10, 20), Vec2(14,22), brown)
+b2_2 = Block(Vec2(10, 1), Vec2(14,21), green)
+b3 = Block(Vec2(5, 1), Vec2(28,19), brown)
+b3_2 = Block(Vec2(5, 1), Vec2(28,18), green)
+b4 = Block(Vec2(30, 20), Vec2(37,23), brown)
+b4_2 = Block(Vec2(30, 1), Vec2(37,22), green)
+b5 = Block(Vec2(6, 3), Vec2(44, 20), brown)
+b5_2 = Block(Vec2(6, 1), Vec2(44, 19), green)
 
 tom = Character(Vec2(100,100))
 
+# Spielschleife
 while True:
+    # Screen wird bei jedem Schleifendurchlauf auf blaue Hintergrundfarbe resettet
     screen.fill((80,150,255))
+
+    # Blöcke und Character werden bei jedem Schleifendruchlauf geupdatet und gedrawt
     tom.draw()
     b1.update()
+    b1_2.update()
     b2.update()
+    b2_2.update()
     b3.update()
+    b3_2.update()
     b4.update()
+    b4_2.update()
     b5.update()
-    b6.update()
-    b7.update()
-    b8.update()
-    #handles the shutting down of the programm, ignorieren!
+    b5_2.update()
+
+    # Handles the shutting down of the programm, ignorieren!
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
 
+    # Keybinds für Bewegung des Characters nach links (A) und nach rechts (D) festgelegt
     keys = pygame.key.get_pressed()
     if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
         tom.standstill()
@@ -54,9 +66,11 @@ while True:
     if keys[pygame.K_w]:
         tom.jump()
 
-    dt = clock.get_time() / 1000.0
+
+    dt = clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
     clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
 
+    # Ruft update auf CollisionManager auf -> bewegt HitBoxen, prüft Kollisionen
     CollisionManager().update(dt)
 
     pygame.display.flip()
