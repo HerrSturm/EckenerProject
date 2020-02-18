@@ -1,8 +1,8 @@
 import pygame, HitBox, Vec2
 from HitBox import *
 class Gegner(object):
-    def __init__(self, pos,startRange, endRange):
-        self.hitBox = HitBox(pos, Vec2(100,100), False, Layer("player"), Vec2(100,0))
+    def __init__(self, pos, size, startRange, endRange):
+        self.hitBox = HitBox(pos, size * 24, False, Layer("player"), Vec2(100,0))
         self.startRange = startRange
         self.endRange = endRange
         self.mainScreen = pygame.display.get_surface()

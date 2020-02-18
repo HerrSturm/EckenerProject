@@ -35,7 +35,7 @@ b5_2 = Block(Vec2(6, 1), Vec2(44, 19), green)
 tom = Character()
 
 
-gegner = Gegner(Vec2(50,300),100, 600)
+gegner = Gegner(Vec2(50,300),Vec2(2,2),100, 600)
 
 # Spielschleife
 while True:
