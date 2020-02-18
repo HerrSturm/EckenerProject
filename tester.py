@@ -3,6 +3,7 @@ from Block import Block
 from Vec2 import Vec2
 from characterClass import Character
 from CollisionManager import CollisionManager
+from GegnerClass import *
 pygame.init()
 
 # Variabeln für Farben werden kreiert
@@ -33,12 +34,19 @@ b5_2 = Block(Vec2(6, 1), Vec2(44, 19), green)
 # Character wird initialisiert
 tom = Character()
 
+
+gegner = Gegner(Vec2(50,300),Vec2(2,2),100, 600)
+
 # Spielschleife
 while True:
     # Screen wird bei jedem Schleifendurchlauf auf blaue Hintergrundfarbe resettet
     screen.fill((80,150,255))
+    gegner.move()
+    gegner.draw()
+
 
     # Blöcke und Character werden bei jedem Schleifendruchlauf geupdatet und gedrawt
+
     tom.draw()
     b1.update()
     b1_2.update()
