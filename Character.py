@@ -1,15 +1,21 @@
 import pygame
 from HitBox import*
 from Direction import Direction
+from sprites import runSprites
 #CONST gravity
 class Character():
     GRAVITY = 130
     JUMPVEL = 180
     MOVEVEL = 80
     def __init__(self, position): #Vec2 position
+        self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
+        self.mainScreen = pygame.display.get_surface()
+        self.spriteCount = 2
+        self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
+        self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
-        size = Vec2(40,75)
+        size = Vec2(40,58)
         self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
@@ -22,8 +28,12 @@ class Character():
             self.isGrounded_ = True
     #draws the character on the screen
     def draw(self):
+        self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
+        self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
-
+        self.mainScreen.blit(self.imagebig, ((self.hitBox.pos.x)-43,(self.hitBox.pos.y)-15))
+        self.spriteCount = self.spriteCount + 1
+        print(self.spriteCount)
     #updates the player
     def update(self, dt):
         self.draw()
