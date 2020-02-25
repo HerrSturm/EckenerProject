@@ -36,6 +36,9 @@ class Character():
         if keys[pygame.K_w]:
             self.jump()
 
+    def remove(self):
+        self.hitBox.remove()
+
     #gets called before the collisionmanager does stuff
     def beforeCollisionManager(self, dt):
         self.isGrounded_ = False

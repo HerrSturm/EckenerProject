@@ -21,6 +21,9 @@ class Block(object):
     def draw(self):
         pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
 
+    def remove(self):
+        self.hitbox.remove()
+
     def move(self,position):
         self.position += position
 

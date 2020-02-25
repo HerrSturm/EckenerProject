@@ -14,6 +14,9 @@ class Gegner(object):
     def update(self, dt):
         self.move()
 
+    def remove(self):
+        self.hitBox.remove()
+
     def move(self):
         if self.startRange < self.endRange:
             if self.hitBox.pos.x < self.startRange:

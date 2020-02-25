@@ -48,3 +48,7 @@ class Level:
     def draw(self):
         for object in self.objects:
             object.draw()
+
+    def remove(self):
+        for object in self.objects:
+            object.remove()
