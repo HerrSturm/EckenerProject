@@ -1,8 +1,9 @@
 import sys, pygame, time
 from Block import Block
 from Vec2 import Vec2
-from characterClass import Character
+from Character import Character
 from CollisionManager import CollisionManager
+from GegnerClass import *
 pygame.init()
 
 # Variabeln für Farben werden kreiert
@@ -30,15 +31,21 @@ b4_2 = Block(Vec2(37,22), Vec2(30, 1), green)
 b5 = Block(Vec2(44, 20), Vec2(6, 3), brown)
 b5_2 = Block(Vec2(44, 19), Vec2(6, 1), green)
 
-# Character wird initialisiert
-tom = Character()
+tom = Character(Vec2(10,400))
+
+
+gegner = Gegner(Vec2(50,300),Vec2(2,2),100, 600)
 
 # Spielschleife
 while True:
     # Screen wird bei jedem Schleifendurchlauf auf blaue Hintergrundfarbe resettet
     screen.fill((80,150,255))
+    gegner.move()
+    gegner.draw()
+
 
     # Blöcke und Character werden bei jedem Schleifendruchlauf geupdatet und gedrawt
+
     tom.draw()
     b1.update()
     b1_2.update()
@@ -64,6 +71,8 @@ while True:
         tom.moveleft()
     if keys[pygame.K_d]:
         tom.moveright()
+    if keys[pygame.K_w]:
+        tom.jump()
 
 
     dt = clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
