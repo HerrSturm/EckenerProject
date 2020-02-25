@@ -13,12 +13,12 @@
       }, {
         "type": "block",
         "size": [10, 20],
-        "position":[14,20],
+        "position":[14,22],
         "color": "brown"
       }, {
         "type": "block",
         "size": [10, 1],
-        "position":[14,19],
+        "position":[14,21],
         "color": "green"
       }, {
         "type": "block",
