@@ -21,8 +21,8 @@ class Character():
         if dir == Direction.DOWN:
             self.isGrounded_ = True
     #draws the character on the screen
-    def draw(self):
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+    def draw(self, surface):
+        pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
     #updates the player
     def update(self, dt):

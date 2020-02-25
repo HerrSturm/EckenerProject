@@ -8,8 +8,8 @@ class Gegner(object):
         self.startRange = pos.x + startRange * 24
         self.endRange = pos.x + endRange * 24
         self.mainScreen = pygame.display.get_surface()
-    def draw(self):
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+    def draw(self, surface):
+        pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
     def update(self, dt):
         self.move()
