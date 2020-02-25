@@ -14,14 +14,15 @@ class Block(object):
         self.color = color
         self.screen = pygame.display.get_surface()
         self.hitbox = HitBox(self.position,self.size, True, Layer("solid"))
-        pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
 
-    def update(self):
+    def update(self, dt):
+        pass
+
+    def draw(self):
         pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
 
     def move(self,position):
         self.position += position
-        pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
 
     #def setvelocity(self, velocity):
     #    self.hitbox.vel = velocity
