@@ -26,7 +26,15 @@ class Character():
 
     #updates the player
     def update(self, dt):
-        self.draw()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
+            self.standstill()
+        if keys[pygame.K_a]:
+            self.moveleft()
+        if keys[pygame.K_d]:
+            self.moveright()
+        if keys[pygame.K_w]:
+            self.jump()
 
     #gets called before the collisionmanager does stuff
     def beforeCollisionManager(self, dt):
