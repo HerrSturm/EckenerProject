@@ -11,6 +11,9 @@ class Gegner(object):
     def draw(self):
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
+    def update(self, dt):
+        self.move()
+
     def move(self):
         if self.startRange < self.endRange:
             if self.hitBox.pos.x < self.startRange:
