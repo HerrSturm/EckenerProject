@@ -19,6 +19,7 @@ while True:
     keys = pygame.key.get_pressed()
     pygame.display.flip()
     #Shutdownhandling
+    menu.pause
     if keys[pygame.K_ESCAPE]:
         #menu.menu()
         sys.exit()

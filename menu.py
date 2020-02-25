@@ -1,23 +1,49 @@
-import pygame
+import pygame, sys
 pygame.init()
 menuScreenSize = width, height = 1280, 720
 menuScreen = pygame.display.set_mode(menuScreenSize)
-
-
-
+running=False
+if running == True:
+    print(0)
 def menu():
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
-            sys.exit()
+    pygame.draw.rect(menuScreen, (255, 255, 255), (440, 300, 400, 50))
+    pygame.draw.rect(menuScreen, (255, 255, 255), (440, 400, 400, 50))
+    pygame.draw.rect(menuScreen, (255, 255, 255), (440, 500, 400, 50))
+    titleFont=pygame.font.SysFont('Arial Black',70)
+    buttonFont=pygame.font.SysFont('Chandas', 30)
+    titleText= titleFont.render("adidas", False, (255, 255 ,255))
+    textButton1= buttonFont.render("Play", False, (0, 0 ,0))
+    textButton2= buttonFont.render("Options", False, (0, 0 ,0))
+    textButton3= buttonFont.render("Quit Game", False, (0, 0 ,0))
+    menuScreen.blit(titleText,(500,100))
+    menuScreen.blit(textButton1,(595, 290))
+    menuScreen.blit(textButton2,(580, 390))
+    menuScreen.blit(textButton3,(560, 490))
 
 def update():
     global menuScreen
     global menuScreenSize
-    pygame.draw.rect(menuScreen, (255, 255, 255), (10, 20, menuScreenSize[0], menuScreenSize[1]))
+    while True:
+        pygame.display.flip()
+        coordinates = 1
+        pygame.event.get()
+        lMouse=pygame.mouse.get_pressed()[0]
+        pygame.mouse.get_pos()[coordinates]
+        if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 300 <= pygame.mouse.get_pos()[1] and 350 >= pygame.mouse.get_pos()[1]:
+            print(1)
+            if lMouse:
+                print(4)
+        if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 400 <= pygame.mouse.get_pos()[1] and 450 >= pygame.mouse.get_pos()[1]:
+            print(2)
+            if lMouse:
+                print(5)
+        if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 500 <= pygame.mouse.get_pos()[1] and 550 >= pygame.mouse.get_pos()[1]:
+            print(3)
+            if lMouse:
+                sys.exit()
 
-i= True
+menu()
+update()
 
-while i==True:
-    menu()
-    print(1)
-    update()
+def test():
+    pygame.draw.rect(menuScreen, (255, 0, 0), (440, 300, 400, 50))
