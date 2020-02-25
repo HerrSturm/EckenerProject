@@ -1,7 +1,7 @@
 import sys, pygame, time
 from Block import Block
 from Vec2 import Vec2
-from characterClass import Character
+from Character import Character
 from CollisionManager import CollisionManager
 from GegnerClass import *
 pygame.init()
@@ -31,8 +31,7 @@ b4_2 = Block(Vec2(30, 1), Vec2(37,22), green)
 b5 = Block(Vec2(6, 3), Vec2(44, 20), brown)
 b5_2 = Block(Vec2(6, 1), Vec2(44, 19), green)
 
-# Character wird initialisiert
-tom = Character()
+tom = Character(Vec2(10,400))
 
 
 gegner = Gegner(Vec2(50,300),Vec2(2,2),100, 600)
@@ -72,6 +71,8 @@ while True:
         tom.moveleft()
     if keys[pygame.K_d]:
         tom.moveright()
+    if keys[pygame.K_w]:
+        tom.jump()
 
 
     dt = clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
