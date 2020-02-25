@@ -27,3 +27,10 @@ class Level:
                     object["range"][0]
                     object["range"][1]
                 ))
+        characterSpawn = Vec2(*level["characterSpawn"])
+        return Level(objects, characterSpawn)
+
+    def update(self, dt):
+        for object in self.objects:
+            object.update()
+        CollisionManager().update(dt)
