@@ -2,6 +2,8 @@ import pygame
 from HitBox import*
 from Direction import Direction
 from sprites import runSprites
+from sprites import fallSprites
+from sprites import idleSprites
 #CONST gravity
 class Character():
     GRAVITY = 130
@@ -28,12 +30,25 @@ class Character():
             self.isGrounded_ = True
     #draws the character on the screen
     def draw(self):
-        self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
-        self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
-        self.mainScreen.blit(self.imagebig, ((self.hitBox.pos.x)-43,(self.hitBox.pos.y)-15))
+        pygame.draw.rect(self.mainScreen, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        if self.isGrounded == True and self.hitBox.vel.x == 0:
+            self.imageoriginal = pygame.image.load(idleSprites(self.spriteCount)).convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True:
+            self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False and self.hitBox.vel.y <= -20:
+            self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False and self.hitBox.vel.y > -20 and self.hitBox.vel.y <= 20:
+            self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-03.png").convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False:
+            self.imageoriginal = pygame.image.load(fallSprites(self.spriteCount)).convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        self.mainScreen.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
-        print(self.spriteCount)
+        print(self.hitBox.vel.y)
     #updates the player
     def update(self, dt):
         self.draw()
