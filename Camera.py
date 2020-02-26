@@ -2,6 +2,7 @@ from Vec2 import *
 import pygame
 
 class Camera:
+    DEFAULT_GLIDE_FACTOR = 1
 
     def __init__(self, size, background):
         self.position = Vec2()
@@ -13,11 +14,14 @@ class Camera:
 
     def draw(self):
         self.mainScreen.fill(self.background)
-        self.surface.blit(self.mainScreen, self.position.values)
+        self.mainScreen.blit(self.surface, self.position.values)
         self.surface.fill(self.background)
 
     def move(self, deltaPos):
         self.position += deltaPos
 
-    def glide(self, target, glideFactor = 0.1):
-        self.position += (target - self.position) * 0.1
+    def glide(self, target, dt, glideFactor = DEFAULT_GLIDE_FACTOR):
+        self.position += (target - self.position) * dt * glideFactor
+
+    def glideCenter(self, target, dt, glideFactor = DEFAULT_GLIDE_FACTOR):
+        self.glide(-(target - Vec2(*self.mainScreen.get_size()) / 2), dt, glideFactor)
