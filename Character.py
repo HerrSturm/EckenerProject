@@ -10,7 +10,7 @@ class Character():
         self.isGrounded = False
         self.isGrounded_ = False
         size = Vec2(40,75)
-        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
