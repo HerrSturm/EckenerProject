@@ -18,8 +18,11 @@ class Block(object):
     def update(self, dt):
         pass
 
-    def draw(self):
-        pygame.draw.rect(self.screen, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
+
+    def remove(self):
+        self.hitbox.remove()
 
     def move(self,position):
         self.position += position

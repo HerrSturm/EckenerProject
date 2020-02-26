@@ -57,6 +57,10 @@ class HitBox(object):
         self.pos = pos
         [callback(self) for (type, callback) in self.callbacks if type == "pos"]
 
+    @property
+    def center(self):
+        return self.pos + self.size / 2
+
     def onPosChanged(self, callback):
         self.callbacks.append(("pos", callback))
 

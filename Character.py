@@ -10,7 +10,7 @@ class Character():
         self.isGrounded = False
         self.isGrounded_ = False
         size = Vec2(40,75)
-        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
@@ -21,8 +21,8 @@ class Character():
         if dir == Direction.DOWN:
             self.isGrounded_ = True
     #draws the character on the screen
-    def draw(self):
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+    def draw(self, surface):
+        pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
     #updates the player
     def update(self, dt):
@@ -35,6 +35,9 @@ class Character():
             self.moveright()
         if keys[pygame.K_w]:
             self.jump()
+
+    def remove(self):
+        self.hitBox.remove()
 
     #gets called before the collisionmanager does stuff
     def beforeCollisionManager(self, dt):

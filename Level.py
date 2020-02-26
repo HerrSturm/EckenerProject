@@ -2,6 +2,7 @@ import json
 from Character import *
 from Block import *
 from GegnerClass import *
+from Camera import *
 
 colors = {
     "brown": (150,80,50),
@@ -11,10 +12,11 @@ colors = {
 
 class Level:
 
-    def __init__(self, objects, characterSpawn):
+    def __init__(self, objects, characterSpawn, size, background):
         self.objects = objects
         self.character = Character(characterSpawn) # TODO: use characterSpawn
         self.objects.append(self.character)
+        self.camera = Camera(size * 24, background)
 
     def loadFile(name):
         file = open(name)
@@ -38,13 +40,21 @@ class Level:
                     object["range"][1]
                 ))
         characterSpawn = Vec2(*level["characterSpawn"])
-        return Level(objects, characterSpawn)
+        size = Vec2(*level["size"])
+        background = tuple(level["background"])
+        return Level(objects, characterSpawn, size, background)
 
     def update(self, dt):
         for object in self.objects:
             object.update(dt)
+        self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
 
     def draw(self):
         for object in self.objects:
-            object.draw()
+            object.draw(self.camera.surface)
+        self.camera.draw()
+
+    def remove(self):
+        for object in self.objects:
+            object.remove()

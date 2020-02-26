@@ -17,7 +17,8 @@ class CollisionManager(object):
             self.hitBoxes.add(hitBox)
 
         def remove(self, hitBox):
-            self.hitBoxes.remove(hitBox)
+            if hitBox in self.hitBoxes:
+                self.hitBoxes.remove(hitBox)
 
         def update(self, dt):
             self.acc += dt
