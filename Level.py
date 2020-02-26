@@ -7,7 +7,8 @@ from Camera import *
 colors = {
     "brown": (150,80,50),
     "blue": (80,150,255),
-    "green": (50,100,50)
+    "green": (50,100,50),
+    "grey": (125,125,125)
 }
 
 class Level:

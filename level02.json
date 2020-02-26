@@ -2,7 +2,7 @@
   "level": {
     "objects": [{
         "type": "block",
-        "size": [8, 10],
+        "size": [8, 100],
         "position":[0,26],
         "color": "brown"
       }, {
@@ -14,7 +14,7 @@
         "type": "block",
         "size": [12, 18],
         "position":[0,0],
-        "color": "brown"
+        "color": "grey"
       }, {
         "type": "block",
         "size": [1, 1],
@@ -27,7 +27,7 @@
         "color": "green"
       }, {
         "type": "block",
-        "size": [1, 10],
+        "size": [1, 100],
         "position":[10,27],
         "color": "brown"
       }, {
@@ -37,7 +37,7 @@
         "color": "green"
       }, {
         "type": "block",
-        "size": [1, 10],
+        "size": [1, 100],
         "position":[14,28],
         "color": "brown"
       }, {
@@ -47,7 +47,7 @@
         "color": "green"
       }, {
         "type": "block",
-        "size": [2, 10],
+        "size": [2, 100],
         "position":[18,25],
         "color": "brown"
       }, {
@@ -57,7 +57,7 @@
         "color": "green"
       }, {
         "type": "block",
-        "size": [4, 20],
+        "size": [4, 100],
         "position":[24,21],
         "color": "brown"
       }, {
@@ -67,7 +67,7 @@
         "color": "green"
       }, {
         "type": "block",
-        "size": [2, 25],
+        "size": [2, 100],
         "position":[28,12],
         "color": "brown"
       }, {
@@ -92,7 +92,7 @@
         "color": "brown"
       }, {
         "type": "block",
-        "size": [8, 4],
+        "size": [8, 100],
         "position":[35,30],
         "color": "brown"
       }, {
@@ -107,7 +107,7 @@
         "color": "brown"
       }, {
         "type": "block",
-        "size": [20, 20],
+        "size": [20, 100],
         "position":[51,22],
         "color": "brown"
       }, {
@@ -123,7 +123,8 @@
         "range": [-3, 3]
       }
     ],
-    "characterSpawn": [2, 25],
-    "size": [67, 43]
+    "characterSpawn": [2, 20],
+    "size": [67, 43],
+    "background": [80, 150, 255]
   }
 }
