@@ -16,7 +16,7 @@ class Level:
         self.objects = objects
         self.character = Character(characterSpawn) # TODO: use characterSpawn
         self.objects.append(self.character)
-        self.camera = Camera(size, background)
+        self.camera = Camera(size * 24, background)
 
     def loadFile(name):
         file = open(name)
@@ -47,6 +47,7 @@ class Level:
     def update(self, dt):
         for object in self.objects:
             object.update(dt)
+        self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
 
     def draw(self):
