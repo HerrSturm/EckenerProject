@@ -26,7 +26,7 @@ class CollisionManager(object):
                 self.acc -= DT
 
         def _physics(self, dt):
-            self._callCallbacks("beforeUpdate")
+            self._callCallbacks("beforeUpdate", dt)
             for hitBox in self.hitBoxes:
                 if hitBox.static:
                     continue
@@ -57,10 +57,10 @@ class CollisionManager(object):
                             hitBox.top = other.bottom
                             hitBox.vel.y = 0
                             hitBox._collide(other, Direction.UP)
-            self._callCallbacks("afterUpdate")
+            self._callCallbacks("afterUpdate", dt)
 
-        def _callCallbacks(self, event):
-            [callback() for (type, callback) in self.callbacks
+        def _callCallbacks(self, event, dt):
+            [callback(dt) for (type, callback) in self.callbacks
                 if type == event]
 
         def onBeforeUpdate(self, callback):
