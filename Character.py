@@ -3,9 +3,9 @@ from HitBox import*
 from Direction import Direction
 #CONST gravity
 class Character():
-    GRAVITY = 130
-    JUMPVEL = 180
-    MOVEVEL = 80
+    GRAVITY = 300
+    JUMPVEL = 275
+    MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.isGrounded = False
         self.isGrounded_ = False
