@@ -17,6 +17,7 @@ class Level:
         self.character = Character(characterSpawn) # TODO: use characterSpawn
         self.objects.append(self.character)
         self.camera = Camera(size * 24, background)
+        self.camera.moveToCenter(self.character.hitBox.center)
 
     def loadFile(name):
         file = open(name)
