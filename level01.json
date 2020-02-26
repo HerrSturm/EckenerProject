@@ -48,8 +48,8 @@
         "range": [-3, 7]
       }
     ],
-    "characterSpawn": [50, 50],
-    "size": [1608, 1032],
+    "characterSpawn": [2, 2],
+    "size": [67, 43],
     "background": [80, 150, 255]
   }
 }
