@@ -13,8 +13,9 @@ colors = {
 
 class Level:
 
-    def __init__(self, objects, characterSpawn, size, background):
+    def __init__(self, objects, characterSpawn, size, background, filename):
         self.objects = objects
+        self.filename = filename
         self.character = Character(characterSpawn) # TODO: use characterSpawn
         self.objects.append(self.character)
         self.camera = Camera(size * 24, background)
@@ -22,9 +23,9 @@ class Level:
 
     def loadFile(name):
         file = open(name)
-        return Level.load(json.load(file))
+        return Level.load(json.load(file),name)
 
-    def load(json):
+    def load(json, filename):
         objects = []
         level = json["level"]
         for object in level["objects"]:
@@ -44,13 +45,13 @@ class Level:
         characterSpawn = Vec2(*level["characterSpawn"])
         size = Vec2(*level["size"])
         background = tuple(level["background"])
-        return Level(objects, characterSpawn, size, background)
+        return Level(objects, characterSpawn, size, background, filename)
 
     def update(self, dt):
         for object in self.objects:
             object.update(dt)
         if self.death():
-            self.restore("level02.json")
+            self.restore(self.filename)
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
 
