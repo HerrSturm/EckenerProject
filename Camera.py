@@ -17,8 +17,11 @@ class Camera:
         self.mainScreen.blit(self.surface, self.position.values)
         self.surface.fill(self.background)
 
-    def move(self, deltaPos):
-        self.position += deltaPos
+    def moveTo(self, position):
+        self.position = -position
+
+    def moveToCenter(self, position):
+        self.position = -(position - Vec2(*self.mainScreen.get_size()) / 2)
 
     def glide(self, target, dt, glideFactor = DEFAULT_GLIDE_FACTOR):
         self.position += (target - self.position) * dt * glideFactor

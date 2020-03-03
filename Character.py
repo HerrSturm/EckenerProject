@@ -18,7 +18,7 @@ class Character():
         self.mainScreen = pygame.display.get_surface()
 
     #checks if hitbox collided with ground
-    def check_Grounded(self, hitbox, other, dir):
+    def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
             self.isGrounded_ = True
     #draws the character on the screen
