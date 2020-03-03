@@ -51,7 +51,7 @@ class Level:
         for object in self.objects:
             object.update(dt)
         if self.death():
-            self.restore(self.filename)
+            self.restore()
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
 
@@ -64,8 +64,8 @@ class Level:
         for object in self.objects:
             object.remove()
 
-    def restore(self, name):
-        file = open(name)
+    def restore(self):
+        file = open(self.filename)
         map = json.load(file)
         objects = []
         level = map["level"]
