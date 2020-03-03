@@ -64,10 +64,10 @@ class Character():
     def jump(self):
         if self.isGrounded:
             self.hitBox.vel.y = 0
-            self.hitBox.velEnemy += Vec2(0, -self.JUMPVEL)
+            self.hitBox.vel += Vec2(0, -self.JUMPVEL)
 
 #010B1TC01N1000CYB3R110H4CK101
     #check enemy hurts me?
-    def hurt(self, hitbox, other, dir):
+    def hurt(self, hitbox, other, dir, layer):
         self.health -= 1
         print("AUA")

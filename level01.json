@@ -44,7 +44,7 @@
       {
         "type": "enemy",
         "size": [2,2],
-        "position": [5, 5],
+        "position": [5, 13],
         "range": [-3, 7]
       }
     ],
