@@ -9,9 +9,11 @@ class Character():
     def __init__(self, position): #Vec2 position
         self.isGrounded = False
         self.isGrounded_ = False
+        self.health = 1
         size = Vec2(40,75)
         self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
-        self.hitBox.onCollide(self.check_Grounded)
+        self.hitBox.onCollide(Layer.all(), self.check_Grounded)
+        self.hitBox.onCollide(Layer("deadly"), self.hurt)
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
@@ -51,4 +53,9 @@ class Character():
     def jump(self):
         if self.isGrounded:
             self.hitBox.vel.y = 0
-            self.hitBox.vel += Vec2(0, -self.JUMPVEL)
+            self.hitBox.velEnemy += Vec2(0, -self.JUMPVEL)
+
+#010B1TC01N1000CYB3R110H4CK101
+    #check enemy hurts me?
+    def hurt(self, hitbox, other, dir):
+        self.health -= 1
