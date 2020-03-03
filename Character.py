@@ -12,8 +12,8 @@ class Character():
         self.health = 1
         size = Vec2(40,75)
         self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
-        self.hitBox.onCollide(Layer.all(), self.check_Grounded)
-        self.hitBox.onCollide(Layer("deadly"), self.hurt)
+        self.hitBox.onCollide(self.check_Grounded)
+        self.hitBox.onCollide(self.hurt, Layer("deadly"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
@@ -59,3 +59,4 @@ class Character():
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir):
         self.health -= 1
+        print("AUA")
