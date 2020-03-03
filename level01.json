@@ -13,12 +13,12 @@
       }, {
         "type": "block",
         "size": [10, 20],
-        "position":[14,20],
+        "position":[14,22],
         "color": "brown"
       }, {
         "type": "block",
         "size": [10, 1],
-        "position":[14,19],
+        "position":[14,21],
         "color": "green"
       }, {
         "type": "block",
@@ -43,12 +43,13 @@
       },
       {
         "type": "enemy",
-        "size": [1,1],
-        "position": [17, 19],
-        "range": [-3, +7]
+        "size": [2,2],
+        "position": [5, 5],
+        "range": [-3, 7]
       }
     ],
-    "characterSpawn": [50, 50],
-    "size": [1608, 1032]
+    "characterSpawn": [2, 2],
+    "size": [67, 43],
+    "background": [80, 150, 255]
   }
 }
