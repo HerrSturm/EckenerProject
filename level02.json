@@ -93,12 +93,12 @@
       }, {
         "type": "block",
         "size": [8, 100],
-        "position":[35,30],
+        "position":[35,29],
         "color": "brown"
       }, {
         "type": "block",
         "size": [8, 1],
-        "position":[35,29],
+        "position":[35,28],
         "color": "green"
       }, {
         "type": "block",
@@ -124,7 +124,7 @@
       }
     ],
     "characterSpawn": [2, 20],
-    "size": [67, 43],
+    "size": [100, 100],
     "background": [80, 150, 255]
   }
 }

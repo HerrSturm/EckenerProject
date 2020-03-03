@@ -48,6 +48,8 @@ class Level:
     def update(self, dt):
         for object in self.objects:
             object.update(dt)
+        if self.death():
+            self.restore("level02.json")
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
 
@@ -59,3 +61,20 @@ class Level:
     def remove(self):
         for object in self.objects:
             object.remove()
+
+    def restore(self, name):
+        file = open(name)
+        map = json.load(file)
+        objects = []
+        level = map["level"]
+        characterSpawn = Vec2(*level["characterSpawn"])
+        self.character.hitBox.pos.values = characterSpawn * 24
+
+
+    def death(self):
+        if self.character.hitBox.pos.y > 50*24:
+            self.character.lives -= 1
+            if self.character.lives<=0:
+                return True
+            else:
+                return False
