@@ -3,30 +3,41 @@ from HitBox import*
 from Direction import Direction
 #CONST gravity
 class Character():
-    GRAVITY = 130
-    JUMPVEL = 180
-    MOVEVEL = 80
+    GRAVITY = 300
+    JUMPVEL = 275
+    MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.isGrounded = False
         self.isGrounded_ = False
         size = Vec2(40,75)
-        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
 
     #checks if hitbox collided with ground
-    def check_Grounded(self, hitbox, other, dir):
+    def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
             self.isGrounded_ = True
     #draws the character on the screen
-    def draw(self):
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+    def draw(self, surface):
+        pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
     #updates the player
     def update(self, dt):
-        self.draw()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
+            self.standstill()
+        if keys[pygame.K_a]:
+            self.moveleft()
+        if keys[pygame.K_d]:
+            self.moveright()
+        if keys[pygame.K_w]:
+            self.jump()
+
+    def remove(self):
+        self.hitBox.remove()
 
     #gets called before the collisionmanager does stuff
     def beforeCollisionManager(self, dt):

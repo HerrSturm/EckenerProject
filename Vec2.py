@@ -117,6 +117,11 @@ class Vec2:
         moduloed = tuple( a % b for a, b in zip(self, other) )
         return Vec2(*moduloed)
 
+    def __neg__(self):
+        """ Returns the vector negated """
+        neged = tuple(-a for a in self)
+        return Vec2(*neged)
+
     def __iter__(self):
         return self.values.__iter__()
 
