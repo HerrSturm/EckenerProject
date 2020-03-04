@@ -34,7 +34,7 @@ b5_2 = Block(Vec2(6, 1), Vec2(44, 19), green)
 tom = Character(Vec2(10,400))
 
 
-gegner = Gegner(Vec2(50,300),Vec2(2,2),100, 600)
+gegner = Gegner(Vec2(4,4),Vec2(2,2),5, 35)
 
 # Spielschleife
 while True:
@@ -57,6 +57,7 @@ while True:
     b4_2.update()
     b5.update()
     b5_2.update()
+
 
     # Handles the shutting down of the programm, ignorieren!
     for event in pygame.event.get():
