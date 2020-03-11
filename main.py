@@ -1,10 +1,18 @@
-import sys, pygame, characterClass, HitBox, Vec2
+import sys, pygame, characterClass, menu
 pygame.init()
 mainScreenSize = width, height = 1280, 720
 mainScreen = pygame.display.set_mode(mainScreenSize)
 character=characterClass.Character()
-clock = pygame.time.Clock()
+
+class State(Enum):
+    MAIN_MENU = 0
+    GAME = 1
+
+state = State.MAIN_MENU
+
 while True:
+    if state == State.MAIN_MENU:
+        state = State.GAME
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -12,8 +20,9 @@ while True:
     mainScreen.fill(pygame.Color(0,0,0))
     pygame.display.flip()
     #Shutdownhandling
+    menu.pause
     if keys[pygame.K_ESCAPE]:
+        #menu.menu()
         sys.exit()
-
-    dt = clock.get_time() / 1000.0
-    CollisionManager().update(dt)
+    mainScreen.fill((0,0,0))
+    character.update()
