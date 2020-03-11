@@ -55,17 +55,37 @@ class HitBox(object):
 
     def setPos(self, pos):
         self.pos = pos
-        [callback(self) for (type, callback) in self.callbacks if type == "pos"]
+        for tup in self.callbacks:
+            if tup[0] == "pos":
+                callback(self)
+
+    @property
+    def center(self):
+        return self.pos + self.size / 2
 
     def onPosChanged(self, callback):
         self.callbacks.append(("pos", callback))
 
-    def onCollide(self, callback):
-        self.callbacks.append(("collide", callback))
+    def onCollide(self, callback, layer = Layer.all()):
+        self.callbacks.append(("collide", callback, layer))
 
     def _collide(self, other, dir):
-        [callback(self, other, dir) for (type, callback) in self.callbacks
-            if type == "collide"]
+        for tup in self.callbacks:
+            if tup[0] == "collide":
+                (type, callback, layer) = tup
+                if other.layer == layer:
+                    callback(self, other, dir, layer)
+
+    def listensToCollisionLayer(self, listenLayer):
+        for tup in self.callbacks:
+            if tup[0] == "collide":
+                (type, callback, layer) = tup
+                if layer == listenLayer:
+                    return True
+        return False
+
+    def hasLayer(self, layer):
+        return layer == self.layer
 
     def overlap(self, other):
         return (

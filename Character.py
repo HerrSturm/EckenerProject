@@ -6,9 +6,9 @@ from sprites import fallSprites
 from sprites import idleSprites
 #CONST gravity
 class Character():
-    GRAVITY = 130
-    JUMPVEL = 180
-    MOVEVEL = 80
+    GRAVITY = 300
+    JUMPVEL = 275
+    MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
         self.mainScreen = pygame.display.get_surface()
@@ -17,20 +17,23 @@ class Character():
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
+        self.health = 1
         size = Vec2(40,58)
-        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
+        self.lives = 1
+        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
+        self.hitBox.onCollide(self.hurt, Layer("deadly"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
 
     #checks if hitbox collided with ground
-    def check_Grounded(self, hitbox, other, dir):
+    def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
             self.isGrounded_ = True
     #draws the character on the screen
-    def draw(self):
-        pygame.draw.rect(self.mainScreen, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+    def draw(self, surface):
+        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0:
             self.imageoriginal = pygame.image.load(idleSprites(self.spriteCount)).convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -46,12 +49,23 @@ class Character():
         elif self.isGrounded == False:
             self.imageoriginal = pygame.image.load(fallSprites(self.spriteCount)).convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
-        self.mainScreen.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
+        surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
         print(self.hitBox.vel.y)
     #updates the player
     def update(self, dt):
-        self.draw()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
+            self.standstill()
+        if keys[pygame.K_a]:
+            self.moveleft()
+        if keys[pygame.K_d]:
+            self.moveright()
+        if keys[pygame.K_w]:
+            self.jump()
+
+    def remove(self):
+        self.hitBox.remove()
 
     #gets called before the collisionmanager does stuff
     def beforeCollisionManager(self, dt):
@@ -77,3 +91,9 @@ class Character():
         if self.isGrounded:
             self.hitBox.vel.y = 0
             self.hitBox.vel += Vec2(0, -self.JUMPVEL)
+
+#010B1TC01N1000CYB3R110H4CK101
+    #check enemy hurts me?
+    def hurt(self, hitbox, other, dir, layer):
+        self.health -= 1
+        print("AUA")

@@ -1,3 +1,0 @@
-mainScreenSize = width, height = 1280, 720
-mainScreen = pygame.display.set_mode(mainScreenSize)
-pygame.display.flip()
