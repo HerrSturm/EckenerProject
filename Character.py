@@ -10,6 +10,7 @@ class Character():
     JUMPVEL = 275
     MOVEVEL = 200
     def __init__(self, position): #Vec2 position
+        self.heading = 1
         self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
         self.mainScreen = pygame.display.get_surface()
         self.spriteCount = 2
@@ -33,7 +34,7 @@ class Character():
             self.isGrounded_ = True
     #draws the character on the screen
     def draw(self, surface):
-        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0:
             self.imageoriginal = pygame.image.load(idleSprites(self.spriteCount)).convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -49,9 +50,15 @@ class Character():
         elif self.isGrounded == False:
             self.imageoriginal = pygame.image.load(fallSprites(self.spriteCount)).convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        if self.hitBox.vel.x > 0:
+            self.heading = 1
+        elif self.hitBox.vel.x < 0:
+            self.heading = -1
+        if self.heading == -1:
+            self.imagebig = pygame.transform.flip(self.imagebig,True,False)
         surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
-        print(self.hitBox.vel.y)
+        print(self.hitBox.vel.x)
     #updates the player
     def update(self, dt):
         keys = pygame.key.get_pressed()

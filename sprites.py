@@ -4,7 +4,7 @@ def runSprites(x):
     SpritesRun = ["adventurer-run-00.png","adventurer-run-01.png",
         "adventurer-run-02.png","adventurer-run-03.png",
         "adventurer-run-04.png","adventurer-run-05.png"]
-    return(str(path)+str(SpritesRun[x//10%len(SpritesRun)-1]))
+    return(str(path)+str(SpritesRun[x//4%len(SpritesRun)-1]))
 def fallSprites(x):
     path = "Graphics/aAllGraphics/Adventurer/"
     SpritesFall = ["adventurer-fall-00.png","adventurer-fall-01.png"]
@@ -12,4 +12,4 @@ def fallSprites(x):
 def idleSprites(x):
     path = "Graphics/aAllGraphics/Adventurer/"
     SpritesIdle = ["adventurer-idle-00.png","adventurer-idle-01.png","adventurer-idle-02.png"]
-    return(path+SpritesIdle[x//15%len(SpritesIdle)-1])   
+    return(path+SpritesIdle[x//15%len(SpritesIdle)-1])
