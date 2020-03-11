@@ -1,0 +1,130 @@
+{
+  "level": {
+    "objects": [{
+        "type": "block",
+        "size": [8, 100],
+        "position":[0,26],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [8, 1],
+        "position":[0,25],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [12, 18],
+        "position":[0,0],
+        "color": "grey"
+      }, {
+        "type": "block",
+        "size": [1, 1],
+        "position":[12,17],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [1, 1],
+        "position":[12,12],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [1, 100],
+        "position":[10,27],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [1, 1],
+        "position":[10,26],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [1, 100],
+        "position":[14,28],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [1, 1],
+        "position":[14,27],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [2, 100],
+        "position":[18,25],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [2, 1],
+        "position":[18,24],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [4, 100],
+        "position":[24,21],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [4, 1],
+        "position":[24,20],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [2, 100],
+        "position":[28,12],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [8, 1],
+        "position":[22,11],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [8, 1],
+        "position":[22,12],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [2, 1],
+        "position":[26,13],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [2, 23],
+        "position":[40,0],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [8, 100],
+        "position":[35,29],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [8, 1],
+        "position":[35,28],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [1, 20],
+        "position":[50,25],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [20, 100],
+        "position":[51,22],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [20, 1],
+        "position":[51,21],
+        "color": "green"
+      },
+      {
+        "type": "enemy",
+        "size": [2,2],
+        "position": [25, 9],
+        "range": [-3, 3]
+      }
+    ],
+    "characterSpawn": [2, 20],
+    "size": [100, 100],
+    "background": [80, 150, 255]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "level": {
+    "objects": [{
+        "type": "block",
+        "size": [10, 10],
+        "position":[0,26],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [10, 1],
+        "position":[0,25],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [10, 20],
+        "position":[14,22],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [10, 1],
+        "position":[14,21],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [5, 1],
+        "position":[30,19],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [5, 1],
+        "position":[30,18],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [30, 20],
+        "position":[37,23],
+        "color": "brown"
+      }, {
+        "type": "block",
+        "size": [30, 1],
+        "position":[37,22],
+        "color": "green"
+      },
+      {
+        "type": "enemy",
+        "size": [2,2],
+        "position": [5, 13],
+        "range": [-3, 7]
+      }
+    ],
+    "characterSpawn": [2, 2],
+    "size": [67, 43],
+    "background": [80, 150, 255]
+  }
+}
