@@ -1,0 +1,110 @@
+{
+  "level": {
+    "objects": [{
+        "type": "block",
+        "size": [20, 4],
+        "position":[0,11],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [20, 1],
+        "position":[0,11],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [2, 30],
+        "position":[30,0],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [15, 2],
+        "position":[15,28],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [15, 1],
+        "position":[15,27],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [3, 1],
+        "position":[13,23],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [3, 1],
+        "position":[13,22],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [5, 3],
+        "position":[1,45],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [5, 1],
+        "position":[1,44],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [5, 3],
+        "position":[23,47],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [5, 1],
+        "position":[23,46],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [5, 3],
+        "position":[33,42],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [5, 1],
+        "position":[33,41],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [5, 3],
+        "position":[43,37],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [5, 1],
+        "position":[43,36],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [5, 3],
+        "position":[53,32],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [5, 1],
+        "position":[53,31],
+        "color": "green"
+      },{
+        "type": "block",
+        "size": [415, 20],
+        "position":[69,28],
+        "color": "brown"
+      },{
+        "type": "block",
+        "size": [15, 1],
+        "position":[69,27],
+        "color": "green"
+      },
+      {
+        "type": "enemy",
+        "size": [3,2],
+        "position": [23, 20],
+        "range": [-3, 3]
+      }
+    ],
+    "characterSpawn": [2, 3],
+    "size": [100, 100],
+    "background": [80, 150, 255]
+  }
+}
