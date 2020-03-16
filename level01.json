@@ -40,6 +40,11 @@
         "size": [30, 1],
         "position":[37,22],
         "color": "green"
+      }, {
+        "type": "endBlock",
+        "size": [1, 1],
+        "position":[60,21],
+        "color": "yellow"
       },
       {
         "type": "enemy",
