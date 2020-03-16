@@ -8,7 +8,8 @@ colors = {
     "brown": (150,80,50),
     "blue": (80,150,255),
     "green": (50,100,50),
-    "grey": (125,125,125)
+    "grey": (125,125,125),
+    "yellow": (255,255,0)
 }
 
 class Level:
@@ -35,6 +36,28 @@ class Level:
                     Vec2(*object["size"]),
                     colors[object["color"]]
                 ))
+
+            #create a simple platform with a grass surface
+            if object["type"] == "platform":
+                objects.append(Block(
+                    Vec2(*object["position"]),
+                    Vec2(*[object["size"][0],1]),
+                    colors["green"]
+                ))
+                objects.append(Block(
+                    Vec2(*[object["position"][0], object["position"][1]+1]),
+                    Vec2(*[object["size"][0],object["size"][1]-1]),
+                    colors["brown"]
+                ))
+
+            #creating an EndBlock object
+            if object["type"] == "endBlock":
+                objects.append(EndBlock(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    colors[object["color"]]
+                ))
+
             if object["type"] == "enemy":
                 objects.append(Gegner(
                     Vec2(*object["position"]),
@@ -42,6 +65,7 @@ class Level:
                     object["range"][0],
                     object["range"][1]
                 ))
+
         characterSpawn = Vec2(*level["characterSpawn"])
         size = Vec2(*level["size"])
         background = tuple(level["background"])
