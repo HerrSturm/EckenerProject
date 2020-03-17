@@ -1,0 +1,31 @@
+{
+  "level": {
+    "objects": [{
+        "type": "platform",
+        "size": [9, 100],
+        "position": [0, 26]
+      }, {
+        "type": "platform",
+        "size": [9, 100],
+        "position": [17, 24]
+      }, {
+        "type": "platform",
+        "size": [9, 100],
+        "position": [31, 28]
+      }, {
+        "type": "endBlock",
+        "size": [1, 1],
+        "position":[70,20],
+        "color": "yellow"
+      }, {
+        "type": "enemy",
+        "size": [1,1],
+        "position": [35,27],
+        "range": [-4, 4]
+      }
+    ],
+    "characterSpawn": [2, 20],
+    "size": [100, 100],
+    "background": [80, 150, 255]
+  }
+}

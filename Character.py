@@ -21,9 +21,12 @@ class Character():
         self.health = 1
         size = Vec2(40,58)
         self.lives = 1
+        self.lvlUp = False
+        self.nextLvl = 2
         self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
+        self.hitBox.onCollide(self.end, Layer("end"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
@@ -104,3 +107,7 @@ class Character():
     def hurt(self, hitbox, other, dir, layer):
         self.health -= 1
         print("AUA")
+
+    def end(self, hitbox, other, dir, layer):
+        print('Level beendet!')
+        self.lvlUp = True
