@@ -20,7 +20,7 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
-level = Level.loadFile("level02.json")
+level = Level.loadFile("level01.json")
 
 # Spielschleife
 while True:
@@ -33,6 +33,17 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
 
+    if level.character.lvlUp:
+        nextLvl = level.character.nextLvl
+        level.remove()
+        try:
+            if nextLvl < 10:
+                level = Level.loadFile("level0" + str(nextLvl) + ".json")
+            else:
+                level = Level.loadFile("level" + str(nextLvl) + ".json")
+            level.character.nextLvl = nextLvl + 1
+        except:
+            sys.exit()
 
     dt = clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
     clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
