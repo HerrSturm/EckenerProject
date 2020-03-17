@@ -34,7 +34,8 @@ class Level:
                 objects.append(Block(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
-                    colors[object["color"]]
+                    colors[object["color"]],
+                    object["texture"]
                 ))
 
             #create a simple platform with a grass surface
@@ -42,12 +43,14 @@ class Level:
                 objects.append(Block(
                     Vec2(*object["position"]),
                     Vec2(*[object["size"][0],1]),
-                    colors["green"]
+                    colors["green"],
+                    'grass'
                 ))
                 objects.append(Block(
                     Vec2(*[object["position"][0], object["position"][1]+1]),
                     Vec2(*[object["size"][0],object["size"][1]-1]),
-                    colors["brown"]
+                    colors["brown"],
+                    'dirt'
                 ))
 
             #creating an EndBlock object
