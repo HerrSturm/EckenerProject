@@ -74,7 +74,7 @@ class Level:
     def update(self, dt):
         for object in self.objects:
             object.update(dt)
-        if self.death():
+        if self.death() or self.character.lives <= 0:
             self.restore()
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
@@ -83,6 +83,9 @@ class Level:
         for object in self.objects:
             object.draw(self.camera.surface)
         self.camera.draw()
+
+        for live in range(0, self.character.lives):
+            self.camera.mainScreen.blit(self.character.heartImage, (20 + live*50, 20))
 
     def remove(self):
         for object in self.objects:
@@ -95,6 +98,7 @@ class Level:
         level = map["level"]
         characterSpawn = Vec2(*level["characterSpawn"])
         self.character.hitBox.pos.values = characterSpawn * 24
+        self.character.lives = 3
 
 
     def death(self):

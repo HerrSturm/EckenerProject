@@ -52,4 +52,6 @@ while True:
     level.update(dt)
     level.draw()
 
+    level.character.protectionCorrection(dt)
+
     pygame.display.flip()
