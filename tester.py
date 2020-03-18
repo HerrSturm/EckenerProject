@@ -7,11 +7,6 @@ from GegnerClass import *
 from Level import *
 pygame.init()
 
-# Variabeln für Farben werden kreiert
-brown = (150,80,50)
-blue = (80,150,255)
-green = (50,100,50)
-
 # Pygame wird initialisiert
 size = width, heigth = 1400, 800
 clock = pygame.time.Clock()
@@ -20,7 +15,7 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
-level = Level.loadFile("level02.json")
+level = Level.loadFile("level04.json")
 
 # Spielschleife
 while True:

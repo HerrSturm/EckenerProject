@@ -87,7 +87,7 @@
         "color": "green"
       },{
         "type": "block",
-        "size": [415, 20],
+        "size": [15, 20],
         "position":[69,28],
         "color": "brown"
       },{
@@ -95,6 +95,11 @@
         "size": [15, 1],
         "position":[69,27],
         "color": "green"
+      },{
+        "type": "block",
+        "size": [3, 1],
+        "position":[75,26],
+        "color": "goal"
       },
       {
         "type": "enemy",
