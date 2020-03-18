@@ -8,7 +8,7 @@ except:
 
 pygame.init()
 
-version = '0.6.43b'
+version = '0.6.5b'
 
 # Variabeln für Feldmarkierung
 m1 = False
@@ -40,8 +40,8 @@ for fade in fader:
 
     buttons.append([fadeX, fadeY, sizeX, sizeY, fade[4], fade[5]])
 
-buttons.append([20, 10, 40, 40, 'Material', (255,255,255)])
-buttons.append([200, 10, 40, 40, 'Range', (255, 60, 0)])
+buttons.append([20, 10, 40, 40, 'Material', (255,255,255), 'W'])
+buttons.append([200, 10, 40, 40, 'Range', (255, 60, 0), 'A/S'])
 
 # Pygame wird initialisiert
 size = width, heigth = 1400, 800
@@ -138,11 +138,13 @@ def flipType(button):
         button[5] = (255,255,255)
 
 #Der EnemyRange Button wurde angeklickt -> Die Reichweite des Enemy Typs wird verstellt
-def flipRange():
+def flipRange(i):
     global enemyRange
-    if enemyRange < 10:
-        enemyRange += 1
+    if enemyRange < 10 or i <0:
+        enemyRange += i
     else: enemyRange = 1
+    if enemyRange < 1:
+        enemyRange = 10
 
 #Überprüfung ob ein Button gedrückt wurde
 def checkButton(x,y, lHold):
@@ -157,7 +159,7 @@ def checkButton(x,y, lHold):
                     if button[4] == 'Material':
                         flipType(button)
                     elif button[4] == 'Range':
-                        flipRange()
+                        flipRange(1)
 
                 else:
                     if fader[fade][0] < mousePos[0] < fader[fade][0]+fader[fade][2]:
@@ -235,10 +237,15 @@ def draw():
         #Fader zeichnen
         pygame.draw.rect(screen, (0), [fade[0], fade[1], fade[2], fade[3]])
         pygame.draw.rect(screen, (255,255,255), [fade[0]+1, fade[1]+1, fade[2]-2, fade[3]-2])
+
+        myfont = pygame.font.SysFont('Arial', 20)
     for button in buttons:
         #Buttons zeichnen
         pygame.draw.rect(screen, (0), [button[0], button[1], button[2], button[3]])
         pygame.draw.rect(screen, button[5], [button[0]+1, button[1]+1, button[2]-2, button[3]-2])
+        if len(button) > 6:
+            buttonText = myfont.render(button[6], False, (0, 0, 0))
+            screen.blit(buttonText,(button[0]+5,button[1]))
 
     #Texte einblenden
     myfont = pygame.font.SysFont('Arial', 30)
@@ -266,6 +273,15 @@ def checkEvents():
                 cam[0] += 5
             elif event.key == pygame.K_RIGHT:
                 cam[0] -= 5
+            elif event.key == pygame.K_w:
+                for button in buttons:
+                    if button[4] == 'Material':
+                        flipType(button)
+                        break
+            elif event.key == pygame.K_a:
+                flipRange(-1)
+            elif event.key == pygame.K_d:
+                flipRange(1)
 
 
 #-------------------------------------------------------------------------------
