@@ -96,7 +96,7 @@
         "position":[69,27],
         "color": "green"
       },{
-        "type": "block",
+        "type": "endBlock",
         "size": [3, 1],
         "position":[75,26],
         "color": "goal"
