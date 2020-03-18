@@ -8,7 +8,7 @@ except:
 
 pygame.init()
 
-version = '0.5.23b'
+version = '0.6.43b'
 
 # Variabeln für Feldmarkierung
 m1 = False
