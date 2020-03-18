@@ -92,8 +92,8 @@ def addObject(type, m1, m2):
         printObjects.append('{"type": "enemy","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)) +']}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,0,0)])
     elif type == 'endBlock':
-        printObjects.append('{"type": "endBlock","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"color": "yellow"}')
-        objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,255,0)])
+        printObjects.append('{"type": "endBlock","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"color": "goal"}')
+        objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (212,175,55)])
     showLevelCode()
 
 def flipType(button):
@@ -113,7 +113,7 @@ def flipType(button):
         button[5] = (255,0,0)
     elif type == 'enemy':
         type = 'endBlock'
-        button[5] = (255,255,0)
+        button[5] = (212,175,55)
     elif type == 'endBlock':
         type = 'platform'
         button[5] = (255,255,255)
