@@ -41,7 +41,7 @@
         "position":[37,22],
         "color": "green"
       },{
-        "type": "block",
+        "type": "endBlock",
         "size": [3, 1],
         "position":[53,21],
         "color": "goal"
