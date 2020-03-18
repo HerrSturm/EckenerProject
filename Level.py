@@ -65,6 +65,14 @@ class Level:
                     object["range"][0],
                     object["range"][1]
                 ))
+            if object["type"] == "movingBlock":
+                objects.append(MovingBlock(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1],
+                    colors[object["color"]]
+                ))
 
         characterSpawn = Vec2(*level["characterSpawn"])
         size = Vec2(*level["size"])

@@ -17,6 +17,7 @@ lHold = False
 mHold = False
 rHold = False
 type = 'platform'
+movingType = 'platform'
 enemyRange = 3
 printObjects = []
 objects = []
@@ -41,7 +42,8 @@ for fade in fader:
     buttons.append([fadeX, fadeY, sizeX, sizeY, fade[4], fade[5]])
 
 buttons.append([20, 10, 40, 40, 'Material', (255,255,255), 'W'])
-buttons.append([200, 10, 40, 40, 'Range', (255, 60, 0), 'A/S'])
+buttons.append([240, 10, 40, 40, 'Range', (255, 60, 0), 'A/S'])
+buttons.append([240, -300, 40, 40, 'movingMaterial', (255,255,255), 'S'])
 
 # Pygame wird initialisiert
 size = width, heigth = 1400, 800
@@ -112,6 +114,22 @@ def addObject(type, m1, m2):
     elif type == 'endBlock':
         printObjects.append('{"type": "endBlock","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"color": "goal"}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (212,175,55)])
+    elif type == 'movingBlock':
+        printObjects.append('{"type": "movingBlock","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)))
+        if movingType == 'grass':
+            printObjects[-1] += '],"color": "green"}'
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (50,100,50)])
+        elif movingType == 'dirt':
+            printObjects[-1] += '],"color": "brown"}'
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (150,80,50)])
+        elif movingType == 'stone':
+            printObjects[-1] += '],"color": "grey"}'
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (125,125,125)])
+        elif movingType == 'platform':
+            printObjects[-1] += '],"color": "brown"}'
+            printObjects.append('{"type": "movingBlock","size": [' + str(sizeX) + ', 1],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)) + '],"color": "green"}')
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (150,80,50)])
+            objects.append([posX*24, posY*24, sizeX*24, 1*24, (50,100,50)])
     showLevelCode()
 
 #Der Type Button wurde angeklickt. -> der Blocktyp wird geändert.
@@ -134,7 +152,32 @@ def flipType(button):
         type = 'endBlock'
         button[5] = (212,175,55)
     elif type == 'endBlock':
+        type = 'movingBlock'
+        for b in buttons:
+            if b[4] == 'movingMaterial':
+                b[1] = 60
+        button[5] = (0,0,0)
+    elif type == 'movingBlock':
         type = 'platform'
+        for b in buttons:
+            if b[4] == 'movingMaterial':
+                b[1] = -300
+        button[5] = (255,255,255)
+
+def flipMovingType(button):
+    global movingType
+
+    if movingType == 'platform':
+        movingType = 'grass'
+        button[5] = (50,100,50)
+    elif movingType == 'grass':
+        movingType = 'dirt'
+        button[5] = (150,80,50)
+    elif movingType == 'dirt':
+        movingType = 'stone'
+        button[5] = (125,125,125)
+    elif movingType == 'stone':
+        movingType = 'platform'
         button[5] = (255,255,255)
 
 #Der EnemyRange Button wurde angeklickt -> Die Reichweite des Enemy Typs wird verstellt
@@ -158,6 +201,8 @@ def checkButton(x,y, lHold):
                 if not lHold:
                     if button[4] == 'Material':
                         flipType(button)
+                    elif button[4] == 'movingMaterial':
+                        flipMovingType(button)
                     elif button[4] == 'Range':
                         flipRange(1)
 
@@ -250,14 +295,19 @@ def draw():
     #Texte einblenden
     myfont = pygame.font.SysFont('Arial', 30)
     typeText = myfont.render(type, False, (255, 255, 255))
-    rangeText = myfont.render('Enemy Range: ' + str(enemyRange), False, (255, 60, 0))
+    movingTypeText = myfont.render(movingType, False, (255, 255, 255))
+    rangeText = myfont.render('Moving Range: ' + str(enemyRange), False, (255, 60, 0))
     backgroundColorText = myfont.render('Background: ', False, (255, 255, 255))
     myfont = pygame.font.SysFont('Arial', 16)
     yb = myfont.render('Level-Editor by YB Version: ' + version, False, (255, 255, 200))
     screen.blit(typeText,(80,10))
-    screen.blit(rangeText,(260,10))
+    screen.blit(rangeText,(300,10))
     screen.blit(backgroundColorText,(1000,10))
     screen.blit(yb,(5,780))
+    if type == 'movingBlock':
+        screen.blit(movingTypeText,(300,60))
+    else:
+        screen.blit(movingTypeText,(-300,60))
 
 #Pygame Event Management
 def checkEvents():
@@ -277,6 +327,11 @@ def checkEvents():
                 for button in buttons:
                     if button[4] == 'Material':
                         flipType(button)
+                        break
+            elif event.key == pygame.K_s:
+                for button in buttons:
+                    if button[4] == 'movingMaterial':
+                        flipMovingType(button)
                         break
             elif event.key == pygame.K_a:
                 flipRange(-1)
