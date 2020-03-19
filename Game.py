@@ -3,10 +3,11 @@ from DeathScreen import DeathScreen
 from Level import Level
 from enum import Enum
 from GameState import GameState
+import pygame
 
 class Game:
 
-    def __init__(levelNameList):
+    def __init__(self, levelNameList):
         self.levelNameList = levelNameList
         self.currentLevelIndex = 0
         self.currentLevel = None
@@ -19,6 +20,7 @@ class Game:
     def init(self):
         size = (1400, 800)
         pygame.display.set_mode(size)
+        self.screen = pygame.display.get_surface()
 
     def loop(self):
         while True:
@@ -74,7 +76,7 @@ class Game:
             print("No level on index " + self.currentLevelIndex)
 
     def draw(self):
-        screen.fill((0, 0, 0))
+        self.screen.fill((0, 0, 0))
         if self.currentLevel:
             self.currentLevel.draw()
         if self.currentMenu:
