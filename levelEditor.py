@@ -84,16 +84,21 @@ def showLevelCode():
 
 def addObject(type, m1, m2):
     #Blockposition festlegen
-    if m1[0] < m2[0]:
+    if m1[0] <= m2[0]:
         posX = m1[0]-cam[0]
     else:
-        posX = m2[0]-cam[0]
-    if m1[1] < m2[1]:
+        posX = m2[0]-cam[0] +1
+    if m1[1] <= m2[1]:
         posY = m1[1]-cam[1]
     else:
-        posY = m2[1]-cam[1]
+        posY = m2[1]-cam[1] +1
     sizeX = abs(m2[0]-m1[0])
     sizeY = abs(m2[1]-m1[1])
+
+    if sizeX < 1:
+        sizeX = 1
+    if sizeY < 1:
+        sizeY = 1
 
     #der neue Block wird dem Level-Editor und dem codeBuilder hinzugefügt.
     if type == 'platform':
@@ -223,6 +228,15 @@ def checkButton(x,y, lHold):
                 return True
     return False
 
+def delObject(x,y, rHold):
+    for i in range(0, len(objects)):
+        if objects[i][0] < mousePos[0] < (objects[i][0] + objects[i][2]):
+            if objects[i][1] < mousePos[1] < (objects[i][1] + objects[i][3]):
+                if not rHold:
+                    del objects[i]
+                    del printObjects[i]
+                    break
+
 #Der Level-Editor wird jeden Frame aktualisiert
 def update(x, y, l, r):
     global m1, m2, lHold, mHold, rHold, type
@@ -244,11 +258,10 @@ def update(x, y, l, r):
 
     if r == True:
         if rHold == False:
-            rHold = True
             if len(objects) > 0:
-                del objects[-1]
-                del printObjects[-1]
+                delObject(x, y, rHold)
                 showLevelCode()
+            rHold = True
     else:
         rHold = False
 
@@ -256,7 +269,20 @@ def update(x, y, l, r):
 def draw():
 
     if m1 != False:
-        pygame.draw.rect(screen, (50,0,0), [m1[0]*24,m1[1]*24, (mouseBlockPos[0]-m1[0])*24, (mouseBlockPos[1]-m1[1])*24])
+        posX = m1[0]
+        posY = m1[1]
+        sizeX = (mouseBlockPos[0]-m1[0])
+        sizeY = (mouseBlockPos[1]-m1[1])
+        if sizeX == 0:
+            sizeX = 1
+        elif sizeX < 0:
+            posX += 1
+        if sizeY == 0:
+            sizeY = 1
+        elif sizeY < 0:
+            posY += 1
+
+        pygame.draw.rect(screen, (50,0,0), [posX*24, posY*24, sizeX*24, sizeY*24])
     else:
         pygame.draw.rect(screen, (50,0,0), [mouseBlockPos[0]*24,mouseBlockPos[1]*24, 24, 24])
 
