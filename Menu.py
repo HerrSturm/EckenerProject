@@ -2,7 +2,8 @@ import pygame, sys
 pygame.init()
 class Menu(object):
     def __init__(self):
-        self.draw
+        self.mainScreen = pygame.display.get_surface()
+
     def draw(self):
         titleFont=pygame.font.SysFont('Arial Black',70)
         buttonFont=pygame.font.SysFont('Chandas', 30)
@@ -11,14 +12,12 @@ class Menu(object):
         textButton2= buttonFont.render("Options", False, (0, 0 ,0))
         textButton3= buttonFont.render("Quit Game", False, (0, 0 ,0))
         self.mainScreen.blit(titleText,(500,100))
-        self.mainScreen.blit(textButton1,(595, 290))
-        self.mainScreen.blit(textButton2,(580, 390))
-        self.mainScreen.blit(textButton3,(560, 490))
-        pygame.display.flip()
-        self.mainScreen = pygame.display.get_surface()
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 300, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 400, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 500, 400, 50))
+        self.mainScreen.blit(textButton1,(595, 290))
+        self.mainScreen.blit(textButton2,(580, 390))
+        self.mainScreen.blit(textButton3,(560, 490))
 
     def update(self):
         pygame.display.flip()
