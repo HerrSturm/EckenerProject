@@ -61,7 +61,6 @@ class Character():
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
         surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
-        print(self.hitBox.vel.x)
     #updates the player
     def update(self, dt):
         keys = pygame.key.get_pressed()

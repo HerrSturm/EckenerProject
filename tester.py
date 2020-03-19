@@ -47,6 +47,7 @@ while True:
 
     dt = clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
     clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
+    print('FPS: ' + str(int(1000/clock.get_time())))
 
     # Ruft update auf CollisionManager auf -> bewegt HitBoxen, prüft Kollisionen
     level.update(dt)
