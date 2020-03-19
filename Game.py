@@ -1,6 +1,7 @@
 import sys
 from Menu import Menu
-#from DeathScreen import DeathScreen
+from DeathScreen import DeathScreen
+from Options import Options
 from Level import Level
 from enum import Enum
 from GameState import GameState
@@ -33,32 +34,35 @@ class Game:
                 needStateUpdate = False
                 if self.state == GameState.MAIN_MENU:
                     self.noLevel()
-                    if not type(self.currentMenu) == Menu:
+                    if type(self.currentMenu) != Menu:
                         self.noMenu()
                         self.loadMainMenu()
-                """
                 if self.state == GameState.DEATH_SCREEN:
-                    if not type(self.currentMenu) == DeathScreen:
+                    self.noLevel()
+                    if type(self.currentMenu) != DeathScreen:
                         self.noMenu()
                         self.loadDeathScreen()
+                if self.state == GameState.OPTIONS:
                     self.noLevel()
-                """
+                    if type(self.currentMenu) != Options:
+                        self.noMenu()
+                        self.loadOptions()
                 if self.state == GameState.GAME:
                     self.noMenu()
-                    if not type(self.currentLevel) == Level:
+                    if type(self.currentLevel) != Level:
                         if not self.loadLevel():
                             self.state = GameState.MAIN_MENU
                             needStateUpdate = True
                 if self.state == GameState.RESTART:
                     self.noLevel()
                     self.noMenu()
-                    self.state = GameState.GAME
+                    self.state = GameState.DEATH_SCREEN
                     needStateUpdate = True
                 if self.state == GameState.NEXT_LEVEL:
                     self.noLevel()
                     self.noMenu()
                     self.currentLevelIndex += 1
-                    self.state = GameState.GAME
+                    self.state = GameState.MAIN_MENU
                     needStateUpdate = True
             dt = self.update()
             self.draw()
@@ -72,12 +76,19 @@ class Game:
         if self.currentMenu:
             self.currentMenu = None
 
+    def getCurrentLevelName(self):
+        if self.currentLevelIndex >= len(self.levelNameList):
+            return "no level :D"
+        return "level " + str(self.currentLevelIndex + 1)
+
     def loadMainMenu(self):
-        self.currentMenu = Menu()
+        self.currentMenu = Menu(self.getCurrentLevelName())
 
     def loadDeathScreen(self):
-        pass
-        #self.currentMenu = DeathScreen()
+        self.currentMenu = DeathScreen(self.getCurrentLevelName())
+
+    def loadOptions(self):
+        self.currentMenu = Options()
 
     def loadLevel(self):
         if self.currentLevelIndex >= len(self.levelNameList):
