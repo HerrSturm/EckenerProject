@@ -35,7 +35,7 @@ class EndBlock(object):
         self.screen = pygame.display.get_surface()
         self.hitbox = HitBox(self.position,self.size, True, Layer("end"))
 
-    def update(self, dt):
+    def update(self, game, dt):
         pass
 
     def draw(self, surface):
