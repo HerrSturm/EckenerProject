@@ -110,7 +110,7 @@ def addObject(type, m1, m2):
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (125,125,125)])
     elif type == 'enemy':
         printObjects.append('{"type": "enemy","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)) +']}')
-        objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,0,0)])
+        objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,0,0), enemyRange])
     elif type == 'endBlock':
         printObjects.append('{"type": "endBlock","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"color": "goal"}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (212,175,55)])
@@ -118,18 +118,18 @@ def addObject(type, m1, m2):
         printObjects.append('{"type": "movingBlock","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)))
         if movingType == 'grass':
             printObjects[-1] += '],"color": "green"}'
-            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (50,100,50)])
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (50,100,50), enemyRange])
         elif movingType == 'dirt':
             printObjects[-1] += '],"color": "brown"}'
-            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (150,80,50)])
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (150,80,50), enemyRange])
         elif movingType == 'stone':
             printObjects[-1] += '],"color": "grey"}'
-            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (125,125,125)])
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (125,125,125), enemyRange])
         elif movingType == 'platform':
             printObjects[-1] += '],"color": "brown"}'
             printObjects.append('{"type": "movingBlock","size": [' + str(sizeX) + ', 1],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)) + '],"color": "green"}')
-            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (150,80,50)])
-            objects.append([posX*24, posY*24, sizeX*24, 1*24, (50,100,50)])
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (150,80,50), enemyRange])
+            objects.append([posX*24, posY*24, sizeX*24, 1*24, (50,100,50), enemyRange])
     showLevelCode()
 
 #Der Type Button wurde angeklickt. -> der Blocktyp wird geändert.
@@ -261,11 +261,17 @@ def draw():
         pygame.draw.rect(screen, (50,0,0), [mouseBlockPos[0]*24,mouseBlockPos[1]*24, 24, 24])
 
     for array in objects:
+        posX = array[0]+cam[0]*24
+        posY = array[1]+cam[1]*24
+        sizeX = array[2]
+        sizeY = array[3]
         if array[4] == 'platform':
-            pygame.draw.rect(screen, (150,80,50), [array[0]+cam[0]*24,array[1]+cam[1]*24,array[2],array[3]])
-            pygame.draw.rect(screen, (50,100,50), [array[0]+cam[0]*24,array[1]+cam[1]*24,array[2],24])
+            pygame.draw.rect(screen, (150,80,50), [posX,posY,sizeX,sizeY])
+            pygame.draw.rect(screen, (50,100,50), [posX,posY,sizeX,24])
         else:
-            pygame.draw.rect(screen, array[4], [array[0]+cam[0]*24,array[1]+cam[1]*24,array[2],array[3]])
+            pygame.draw.rect(screen, array[4], [posX,posY,sizeX,sizeY])
+            if len(array) > 5:
+                pygame.draw.rect(screen, (255,0,0), [posX-array[5]*24, posY+12, sizeX + array[5]*24*2, 2])
 
 #Start-Kamera Umrahmung---------------
     pygame.draw.rect(screen, (0,0,0), [0+cam[0]*24,0+cam[1]*24,5,5])
