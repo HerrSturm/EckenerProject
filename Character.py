@@ -12,7 +12,6 @@ class Character():
     MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.heading = 1
-        self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
         self.mainScreen = pygame.display.get_surface()
         self.spriteCount = 2
         self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
@@ -25,7 +24,7 @@ class Character():
         self.heartImage = pygame.image.load('Graphics/GUI/heart.png')
         self.lvlUp = False
         self.nextLvl = 2
-        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
