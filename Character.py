@@ -1,6 +1,7 @@
 import pygame
 from HitBox import*
 from Direction import Direction
+from GameState import GameState
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -38,6 +39,10 @@ class Character():
             self.moveright()
         if keys[pygame.K_w]:
             self.jump()
+        if self.lives <= 0:
+            game.state = GameState.RESTART
+        if self.lvlUp:
+            game.state = GameState.NEXT_LEVEL
 
     def remove(self):
         self.hitBox.remove()

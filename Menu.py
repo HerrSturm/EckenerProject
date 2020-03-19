@@ -1,5 +1,6 @@
 import pygame, sys
-pygame.init()
+from GameState import GameState
+
 class Menu(object):
     def __init__(self):
         self.mainScreen = pygame.display.get_surface()
@@ -27,11 +28,10 @@ class Menu(object):
         pygame.mouse.get_pos()[coordinates]
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 300 <= pygame.mouse.get_pos()[1] and 350 >= pygame.mouse.get_pos()[1]:
             if lMouse:
-                pass
+                game.state = GameState.GAME
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 400 <= pygame.mouse.get_pos()[1] and 450 >= pygame.mouse.get_pos()[1]:
             if lMouse:
                 pass
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 500 <= pygame.mouse.get_pos()[1] and 550 >= pygame.mouse.get_pos()[1]:
-
             if lMouse:
                 sys.exit()
