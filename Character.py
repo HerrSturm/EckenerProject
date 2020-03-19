@@ -65,6 +65,7 @@ class Character():
         self.spriteCount = self.spriteCount + 1
     #updates the player
     def update(self, game, dt):
+        self.protectionCorrection(dt)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
             self.standstill()
@@ -111,14 +112,16 @@ class Character():
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
         if self.protection <= 0:
-            self.lives -= 1
-            self.protection = 3
-            print("AUA")
+            self.loseLife()
+
+    def loseLife(self):
+        self.lives -= 1
+        self.protection = 3
 
     def protectionCorrection(self, dt):
         self.protection -= dt
-        print(self.protection)
+        if self.protection < 0:
+            self.protection = 0
 
     def end(self, hitbox, other, dir, layer):
-        print('Level beendet!')
         self.lvlUp = True
