@@ -1,3 +1,4 @@
+import sys
 from Menu import Menu
 #from DeathScreen import DeathScreen
 from Level import Level
@@ -27,31 +28,38 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-            if self.state == GameState.MAIN_MENU:
-                if not type(self.currentMenu) == Menu:
+            needStateUpdate = True
+            while needStateUpdate:
+                needStateUpdate = False
+                if self.state == GameState.MAIN_MENU:
+                    self.noLevel()
+                    if not type(self.currentMenu) == Menu:
+                        self.noMenu()
+                        self.loadMainMenu()
+                """
+                if self.state == GameState.DEATH_SCREEN:
+                    if not type(self.currentMenu) == DeathScreen:
+                        self.noMenu()
+                        self.loadDeathScreen()
+                    self.noLevel()
+                """
+                if self.state == GameState.GAME:
                     self.noMenu()
-                    self.loadMainMenu()
-                self.noLevel()
-            """
-            if self.state == GameState.DEATH_SCREEN:
-                if not type(self.currentMenu) == DeathScreen:
+                    if not type(self.currentLevel) == Level:
+                        if not self.loadLevel():
+                            self.state = GameState.MAIN_MENU
+                            needStateUpdate = True
+                if self.state == GameState.RESTART:
+                    self.noLevel()
                     self.noMenu()
-                    self.loadDeathScreen()
-                self.noLevel()
-            """
-            if self.state == GameState.GAME:
-                if not type(self.currentLevel) == Level:
-                    self.loadLevel()
-                self.noMenu()
-            if self.state == GameState.RESTART:
-                self.noLevel()
-                self.noMenu()
-                self.state = GameState.GAME
-            if self.state == GameState.NEXT_LEVEL:
-                self.noLevel()
-                self.noMenu()
-                self.currentLevelIndex += 1
-                self.state = GameState.GAME
+                    self.state = GameState.GAME
+                    needStateUpdate = True
+                if self.state == GameState.NEXT_LEVEL:
+                    self.noLevel()
+                    self.noMenu()
+                    self.currentLevelIndex += 1
+                    self.state = GameState.GAME
+                    needStateUpdate = True
             dt = self.update()
             self.draw()
 
@@ -72,11 +80,15 @@ class Game:
         #self.currentMenu = DeathScreen()
 
     def loadLevel(self):
+        if self.currentLevelIndex >= len(self.levelNameList):
+            return False
         try:
             levelName = self.levelNameList[self.currentLevelIndex]
             self.currentLevel = Level.loadFile(levelName)
+            return True
         except:
             print("No level on index " + str(self.currentLevelIndex))
+        return False
 
     def draw(self):
         self.screen.fill((0, 0, 0))
