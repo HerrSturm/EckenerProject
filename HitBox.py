@@ -4,9 +4,9 @@ from CollisionManager import CollisionManager
 
 class HitBox(object):
     def __init__(self, pos, size, static, layer, vel = Vec2()):
-        self.pos = pos
-        self.size = size
-        self.vel = vel
+        self.pos = Vec2(pos)
+        self.size = Vec2(size)
+        self.vel = Vec2(vel)
         self.static = static
         self.layer = layer
         self.callbacks = []
@@ -54,7 +54,7 @@ class HitBox(object):
         self.setPos(Vec2(self.pos.x, y))
 
     def setPos(self, pos):
-        self.pos = pos
+        self.pos = Vec2(pos)
         for tup in self.callbacks:
             if tup[0] == "pos":
                 #pylint: disable = unused-variable
