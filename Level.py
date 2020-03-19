@@ -16,9 +16,11 @@ class Level:
 
     def __init__(self, objects, characterSpawn, size, background):
         self.objects = objects
-        self.character = Character(characterSpawn) # TODO: use characterSpawn
+        self.characterSpawn = characterSpawn
+        self.character = Character(self.characterSpawn)
         self.objects.append(self.character)
-        self.camera = Camera(size * 24, background)
+        self.size = size * 24
+        self.camera = Camera(self.size, background)
         self.camera.moveToCenter(self.character.hitBox.center)
         self.gameOver = False
 
@@ -76,6 +78,12 @@ class Level:
             object.update(game, dt)
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
+        self.checkCharacterFallDeath()
+
+    def checkCharacterFallDeath(self):
+        if self.character.hitBox.top > self.size.y:
+            self.character.loseLife()
+            self.character.hitBox.pos = self.characterSpawn
 
     def draw(self):
         for object in self.objects:
