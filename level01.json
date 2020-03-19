@@ -40,6 +40,11 @@
         "size": [30, 1],
         "position":[37,22],
         "color": "green"
+      }, {
+        "type": "endBlock",
+        "size": [1, 1],
+        "position":[60,21],
+        "color": "yellow"
       },
       {
         "type": "enemy",
@@ -48,7 +53,7 @@
         "range": [-3, 7]
       }
     ],
-    "characterSpawn": [2, 2],
+    "characterSpawn": [2, 20],
     "size": [67, 43],
     "background": [80, 150, 255]
   }
