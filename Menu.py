@@ -19,7 +19,7 @@ class Menu(object):
         self.mainScreen.blit(textButton2,(580, 390))
         self.mainScreen.blit(textButton3,(560, 490))
 
-    def update(self):
+    def update(self, game):
         pygame.display.flip()
         coordinates = 1
         pygame.event.get()

@@ -28,7 +28,7 @@ class Character():
         pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
     #updates the player
-    def update(self, dt):
+    def update(self, game, dt):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
             self.standstill()

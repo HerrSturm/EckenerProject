@@ -87,7 +87,7 @@ class Game:
         dt = self.clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
         self.clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
         if self.currentLevel:
-            self.currentLevel.update(dt)
+            self.currentLevel.update(self, dt)
         if self.currentMenu:
-            self.currentMenu.update()
+            self.currentMenu.update(self)
         return dt

@@ -47,13 +47,11 @@ class Level:
         background = tuple(level["background"])
         return Level(objects, characterSpawn, size, background)
 
-    def update(self, dt):
+    def update(self, game, dt):
         for object in self.objects:
-            object.update(dt)
-        if self.death():
-            self.restore()
-        self.camera.glideCenter(self.cha
-        return self.gameOver
+            object.update(game, dt)
+        self.camera.glideCenter(self.character.hitBox.center, dt)
+        CollisionManager().update(dt)
 
     def draw(self):
         for object in self.objects:
