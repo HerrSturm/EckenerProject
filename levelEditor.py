@@ -70,8 +70,8 @@ def showLevelCode():
         print(printObjects[i] + suffix)
         clipboardText += printObjects[i] + suffix + '\n'
     if len(objects) > 0:
-        print('],"characterSpawn": ['+ str(objects[0][0]/24) +', '+ str(objects[0][1]/24-4) +'],"size": [100, 100],"background": '+ str(background) +'}}')
-        clipboardText += '],"characterSpawn": ['+ str(objects[0][0]/24) +', '+ str(objects[0][1]/24-4) +'],"size": [100, 100],"background": '+ str(background) +'}}'
+        print('],"characterSpawn": ['+ str(objects[0][0]/24) +', '+ str(objects[0][1]/24-4) +'],"size": [200, 200],"background": '+ str(background) +'}}')
+        clipboardText += '],"characterSpawn": ['+ str(objects[0][0]/24) +', '+ str(objects[0][1]/24-4) +'],"size": [200, 200],"background": '+ str(background) +'}}'
     else:
         clipboardText = ''
     print('\n\n')
