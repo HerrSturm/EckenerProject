@@ -1,5 +1,5 @@
 from Menu import Menu
-from DeathScreen import DeathScreen
+#from DeathScreen import DeathScreen
 from Level import Level
 from enum import Enum
 from GameState import GameState
@@ -32,11 +32,13 @@ class Game:
                     self.noMenu()
                     self.loadMainMenu()
                 self.noLevel()
+            """
             if self.state == GameState.DEATH_SCREEN:
                 if not type(self.currentMenu) == DeathScreen:
                     self.noMenu()
                     self.loadDeathScreen()
                 self.noLevel()
+            """
             if self.state == GameState.GAME:
                 if not type(self.currentLevel) == Level:
                     self.loadLevel()
@@ -66,7 +68,8 @@ class Game:
         self.currentMenu = Menu()
 
     def loadDeathScreen(self):
-        self.currentMenu = DeathScreen()
+        pass
+        #self.currentMenu = DeathScreen()
 
     def loadLevel(self):
         try:
