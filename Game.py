@@ -71,9 +71,9 @@ class Game:
     def loadLevel(self):
         try:
             levelName = self.levelNameList[self.currentLevelIndex]
-            self.currentLevel = Level.load(levelName)
+            self.currentLevel = Level.loadFile(levelName)
         except:
-            print("No level on index " + self.currentLevelIndex)
+            print("No level on index " + str(self.currentLevelIndex))
 
     def draw(self):
         self.screen.fill((0, 0, 0))
