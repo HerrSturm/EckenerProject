@@ -3,6 +3,7 @@ from Character import *
 from Block import *
 from GegnerClass import *
 from Camera import *
+from Vec2 import *
 
 colors = {
     "brown": (150,80,50),
@@ -16,7 +17,7 @@ class Level:
 
     def __init__(self, objects, characterSpawn, size, background):
         self.objects = objects
-        self.characterSpawn = characterSpawn
+        self.characterSpawn = characterSpawn * 24
         self.character = Character(self.characterSpawn)
         self.objects.append(self.character)
         self.size = size * 24
@@ -83,7 +84,8 @@ class Level:
     def checkCharacterFallDeath(self):
         if self.character.hitBox.top > self.size.y:
             self.character.loseLife()
-            self.character.hitBox.pos = self.characterSpawn
+            self.character.hitBox.setPos(self.characterSpawn)
+            self.character.hitBox.vel = Vec2()
 
     def draw(self):
         for object in self.objects:
