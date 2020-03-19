@@ -42,7 +42,7 @@ for fade in fader:
     buttons.append([fadeX, fadeY, sizeX, sizeY, fade[4], fade[5]])
 
 buttons.append([20, 10, 40, 40, 'Material', (255,255,255), 'W'])
-buttons.append([240, 10, 40, 40, 'Range', (255, 60, 0), 'A/S'])
+buttons.append([240, 10, 40, 40, 'Range', (255, 60, 0), 'A/D'])
 buttons.append([240, -300, 40, 40, 'movingMaterial', (255,255,255), 'S'])
 
 # Pygame wird initialisiert
