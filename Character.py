@@ -58,7 +58,7 @@ class Character():
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
-        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -77,19 +77,15 @@ class Character():
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == True:
-            self.imageoriginal = runSprites(self.spriteCount)
-            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
-            self.isSliding = True
-        elif self.isGrounded == True and self.isCrouching:
-            self.imageoriginal = crouchSprites(self.spriteCount)
-            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
-        elif self.isGrounded == True:
             if self.hitBox.vel.x == self.movingSolid and not self.updateKeys():
                 self.imageoriginal = idleSprites(self.spriteCount)
                 self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
             else:
                 self.imageoriginal = runSprites(self.spriteCount)
                 self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == False and self.hitBox.vel.y <= -20:
             self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
