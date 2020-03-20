@@ -77,6 +77,13 @@ class Character():
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == True:
+            self.imageoriginal = runSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            self.isSliding = True
+        elif self.isGrounded == True and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True:
             if self.hitBox.vel.x == self.movingSolid and not self.updateKeys():
                 self.imageoriginal = idleSprites(self.spriteCount)
                 self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -145,9 +152,15 @@ class Character():
             self.hitBox.vel.x = self.MOVEVEL
         else:
             self.hitBox.vel.x = self.MOVEVEL/2
+        #hitbox bewegt sich nach rechts
 
-    def moveleft(self):                             #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel.x = -self.MOVEVEL - abs(self.movingSolid)          #hitbox bewegt sich nach links
+    def moveleft(self):
+        #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
+        if self.isCrouching == False:
+            self.hitBox.vel.x = -self.MOVEVEL
+        else:
+            self.hitBox.vel.x = -self.MOVEVEL/2
+        #hitbox bewegt sich nach links
 
     def standstill(self):
         #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
