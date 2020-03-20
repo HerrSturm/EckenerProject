@@ -25,6 +25,8 @@ class Block(object):
             self.graphicRight = pygame.transform.scale(self.graphicRight, (24, 24))
             self.graphicOneBlock = pygame.image.load("Graphics/Blocks/grass/oneBlock.png").convert_alpha()
             self.graphicOneBlock = pygame.transform.scale(self.graphicOneBlock, (24, 24))
+            self.graphicTop = pygame.image.load("Graphics/Blocks/grass/top.png").convert_alpha()
+            self.graphicTop = pygame.transform.scale(self.graphicTop, (24, 24))
         self.graphic = pygame.image.load("Graphics/Blocks/" + graphicID + ".png").convert_alpha()
         self.graphic = pygame.transform.scale(self.graphic, (24, 24))
 
@@ -32,19 +34,22 @@ class Block(object):
         pass
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
 
         if self.graphicID == "grass" and self.size.y == 24:
             if self.size.x == 24:
+                surface.blit(self.graphicTop, (self.position.x, self.position.y-17))
                 surface.blit(self.graphicOneBlock, (self.position.x, self.position.y))
             else:
                 len = int(self.size.x / 24)
                 for x in range(0, len):
                     if x == 0:
+                        surface.blit(self.graphicTop, (self.position.x + x*24, self.position.y-17))
                         surface.blit(self.graphicLeft, (self.position.x + x*24, self.position.y))
                     elif x+1 == len:
+                        surface.blit(self.graphicTop, (self.position.x + x*24, self.position.y-17))
                         surface.blit(self.graphicRight, (self.position.x + x*24, self.position.y))
                     else:
+                        surface.blit(self.graphicTop, (self.position.x + x*24, self.position.y-19))
                         surface.blit(self.graphicMiddle, (self.position.x + x*24, self.position.y))
         else:
             for x in range(0, int(self.size.x / 24)):

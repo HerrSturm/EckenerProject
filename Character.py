@@ -50,7 +50,7 @@ class Character():
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
-        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
