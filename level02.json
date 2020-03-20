@@ -107,20 +107,26 @@
         "color": "brown"
       }, {
         "type": "block",
-        "size": [20, 100],
+        "size": [1, 1],
+        "position":[50,24],
+        "color": "green"
+      }, {
+        "type": "block",
+        "size": [15, 100],
         "position":[51,22],
         "color": "brown"
       }, {
         "type": "block",
-        "size": [20, 1],
+        "size": [15, 1],
         "position":[51,21],
         "color": "green"
       }, {
         "type": "endBlock",
-        "size": [1, 1],
-        "position":[70,20],
-        "color": "yellow"
-      }, {
+        "size": [3, 1],
+        "position":[57,20],
+        "color": "goal"
+      },
+      {
         "type": "enemy",
         "size": [2,2],
         "position": [25, 9],

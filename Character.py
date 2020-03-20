@@ -112,7 +112,6 @@ class Character():
 
     def protectionCorrection(self, dt):
         self.protection -= dt
-        print(self.protection)
 
     def end(self, hitbox, other, dir, layer):
         print('Level beendet!')

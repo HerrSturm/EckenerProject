@@ -9,7 +9,7 @@ colors = {
     "blue": (80,150,255),
     "green": (50,100,50),
     "grey": (125,125,125),
-    "yellow": (255,255,0)
+    "goal": (212,175,55)
 }
 
 class Level:
@@ -64,6 +64,14 @@ class Level:
                     Vec2(*object["size"]),
                     object["range"][0],
                     object["range"][1]
+                ))
+            if object["type"] == "movingBlock":
+                objects.append(MovingBlock(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1],
+                    colors[object["color"]]
                 ))
 
         characterSpawn = Vec2(*level["characterSpawn"])
