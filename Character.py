@@ -18,9 +18,10 @@ class Character():
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
-        self.health = 1
         size = Vec2(40,58)
-        self.lives = 1
+        self.lives = 3
+        self.protection = 3 #in sekunden nach Lebensverlust angegeben
+        self.heartImage = pygame.image.load('Graphics/GUI/heart.png')
         self.lvlUp = False
         self.nextLvl = 2
         self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
@@ -104,8 +105,13 @@ class Character():
 #010B1TC01N1000CYB3R110H4CK101
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
-        self.health -= 1
-        print("AUA")
+        if self.protection <= 0:
+            self.lives -= 1
+            self.protection = 3
+            print("AUA")
+
+    def protectionCorrection(self, dt):
+        self.protection -= dt
 
     def end(self, hitbox, other, dir, layer):
         print('Level beendet!')

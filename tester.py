@@ -7,11 +7,6 @@ from GegnerClass import *
 from Level import *
 pygame.init()
 
-# Variabeln für Farben werden kreiert
-brown = (150,80,50)
-blue = (80,150,255)
-green = (50,100,50)
-
 # Pygame wird initialisiert
 size = width, heigth = 1400, 800
 clock = pygame.time.Clock()
@@ -20,7 +15,7 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
-level = Level.loadFile("level01.json")
+level = Level.loadFile("level05.json")
 
 # Spielschleife
 while True:
@@ -52,5 +47,7 @@ while True:
     # Ruft update auf CollisionManager auf -> bewegt HitBoxen, prüft Kollisionen
     level.update(dt)
     level.draw()
+
+    level.character.protectionCorrection(dt)
 
     pygame.display.flip()

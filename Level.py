@@ -9,7 +9,7 @@ colors = {
     "blue": (80,150,255),
     "green": (50,100,50),
     "grey": (125,125,125),
-    "yellow": (255,255,0)
+    "goal": (212,175,55)
 }
 
 class Level:
@@ -68,6 +68,14 @@ class Level:
                     object["range"][0],
                     object["range"][1]
                 ))
+            if object["type"] == "movingBlock":
+                objects.append(MovingBlock(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1],
+                    colors[object["color"]]
+                ))
 
         characterSpawn = Vec2(*level["characterSpawn"])
         size = Vec2(*level["size"])
@@ -77,7 +85,7 @@ class Level:
     def update(self, dt):
         for object in self.objects:
             object.update(dt)
-        if self.death():
+        if self.death() or self.character.lives <= 0:
             self.restore()
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
@@ -86,6 +94,9 @@ class Level:
         for object in self.objects:
             object.draw(self.camera.surface)
         self.camera.draw()
+
+        for live in range(0, self.character.lives):
+            self.camera.mainScreen.blit(self.character.heartImage, (20 + live*50, 20))
 
     def remove(self):
         for object in self.objects:
@@ -98,6 +109,7 @@ class Level:
         level = map["level"]
         characterSpawn = Vec2(*level["characterSpawn"])
         self.character.hitBox.pos.values = characterSpawn * 24
+        self.character.lives = 3
 
 
     def death(self):
