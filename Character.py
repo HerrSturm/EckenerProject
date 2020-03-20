@@ -1,6 +1,7 @@
 import pygame
 from HitBox import*
 from Direction import Direction
+from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 #CONST gravity
 class Character():
@@ -9,7 +10,6 @@ class Character():
     MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.heading = 1
-        self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
         self.mainScreen = pygame.display.get_surface()
         self.spriteCount = 2
         self.imageoriginal = runSprites(self.spriteCount)
@@ -25,7 +25,7 @@ class Character():
         self.heartImage = pygame.image.load('Graphics/GUI/heart.png')
         self.lvlUp = False
         self.nextLvl = 2
-        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
@@ -110,8 +110,13 @@ class Character():
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
     #updates the player
-    def update(self, dt):
+    def update(self, game, dt):
+        self.protectionCorrection(dt)
         self.updateKeys()
+        if self.lives <= 0:
+            game.state = GameState.RESTART
+        if self.lvlUp:
+            game.state = GameState.NEXT_LEVEL
 
     def remove(self):
         self.hitBox.remove()
@@ -173,13 +178,16 @@ class Character():
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
         if self.protection <= 0:
-            self.lives -= 1
-            self.protection = 3
-            print("AUA")
+            self.loseLife()
+
+    def loseLife(self):
+        self.lives -= 1
+        self.protection = 3
 
     def protectionCorrection(self, dt):
         self.protection -= dt
+        if self.protection < 0:
+            self.protection = 0
 
     def end(self, hitbox, other, dir, layer):
-        print('Level beendet!')
         self.lvlUp = True
