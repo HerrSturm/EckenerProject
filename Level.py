@@ -30,6 +30,16 @@ class Level:
         objects = []
         level = json["level"]
         for object in level["objects"]:
+
+            #color to texture
+            if object["type"] == "block" or object["type"] == "movingBlock":
+                if object["color"] == 'green':
+                    object["texture"] = 'grass'
+                elif object["color"] == 'brown':
+                    object["texture"] = 'dirt'
+                elif object["color"] == 'grey':
+                    object["texture"] = 'stone'
+
             if object["type"] == "block":
                 objects.append(Block(
                     Vec2(*object["position"]),
@@ -74,7 +84,8 @@ class Level:
                     Vec2(*object["size"]),
                     object["range"][0],
                     object["range"][1],
-                    colors[object["color"]]
+                    colors[object["color"]],
+                    object["texture"]
                 ))
 
         characterSpawn = Vec2(*level["characterSpawn"])

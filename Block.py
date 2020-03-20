@@ -53,7 +53,7 @@ class EndBlock(object):
         self.position += position
 
 class MovingBlock(object):
-    def __init__(self, pos, size, startRange, endRange, color):
+    def __init__(self, pos, size, startRange, endRange, color, graphicID = "grass"):
         self.pos = pos*24
         self.size = size*24
         self.hitBox = HitBox(self.pos, self.size, True, Layer("solid"), Vec2(50,0))
@@ -61,12 +61,21 @@ class MovingBlock(object):
         self.endRange = self.pos[0] + endRange * 24
         self.color = color
         self.mainScreen = pygame.display.get_surface()
+        self.graphic = pygame.image.load("Graphics/Blocks/" + graphicID + ".png").convert_alpha()
+        self.graphic = pygame.transform.scale(self.graphic, (24, 24))
+
     def update(self, dt):
         self.move()
+
     def remove(self):
         self.hitBox.remove()
+
     def draw(self,surface):
         pygame.draw.rect(surface, self.color, (self.pos[0], self.pos[1], self.size[0], self.size[1]))
+        for x in range(0, int(self.size.x / 24)):
+            for y in range(0, int(self.size.y / 24)):
+                surface.blit(self.graphic, (self.pos[0] + x*24, self.pos[1] + y*24))
+
     def move(self):
         if self.startRange < self.endRange:
             if self.hitBox.pos.x < self.startRange:
