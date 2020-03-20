@@ -14,7 +14,7 @@ class Gegner(object):
         self.img = 0
 
 
-    def update(self, dt):
+    def update(self, game, dt):
         self.move()
 
     def remove(self):
@@ -23,6 +23,7 @@ class Gegner(object):
     def draw(self,surface):
         #pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         surface.blit(self.enemy[self.img],(self.hitBox.pos.x,self.hitBox.pos.y))
+
     def move(self):
         if self.startRange < self.endRange:
             if self.hitBox.pos.x < self.startRange:

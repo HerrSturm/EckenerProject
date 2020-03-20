@@ -1,52 +1,6 @@
-import sys, pygame, time
-from Block import Block
-from Vec2 import Vec2
-from Character import Character
-from CollisionManager import CollisionManager
-from GegnerClass import *
-from Level import *
+import pygame
+from Game import Game
+
 pygame.init()
-
-# Pygame wird initialisiert
-size = width, heigth = 1400, 800
-clock = pygame.time.Clock()
-screen = pygame.display.set_mode(size)
-pygame.display.flip()
-
-screen.fill((80,150,255))
-
-level = Level.loadFile("level05.json")
-
-# Spielschleife
-while True:
-    # Screen wird bei jedem Schleifendurchlauf auf blaue Hintergrundfarbe resettet
-    screen.fill((80,150,255))
-
-
-    # Handles the shutting down of the programm, ignorieren!
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-
-    if level.character.lvlUp:
-        nextLvl = level.character.nextLvl
-        level.remove()
-        try:
-            if nextLvl < 10:
-                level = Level.loadFile("level0" + str(nextLvl) + ".json")
-            else:
-                level = Level.loadFile("level" + str(nextLvl) + ".json")
-            level.character.nextLvl = nextLvl + 1
-        except:
-            sys.exit()
-
-    dt = clock.get_time() / 1000.0 # Zeit seit dem letzten tick (Frame) in Sek.
-    clock.tick(60) # Kontrolliert die Aktuallisierungen pro Minute (FPS)
-
-    # Ruft update auf CollisionManager auf -> bewegt HitBoxen, prüft Kollisionen
-    level.update(dt)
-    level.draw()
-
-    level.character.protectionCorrection(dt)
-
-    pygame.display.flip()
+game = Game(["level01.json", "level02.json", "level03.json",
+             "level04.json", "level05.json", "level06.json"])
