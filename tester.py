@@ -15,7 +15,7 @@ pygame.display.flip()
 
 screen.fill((80,150,255))
 
-level = Level.loadFile("level05.json")
+level = Level.loadFile("level06.json")
 
 # Spielschleife
 while True:

@@ -31,11 +31,19 @@ class Character():
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
+        self.movingSolid = 0
 
     #checks if hitbox collided with ground
     def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
             self.isGrounded_ = True
+            if not other.vel.x == 0:
+                self.hitBox.vel.x = other.vel.x*2
+                self.movingSolid = other.vel.x*2
+            else:
+                self.movingSolid = 0
+        else:
+            isGrounded = False
     #draws the character on the screen
     def draw(self, surface):
         #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
@@ -43,8 +51,12 @@ class Character():
             self.imageoriginal = pygame.image.load(idleSprites(self.spriteCount)).convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == True:
-            self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
-            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            if self.hitBox.vel.x == self.movingSolid and not self.updateKeys():
+                self.imageoriginal = pygame.image.load(idleSprites(self.spriteCount)).convert_alpha()
+                self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            else:
+                self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
+                self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == False and self.hitBox.vel.y <= -20:
             self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -54,9 +66,9 @@ class Character():
         elif self.isGrounded == False:
             self.imageoriginal = pygame.image.load(fallSprites(self.spriteCount)).convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
-        if self.hitBox.vel.x > 0:
+        if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
             self.heading = 1
-        elif self.hitBox.vel.x < 0:
+        elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
             self.heading = -1
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
@@ -64,15 +76,7 @@ class Character():
         self.spriteCount = self.spriteCount + 1
     #updates the player
     def update(self, dt):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
-            self.standstill()
-        if keys[pygame.K_a]:
-            self.moveleft()
-        if keys[pygame.K_d]:
-            self.moveright()
-        if keys[pygame.K_w]:
-            self.jump()
+        self.updateKeys()
 
     def remove(self):
         self.hitBox.remove()
@@ -87,11 +91,27 @@ class Character():
         #after col update
         self.isGrounded = self.isGrounded_
 
-    def moveright(self):                           #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
-        self.hitBox.vel.x = self.MOVEVEL            #hitbox bewegt sich nach rechts
+    def updateKeys(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]:
+            self.moveleft()
+        if keys[pygame.K_d]:
+            self.moveright()
+        if keys[pygame.K_w]:
+            self.jump()
+
+        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
+            self.standstill()
+            if not keys[pygame.K_w]:
+                return False
+        else:
+            return True
+
+    def moveright(self):
+        self.hitBox.vel.x = self.MOVEVEL + abs(self.movingSolid)
 
     def moveleft(self):                             #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel.x = -self.MOVEVEL          #hitbox bewegt sich nach links
+        self.hitBox.vel.x = -self.MOVEVEL - abs(self.movingSolid)          #hitbox bewegt sich nach links
 
     def standstill(self):                           #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
         self.hitBox.vel.x = 0               #Hitbox bleibt stehen
