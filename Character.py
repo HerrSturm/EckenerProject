@@ -152,11 +152,9 @@ class Character():
         if self.protection <= 0:
             self.lives -= 1
             self.protection = 3
-            print("AUA")
 
     def protectionCorrection(self, dt):
         self.protection -= dt
 
     def end(self, hitbox, other, dir, layer):
-        print('Level beendet!')
         self.lvlUp = True
