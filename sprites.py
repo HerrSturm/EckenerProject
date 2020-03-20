@@ -29,3 +29,16 @@ def saltoSprites(x):
                     pygame.image.load(path+"adventurer-smrslt-02.png").convert_alpha(),
                     pygame.image.load(path+"adventurer-smrslt-03.png").convert_alpha()]
     return(SaltoSprites[x//6%len(SaltoSprites)-1])
+def crouchSprites(x):
+    CrouchSprites = [pygame.image.load(path+"adventurer-crouch-00.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-crouch-01.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-crouch-02.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-crouch-03.png").convert_alpha()]
+    return(CrouchSprites[x//14%len(CrouchSprites)-1])
+def attackSprites(x):
+    AttackSprites = [pygame.image.load(path+"adventurer-attack2-00.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-attack2-01.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-attack2-02.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-attack2-03.png").convert_alpha(),
+                    pygame.image.load(path+"adventurer-attack2-04.png").convert_alpha()]
+    return(AttackSprites[4-round(x/20)])

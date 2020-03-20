@@ -1,11 +1,7 @@
 import pygame
 from HitBox import*
 from Direction import Direction
-from sprites import runSprites
-from sprites import fallSprites
-from sprites import idleSprites
-from sprites import wallSlideSprites
-from sprites import saltoSprites
+from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -20,6 +16,7 @@ class Character():
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
+        self.isCrouching = False
         self.health = 1
         self.isSliding = False
         size = Vec2(40,58)
@@ -39,8 +36,20 @@ class Character():
     def draw(self, surface):
         keys = pygame.key.get_pressed()
         self.isSliding = False
-        #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
-        if self.isGrounded == True and self.hitBox.vel.x == 0:
+        #checks if the "s" button is pressed and the character is therefore "crouching"
+        if keys[pygame.K_s] and self.isGrounded:
+            self.isCrouching = True
+        else:
+            self.isCrouching = False
+        if keys[pygame.K_s]:
+            self.GRAVITY = 1200
+        else:
+            self.GRAVITY = 300
+        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True and self.hitBox.vel.x == 0:
             self.imageoriginal = idleSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_a]:
@@ -51,6 +60,9 @@ class Character():
             self.imageoriginal = wallSlideSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
             self.isSliding = True
+        elif self.isGrounded == True and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == True:
             self.imageoriginal = runSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -104,12 +116,18 @@ class Character():
 
     def moveright(self):
         #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
-        self.hitBox.vel.x = self.MOVEVEL
+        if self.isCrouching == False:
+            self.hitBox.vel.x = self.MOVEVEL
+        else:
+            self.hitBox.vel.x = self.MOVEVEL/2
         #hitbox bewegt sich nach rechts
 
     def moveleft(self):
         #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel.x = -self.MOVEVEL
+        if self.isCrouching == False:
+            self.hitBox.vel.x = -self.MOVEVEL
+        else:
+            self.hitBox.vel.x = -self.MOVEVEL/2
         #hitbox bewegt sich nach links
 
     def standstill(self):
