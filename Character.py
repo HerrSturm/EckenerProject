@@ -38,11 +38,9 @@ class Character():
     def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
             self.isGrounded_ = True
-            if not other.vel.x == 0:
+            if other.vel.x != 0:
                 self.hitBox.vel.x = other.vel.x
                 self.movingSolid = other.vel.x
-            else:
-                self.movingSolid = 0
         else:
             isGrounded = False
     #draws the character on the screen
@@ -125,6 +123,7 @@ class Character():
     def beforeCollisionManager(self, dt):
         self.isGrounded_ = False
         self.hitBox.vel += Vec2(0, self.GRAVITY*dt)
+        self.movingSolid = 0
 
     #gets called after the collisionmanager did stuff
     def afterCollisionManager(self, dt):
@@ -165,7 +164,7 @@ class Character():
 
     def standstill(self):
         #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
-        self.hitBox.vel.x = 0
+        self.hitBox.vel.x = self.movingSolid
         #Hitbox bleibt stehen
 
     #makes the player jump:only when grounded
