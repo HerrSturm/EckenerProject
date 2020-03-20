@@ -14,6 +14,17 @@ class Block(object):
         self.color = color
         self.screen = pygame.display.get_surface()
         self.hitbox = HitBox(self.position,self.size, True, Layer("solid"))
+        self.graphicID = graphicID
+
+        if graphicID == "grass":
+            self.graphicLeft = pygame.image.load("Graphics/Blocks/grass/leftCorner.png").convert_alpha()
+            self.graphicLeft = pygame.transform.scale(self.graphicLeft, (24, 24))
+            self.graphicMiddle = pygame.image.load("Graphics/Blocks/grass/middle.png").convert_alpha()
+            self.graphicMiddle = pygame.transform.scale(self.graphicMiddle, (24, 24))
+            self.graphicRight = pygame.image.load("Graphics/Blocks/grass/rightCorner.png").convert_alpha()
+            self.graphicRight = pygame.transform.scale(self.graphicRight, (24, 24))
+            self.graphicOneBlock = pygame.image.load("Graphics/Blocks/grass/oneBlock.png").convert_alpha()
+            self.graphicOneBlock = pygame.transform.scale(self.graphicOneBlock, (24, 24))
         self.graphic = pygame.image.load("Graphics/Blocks/" + graphicID + ".png").convert_alpha()
         self.graphic = pygame.transform.scale(self.graphic, (24, 24))
 
@@ -22,9 +33,23 @@ class Block(object):
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, [self.position.x,self.position.y, self.size.x,self.size.y])
-        for x in range(0, int(self.size.x / 24)):
-            for y in range(0, int(self.size.y / 24)):
-                surface.blit(self.graphic, (self.position.x + x*24, self.position.y + y*24))
+
+        if self.graphicID == "grass" and self.size.y == 24:
+            if self.size.x == 24:
+                surface.blit(self.graphicOneBlock, (self.position.x, self.position.y))
+            else:
+                len = int(self.size.x / 24)
+                for x in range(0, len):
+                    if x == 0:
+                        surface.blit(self.graphicLeft, (self.position.x + x*24, self.position.y))
+                    elif x+1 == len:
+                        surface.blit(self.graphicRight, (self.position.x + x*24, self.position.y))
+                    else:
+                        surface.blit(self.graphicMiddle, (self.position.x + x*24, self.position.y))
+        else:
+            for x in range(0, int(self.size.x / 24)):
+                for y in range(0, int(self.size.y / 24)):
+                    surface.blit(self.graphic, (self.position.x + x*24, self.position.y + y*24))
 
     def remove(self):
         self.hitbox.remove()
