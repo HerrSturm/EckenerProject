@@ -39,8 +39,8 @@ class Character():
         if dir == Direction.DOWN:
             self.isGrounded_ = True
             if not other.vel.x == 0:
-                self.hitBox.vel.x = other.vel.x*2
-                self.movingSolid = other.vel.x*2
+                self.hitBox.vel.x = other.vel.x
+                self.movingSolid = other.vel.x
             else:
                 self.movingSolid = 0
         else:
