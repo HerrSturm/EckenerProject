@@ -1,0 +1,27 @@
+
+{"level": { "objects": [
+{"type": "block","size": [8,2],"position":[1,10],"color": "brown"},
+{"type": "block","size": [8,1],"position":[1,9],"color": "green"},
+{"type": "movingBlock","size": [9,1],"position":[18,17],"range": [10,-10],"color": "green"},
+{"type": "movingBlock","size": [9,1],"position":[18,18],"range": [10,-10],"color": "brown"},
+{"type": "movingBlock","size": [9,1],"position":[18,19],"range": [10,-10],"color": "brown"},
+{"type": "enemy","size": [1,1],"position":[22,13],"range": [10,-10]},
+{"type": "enemy","size": [1,1],"position":[12,15],"range": [2,-2]},
+{"type": "enemy","size": [1,1],"position":[25,16],"range": [2,-2]},
+{"type": "enemy","size": [2,2],"position":[30,14],"range": [4,-4]},
+{"type": "enemy","size": [1,1],"position":[14,11],"range": [4,-4]},
+{"type": "enemy","size": [1,1],"position":[19,16],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[40,17],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[44,19],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[48,21],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[52,23],"range": [1,-1]},
+{"type": "movingBlock","size": [4,1],"position":[63,24],"range": [10,-10],"color": "grey"},
+{"type": "enemy","size": [2,1],"position":[64,23],"range": [10,-10]},
+{"type": "enemy","size": [1,1],"position":[69,22],"range": [10,-10]},
+{"type": "enemy","size": [1,1],"position":[62,21],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[77,23],"range": [1,-1]},
+{"type": "block","size": [5,1],"position":[83,23],"color": "brown"},
+{"type": "block","size": [3,1],"position":[84,24],"color": "brown"},
+{"type": "block","size": [5,1],"position":[83,22],"color": "green"},
+{"type": "endBlock","size": [3,1],"position":[84,21],"color": "goal"}
+],"characterSpawn": [1.0, 6.0],"size": [200, 200],"background": [80, 150, 255]}}
