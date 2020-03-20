@@ -9,13 +9,16 @@ class Gegner(object):
         self.endRange = pos.x + endRange * 24
         self.frame = 0
         self.mainScreen = pygame.display.get_surface()
-        self.enemy = pygame.image.load("Graphics/EnemyGraphics/observer/AnimationRechts/observerRight1.png").convert_alpha()
+        self.enemy = [
+            pygame.image.load("Graphics/EnemyGraphics/observer/AnimationRechts/observerRight1.png").convert_alpha(),
+            pygame.image.load("Graphics/EnemyGraphics/observer/AnimationLinks/observerLeft1.png").convert_alpha()]
+        self.img = 0
 
         self.LaufAnimationRight = [pygame.image.load("Graphics/EnemyGraphics/observer/AnimationRechts/observerRight1.png"),
                             pygame.image.load("Graphics/EnemyGraphics/observer/AnimationRechts/observerRight2.png"),
                             pygame.image.load("Graphics/EnemyGraphics/observer/AnimationRechts/observerRight3.png")]
 
-    def update(self, dt):
+    def update(self, game, dt):
         self.move()
 
     def remove(self):

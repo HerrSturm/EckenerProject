@@ -1,0 +1,21 @@
+{"level": { "objects": [
+{"type": "platform","size": [7,8],"position":[2,33]},
+{"type": "movingBlock","size": [3,1],"position":[20,35],"range": [5,-5],"color": "grey"},
+{"type": "platform","size": [7,11],"position":[17,18]},
+{"type": "movingBlock","size": [4,2],"position":[38,34],"range": [5,-5],"color": "grey"},
+{"type": "platform","size": [1,26],"position":[29,12]},
+{"type": "block","size": [1,1],"position":[28,30],"color": "green"},
+{"type": "block","size": [1,1],"position":[24,27],"color": "green"},
+{"type": "block","size": [1,1],"position":[28,24],"color": "green"},
+{"type": "block","size": [1,1],"position":[24,21],"color": "green"},
+{"type": "block","size": [1,1],"position":[28,18],"color": "green"},
+{"type": "movingBlock","size": [4,2],"position":[15,16],"range": [5,-5],"color": "grey"},
+{"type": "platform","size": [10,2],"position":[29,4]},
+{"type": "block","size": [2,19],"position":[37,6],"color": "brown"},
+{"type": "block","size": [10,1],"position":[26,42],"color": "brown"},
+{"type": "block","size": [1,5],"position":[25,38],"color": "brown"},
+{"type": "movingBlock","size": [1,1],"position":[47,29],"range": [5,-5],"color": "grey"},
+{"type": "block","size": [1,1],"position":[39,24],"color": "brown"},
+{"type": "platform","size": [9,2],"position":[47,20]},
+{"type": "endBlock","size": [3,1],"position":[50,19],"color": "goal"}
+],"characterSpawn": [2.0, 19.0],"size": [100, 100],"background": [19, 218, 252]}}

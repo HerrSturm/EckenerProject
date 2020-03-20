@@ -1,20 +1,34 @@
 import pygame
 from HitBox import*
 from Direction import Direction
+from GameState import GameState
+from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 #CONST gravity
 class Character():
     GRAVITY = 300
     JUMPVEL = 275
     MOVEVEL = 200
     def __init__(self, position): #Vec2 position
+        self.heading = 1
+        self.mainScreen = pygame.display.get_surface()
+        self.spriteCount = 2
+        self.imageoriginal = runSprites(self.spriteCount)
+        self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
+        self.isCrouching = False
         self.health = 1
-        size = Vec2(40,75)
-        self.lives = 1
-        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
+        self.isSliding = False
+        size = Vec2(40,58)
+        self.lives = 3
+        self.protection = 3 #in sekunden nach Lebensverlust angegeben
+        self.heartImage = pygame.image.load('Graphics/GUI/heart.png')
+        self.lvlUp = False
+        self.nextLvl = 2
+        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
+        self.hitBox.onCollide(self.end, Layer("end"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
@@ -25,10 +39,64 @@ class Character():
             self.isGrounded_ = True
     #draws the character on the screen
     def draw(self, surface):
-        pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
-
+        keys = pygame.key.get_pressed()
+        self.isSliding = False
+        #checks if the "s" button is pressed and the character is therefore "crouching"
+        if keys[pygame.K_s] and self.isGrounded:
+            self.isCrouching = True
+        else:
+            self.isCrouching = False
+        if keys[pygame.K_s]:
+            self.GRAVITY = 1200
+        else:
+            self.GRAVITY = 300
+        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True and self.hitBox.vel.x == 0:
+            self.imageoriginal = idleSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_a]:
+            self.imageoriginal = wallSlideSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            self.isSliding = True
+        elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_d]:
+            self.imageoriginal = wallSlideSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            self.isSliding = True
+        elif self.isGrounded == True and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True:
+            self.imageoriginal = runSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False and self.hitBox.vel.y <= -20:
+            self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False and self.hitBox.vel.y > -20 and self.hitBox.vel.y <= 20:
+            self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-03.png").convert_alpha()
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False:
+            self.imageoriginal = fallSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        if self.hitBox.vel.x > 0:
+            self.heading = 1
+        elif self.hitBox.vel.x < 0:
+            self.heading = -1
+        #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
+        if self.heading == -1:
+            self.imagebig = pygame.transform.flip(self.imagebig,True,False)
+        if self.isSliding and keys[pygame.K_a]:
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
+        elif self.isSliding and keys[pygame.K_d]:
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-40,(self.hitBox.pos.y)-15))
+        else:
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
+        self.spriteCount = self.spriteCount + 1
     #updates the player
-    def update(self, dt):
+    def update(self, game, dt):
+        self.protectionCorrection(dt)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
             self.standstill()
@@ -38,6 +106,10 @@ class Character():
             self.moveright()
         if keys[pygame.K_w]:
             self.jump()
+        if self.lives <= 0:
+            game.state = GameState.RESTART
+        if self.lvlUp:
+            game.state = GameState.NEXT_LEVEL
 
     def remove(self):
         self.hitBox.remove()
@@ -52,23 +124,47 @@ class Character():
         #after col update
         self.isGrounded = self.isGrounded_
 
-    def moveright(self):                           #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
-        self.hitBox.vel.x = self.MOVEVEL            #hitbox bewegt sich nach rechts
+    def moveright(self):
+        #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
+        if self.isCrouching == False:
+            self.hitBox.vel.x = self.MOVEVEL
+        else:
+            self.hitBox.vel.x = self.MOVEVEL/2
+        #hitbox bewegt sich nach rechts
 
-    def moveleft(self):                             #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel.x = -self.MOVEVEL          #hitbox bewegt sich nach links
+    def moveleft(self):
+        #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
+        if self.isCrouching == False:
+            self.hitBox.vel.x = -self.MOVEVEL
+        else:
+            self.hitBox.vel.x = -self.MOVEVEL/2
+        #hitbox bewegt sich nach links
 
-    def standstill(self):                           #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
-        self.hitBox.vel.x = 0               #Hitbox bleibt stehen
+    def standstill(self):
+        #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
+        self.hitBox.vel.x = 0
+        #Hitbox bleibt stehen
 
     #makes the player jump:only when grounded
     def jump(self):
-        if self.isGrounded:
+        if self.isGrounded :
             self.hitBox.vel.y = 0
             self.hitBox.vel += Vec2(0, -self.JUMPVEL)
 
 #010B1TC01N1000CYB3R110H4CK101
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
-        self.health -= 1
-        print("AUA")
+        if self.protection <= 0:
+            self.loseLife()
+
+    def loseLife(self):
+        self.lives -= 1
+        self.protection = 3
+
+    def protectionCorrection(self, dt):
+        self.protection -= dt
+        if self.protection < 0:
+            self.protection = 0
+
+    def end(self, hitbox, other, dir, layer):
+        self.lvlUp = True
