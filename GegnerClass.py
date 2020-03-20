@@ -22,9 +22,8 @@ class Gegner(object):
         self.hitBox.remove()
 
     def draw(self,surface):
-        #pygame.draw.rect(self.mainScreen, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        #pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         self.enemy = self.LaufAnimationRight[(self.frame//50)%len(self.LaufAnimationRight)-1]
-        print(self.frame)
         if self.hitBox.vel.x < 0:
             self.enemy = pygame.transform.flip(self.enemy,True,False)
         surface.blit(self.enemy,(self.hitBox.pos.x,self.hitBox.pos.y))
