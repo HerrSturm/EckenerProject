@@ -24,11 +24,14 @@ class Menu(object):
     def update(self, game):
         pygame.display.flip()
         coordinates = 1
+        keys = pygame.key.get_pressed()
         pygame.event.get()
         lMouse=pygame.mouse.get_pressed()[0]
         pygame.mouse.get_pos()[coordinates]
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 300 <= pygame.mouse.get_pos()[1] and 350 >= pygame.mouse.get_pos()[1]:
             if lMouse:
+                game.state = GameState.GAME
+        if keys[pygame.K_SPACE]:
                 game.state = GameState.GAME
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 400 <= pygame.mouse.get_pos()[1] and 450 >= pygame.mouse.get_pos()[1]:
             if lMouse:

@@ -11,9 +11,9 @@ class DeathScreen(object):
         titleText= titleFont.render("GAME OVER", False, (255, 0 ,0))
         self.mainScreen.blit(titleText,(350,100))
         buttonFont=pygame.font.SysFont('Chandas', 30)
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (470, 300, 400, 50))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (470, 400, 400, 50))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (470, 500, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (480, 300, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (480, 400, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (480, 500, 400, 50))
         textButton1= buttonFont.render("Play " + self.levelName, False, (0, 0 ,0))
         textButton2= buttonFont.render("Options", False, (0, 0 ,0))
         textButton3= buttonFont.render("Quit Game", False, (0, 0 ,0))
@@ -27,10 +27,13 @@ class DeathScreen(object):
     def update(self, game):
         coordinates = 1
         pygame.event.get()
+        keys = pygame.key.get_pressed()
         lMouse=pygame.mouse.get_pressed()[0]
         pygame.mouse.get_pos()[coordinates]
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 300 <= pygame.mouse.get_pos()[1] and 350 >= pygame.mouse.get_pos()[1]:
             if lMouse:
+                game.state = GameState.GAME
+        if keys[pygame.K_SPACE]:
                 game.state = GameState.GAME
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 400 <= pygame.mouse.get_pos()[1] and 450 >= pygame.mouse.get_pos()[1]:
             if lMouse:
