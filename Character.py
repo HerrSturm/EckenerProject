@@ -1,9 +1,8 @@
 import pygame
 from HitBox import*
 from Direction import Direction
-from sprites import runSprites
-from sprites import fallSprites
-from sprites import idleSprites
+from GameState import GameState
+from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -11,38 +10,79 @@ class Character():
     MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.heading = 1
-        self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
         self.mainScreen = pygame.display.get_surface()
         self.spriteCount = 2
-        self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
+        self.imageoriginal = runSprites(self.spriteCount)
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
+        self.isCrouching = False
         self.health = 1
+        self.isSliding = False
         size = Vec2(40,58)
-        self.lives = 1
+        self.lives = 3
+        self.protection = 3 #in sekunden nach Lebensverlust angegeben
+        self.heartImage = pygame.image.load('Graphics/GUI/heart.png')
         self.lvlUp = False
         self.nextLvl = 2
-        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position, size, False, Layer("player"),Vec2(0,0))
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
+        self.movingSolid = 0
 
     #checks if hitbox collided with ground
     def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
             self.isGrounded_ = True
+            if other.vel.x != 0:
+                self.hitBox.vel.x = other.vel.x
+                self.movingSolid = other.vel.x
+        else:
+            isGrounded = False
     #draws the character on the screen
     def draw(self, surface):
+        keys = pygame.key.get_pressed()
+        self.isSliding = False
+        #checks if the "s" button is pressed and the character is therefore "crouching"
+        if keys[pygame.K_s] and self.isGrounded:
+            self.isCrouching = True
+        else:
+            self.isCrouching = False
+        if keys[pygame.K_s]:
+            self.GRAVITY = 1200
+        else:
+            self.GRAVITY = 300
         #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
-        if self.isGrounded == True and self.hitBox.vel.x == 0:
-            self.imageoriginal = pygame.image.load(idleSprites(self.spriteCount)).convert_alpha()
+        if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True and self.hitBox.vel.x == 0:
+            self.imageoriginal = idleSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_a]:
+            self.imageoriginal = wallSlideSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            self.isSliding = True
+        elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_d]:
+            self.imageoriginal = wallSlideSprites(self.spriteCount)
+            self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            self.isSliding = True
+        elif self.isGrounded == True and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == True:
-            self.imageoriginal = pygame.image.load(runSprites(self.spriteCount)).convert_alpha()
+            if self.hitBox.vel.x == self.movingSolid and not self.updateKeys():
+                self.imageoriginal = idleSprites(self.spriteCount)
+                self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+            else:
+                self.imageoriginal = runSprites(self.spriteCount)
+                self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+        elif self.isGrounded == True and self.isCrouching:
+            self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == False and self.hitBox.vel.y <= -20:
             self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
@@ -51,28 +91,30 @@ class Character():
             self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-03.png").convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         elif self.isGrounded == False:
-            self.imageoriginal = pygame.image.load(fallSprites(self.spriteCount)).convert_alpha()
+            self.imageoriginal = fallSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
-        if self.hitBox.vel.x > 0:
+        if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
             self.heading = 1
-        elif self.hitBox.vel.x < 0:
+        elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
             self.heading = -1
+        #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
-        surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
+        if self.isSliding and keys[pygame.K_a]:
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
+        elif self.isSliding and keys[pygame.K_d]:
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-40,(self.hitBox.pos.y)-15))
+        else:
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
-        print(self.hitBox.vel.x)
     #updates the player
-    def update(self, dt):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
-            self.standstill()
-        if keys[pygame.K_a]:
-            self.moveleft()
-        if keys[pygame.K_d]:
-            self.moveright()
-        if keys[pygame.K_w]:
-            self.jump()
+    def update(self, game, dt):
+        self.protectionCorrection(dt)
+        self.updateKeys()
+        if self.lives <= 0:
+            game.state = GameState.RESTART
+        if self.lvlUp:
+            game.state = GameState.NEXT_LEVEL
 
     def remove(self):
         self.hitBox.remove()
@@ -81,33 +123,70 @@ class Character():
     def beforeCollisionManager(self, dt):
         self.isGrounded_ = False
         self.hitBox.vel += Vec2(0, self.GRAVITY*dt)
+        self.movingSolid = 0
 
     #gets called after the collisionmanager did stuff
     def afterCollisionManager(self, dt):
         #after col update
         self.isGrounded = self.isGrounded_
 
-    def moveright(self):                           #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
-        self.hitBox.vel.x = self.MOVEVEL            #hitbox bewegt sich nach rechts
+    def updateKeys(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]:
+            self.moveleft()
+        if keys[pygame.K_d]:
+            self.moveright()
+        if keys[pygame.K_w]:
+            self.jump()
 
-    def moveleft(self):                             #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
-        self.hitBox.vel.x = -self.MOVEVEL          #hitbox bewegt sich nach links
+        if keys[pygame.K_a]==False and keys[pygame.K_d]==False:
+            self.standstill()
+            if not keys[pygame.K_w]:
+                return False
+        else:
+            return True
 
-    def standstill(self):                           #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
-        self.hitBox.vel.x = 0               #Hitbox bleibt stehen
+    def moveright(self):
+        #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
+        if self.isCrouching == False:
+            self.hitBox.vel.x = self.MOVEVEL
+        else:
+            self.hitBox.vel.x = self.MOVEVEL/2
+        #hitbox bewegt sich nach rechts
+
+    def moveleft(self):
+        #Funktion um die Hitbox nach links zu bewegen (geschw. auf -1)
+        if self.isCrouching == False:
+            self.hitBox.vel.x = -self.MOVEVEL
+        else:
+            self.hitBox.vel.x = -self.MOVEVEL/2
+        #hitbox bewegt sich nach links
+
+    def standstill(self):
+        #Funktion um die Hitbox zum stehen zu bringen (geschw. auf 0)
+        self.hitBox.vel.x = self.movingSolid
+        #Hitbox bleibt stehen
 
     #makes the player jump:only when grounded
     def jump(self):
-        if self.isGrounded:
+        if self.isGrounded :
             self.hitBox.vel.y = 0
             self.hitBox.vel += Vec2(0, -self.JUMPVEL)
 
 #010B1TC01N1000CYB3R110H4CK101
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
-        self.health -= 1
-        print("AUA")
+        if self.protection <= 0:
+            self.loseLife()
+
+    def loseLife(self):
+        self.lives -= 1
+        self.protection = 3
+
+    def protectionCorrection(self, dt):
+        self.protection -= dt
+        if self.protection < 0:
+            self.protection = 0
 
     def end(self, hitbox, other, dir, layer):
-        print('Level beendet!')
         self.lvlUp = True

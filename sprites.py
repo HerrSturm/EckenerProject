@@ -42,6 +42,3 @@ def attackSprites(x):
                     pygame.image.load(path+"adventurer-attack2-03.png").convert_alpha(),
                     pygame.image.load(path+"adventurer-attack2-04.png").convert_alpha()]
     return(AttackSprites[4-round(x/20)])
-def endBlockSprites (x):
-    path = "Graphics/EndBlock/"
-    SpritesEndBlock = ["portal1.png","portal1.png","portal21.png","portal3.png","portal4.png","portal5.png","portal6.png","portal7.png","portal8.png",]
