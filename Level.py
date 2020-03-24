@@ -62,7 +62,7 @@ class Level:
                 ))
 
             if object["type"] == "enemy":
-                objects.append(Gegner(
+                objects.append(TeleportingChicken(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
                     object["range"][0],
