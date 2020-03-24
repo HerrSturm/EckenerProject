@@ -45,6 +45,10 @@ class Character():
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
+        if self.isCrouching:
+            self.hitBox.size.y = 38
+        else:
+            self.hitBox.size.y = 58
         pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
@@ -86,6 +90,9 @@ class Character():
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
         elif self.isSliding and keys[pygame.K_d]:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-40,(self.hitBox.pos.y)-15))
+        elif self.isCrouching:
+            self.hitBox.pos.y = self.hitBox.pos.y + 20
+            surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-55))
         else:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
