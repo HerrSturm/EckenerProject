@@ -3,7 +3,7 @@ from HitBox import *
 class Gegner(object):
     def __init__(self, pos, size, startRange, endRange):
         pos *= 24
-        pos.y -= 110
+        pos.y -= 8
         size *= 24
         self.hitBox = HitBox(pos, Vec2(55,55), False, Layer("deadly"), Vec2(100,0))
         self.startRange = pos.x + startRange * 24
@@ -25,9 +25,6 @@ class Gegner(object):
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame7.png"), (70, 55)),
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame8.png"), (70, 55))]
 
-        #self.imageOriginalGoblin = self.LaufAnimationGoblin
-        #self.imageBigGoblin = pygame.transform.scale(self.imageOriginalGoblin, (125, 75))
-
     def update(self, game, dt):
         self.move()
 
@@ -39,7 +36,7 @@ class Gegner(object):
         self.enemy = self.LaufAnimationGoblin[(self.frame//50)%len(self.LaufAnimationGoblin)-2]
         if self.hitBox.vel.x < 0:
             self.enemy = pygame.transform.flip(self.enemy,True,False)
-        surface.blit(self.enemy,((self.hitBox.pos.x) -10,self.hitBox.pos.y))
+        surface.blit(self.enemy,((self.hitBox.pos.x) -8,self.hitBox.pos.y))
 
     def move(self):
         if self.startRange < self.endRange:
