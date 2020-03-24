@@ -97,8 +97,8 @@ class Game:
             levelName = self.levelNameList[self.currentLevelIndex]
             self.currentLevel = Level.loadFile(levelName)
             return True
-        except:
-            print("No level on index " + str(self.currentLevelIndex))
+        except Exception as e:
+            print("No level on index " + str(self.currentLevelIndex), e)
         return False
 
     def draw(self):
