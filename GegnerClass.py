@@ -63,7 +63,9 @@ class TeleportingChicken(Gegner):
 
 
     def move(self):
+        if self.hitBox.vel.x == 0:
+            self.hitBox.vel.x = 100
         if self.startRange < self.endRange:
             if self.hitBox.pos.x > self.endRange:
                 self.hitBox.pos.x = self.startRange
-            self.frame = self.frame + 1
+            self.frame = self.frame + 5
