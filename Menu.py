@@ -14,12 +14,12 @@ class Menu(object):
         textButton2= buttonFont.render("Options", False, (0, 0 ,0))
         textButton3= buttonFont.render("Quit Game", False, (0, 0 ,0))
         self.mainScreen.blit(titleText,(500,100))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 300, 400, 50))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 400, 400, 50))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 500, 400, 50))
-        self.mainScreen.blit(textButton1,(595, 300))
-        self.mainScreen.blit(textButton2,(580, 400))
-        self.mainScreen.blit(textButton3,(560, 500))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (500, 300, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (500, 400, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (500, 500, 400, 50))
+        self.mainScreen.blit(textButton1,(645, 315))
+        self.mainScreen.blit(textButton2,(653, 415))
+        self.mainScreen.blit(textButton3,(640, 515))
 
     def update(self, game):
         pygame.display.flip()

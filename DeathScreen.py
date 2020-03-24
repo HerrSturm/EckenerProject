@@ -9,7 +9,7 @@ class DeathScreen(object):
     def draw(self):
         titleFont=pygame.font.SysFont('Arial Black',100)
         titleText= titleFont.render("GAME OVER", False, (255, 0 ,0))
-        self.mainScreen.blit(titleText,(350,100))
+        self.mainScreen.blit(titleText,(480,100))
         buttonFont=pygame.font.SysFont('Chandas', 30)
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (480, 300, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (480, 400, 400, 50))
@@ -17,12 +17,12 @@ class DeathScreen(object):
         textButton1= buttonFont.render("Play " + self.levelName, False, (0, 0 ,0))
         textButton2= buttonFont.render("Options", False, (0, 0 ,0))
         textButton3= buttonFont.render("Quit Game", False, (0, 0 ,0))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 300, 400, 50))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 400, 400, 50))
-        pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 500, 400, 50))
-        self.mainScreen.blit(textButton1,(610, 320))
-        self.mainScreen.blit(textButton2,(590, 420))
-        self.mainScreen.blit(textButton3,(570, 520))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (500, 300, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (500, 400, 400, 50))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (500, 500, 400, 50))
+        self.mainScreen.blit(textButton1,(640, 315))
+        self.mainScreen.blit(textButton2,(648, 415))
+        self.mainScreen.blit(textButton3,(635, 515))
 
     def update(self, game):
         coordinates = 1
