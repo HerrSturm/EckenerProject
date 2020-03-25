@@ -42,11 +42,12 @@ class Character():
             isGrounded = False
     #draws the character on the screen
     def draw(self, surface):
-        pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        """remove '#' to show hitbox""" 
+        #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
         self.isSliding = False
 
-        """Handling of Hitbox change, when status changes from to crouching"""
+        """Handling of Hitbox change, when status changes from / to crouching"""
         if self.isCrouching and not(self.toggleCrouching):
             self.toggleCrouching = True
             self.hitBox.size.y = 38
@@ -56,6 +57,7 @@ class Character():
             self.hitBox.pos.y -= 20
             self.toggleCrouching = False
 
+        """casestudy to load the sprite according to state"""
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.image = crouchSprites(self.spriteCount)
         elif self.isGrounded == True and self.hitBox.vel.x == 0:
@@ -82,6 +84,7 @@ class Character():
         elif self.isGrounded == False:
             self.image = fallSprites(self.spriteCount)
 
+        """changes direction of image if heading is left"""
         if self.heading == -1:
             self.image = pygame.transform.flip(self.image,True,False)
 
@@ -94,13 +97,7 @@ class Character():
         else:
             surface.blit(self.image, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
-    #updates the player
 
-    def setHeading(self):
-        if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
-            self.heading = 1
-        elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
-            self.heading = -1
 
     def update(self, game, dt):
         self.setHeading()
@@ -153,6 +150,11 @@ class Character():
         else:
             return True
 
+    def setHeading(self):
+        if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
+            self.heading = 1
+        elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
+            self.heading = -1
 
     def moveright(self):
         #Funktion um die Hitbox nach rechts zu bewegen (geschw. auf +1)
