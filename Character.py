@@ -44,14 +44,9 @@ class Character():
     def draw(self, surface):
         pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
 
-
         self.isSliding = False
 
-        if self.toggleCrouching:
-            print("True")
-        else:
-            print("False")
-
+        """Handling of Hitbox change, when status changes from to crouching"""
         if self.isCrouching and not(self.toggleCrouching):
             self.toggleCrouching = True
             self.hitBox.size.y = 38
@@ -87,12 +82,9 @@ class Character():
         elif self.isGrounded == False:
             self.image = fallSprites(self.spriteCount)
 
-        if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
-            self.heading = 1
-        elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
-            self.heading = -1
         if self.heading == -1:
             self.image = pygame.transform.flip(self.image,True,False)
+
         if self.isSliding and self.isMoving:
             surface.blit(self.image, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
         elif self.isSliding and keys[pygame.K_d]:
@@ -103,7 +95,15 @@ class Character():
             surface.blit(self.image, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
     #updates the player
+
+    def setHeading(self):
+        if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
+            self.heading = 1
+        elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
+            self.heading = -1
+
     def update(self, game, dt):
+        self.setHeading()
         self.protectionCorrection(dt)
         self.updateKeys()
         if self.lives <= 0:
