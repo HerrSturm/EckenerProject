@@ -9,8 +9,6 @@ class Character():
     MOVEVEL = 200
     def __init__(self, position): #Vec2 position
         self.heading = 1
-        self.hitBox = HitBox(Vec2(50,50), Vec2(125, 75), False, Layer("player"), Vec2(0.5, 0))
-        self.mainScreen = pygame.display.get_surface()
         self.spriteCount = 2
         self.imageoriginal = runSprites(self.spriteCount)
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -19,19 +17,17 @@ class Character():
         self.isCrouching = False
         self.health = 1
         self.isSliding = False
-        size = Vec2(40,58)
         self.lives = 3
         self.protection = 3 #in sekunden nach Lebensverlust angegeben
         self.heartImage = pygame.image.load('Graphics/GUI/heart.png')
         self.lvlUp = False
-        self.nextLvl = 2
-        self.hitBox = HitBox(position * 24, size, False, Layer("player"),Vec2(0,0))
+        self.hitBox = HitBox(position * 24, Vec2(40,58), False, Layer("player"),Vec2(0.5,0))
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
-        self.mainScreen = pygame.display.get_surface()
+
 
     #checks if hitbox collided with ground
     def check_Grounded(self, hitbox, other, dir, layer):
@@ -42,14 +38,7 @@ class Character():
         keys = pygame.key.get_pressed()
         self.isSliding = False
         #checks if the "s" button is pressed and the character is therefore "crouching"
-        if keys[pygame.K_s] and self.isGrounded:
-            self.isCrouching = True
-        else:
-            self.isCrouching = False
-        if keys[pygame.K_s]:
-            self.GRAVITY = 1200
-        else:
-            self.GRAVITY = 300
+
         if self.isCrouching:
             self.hitBox.size.y = 38
         else:
@@ -84,11 +73,12 @@ class Character():
         elif self.isGrounded == False:
             self.imageoriginal = fallSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+
+        """Ausrichtung bestimmen und ggf. Bild drehen"""
         if self.hitBox.vel.x > 0:
             self.heading = 1
         elif self.hitBox.vel.x < 0:
             self.heading = -1
-        #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
         if self.isSliding and keys[pygame.K_a]:
@@ -112,6 +102,16 @@ class Character():
             self.moveright()
         if keys[pygame.K_w]:
             self.jump()
+        if keys[pygame.K_s]:
+            self.GRAVITY = 1200
+            if self.isGrounded:
+                self.isCrouching = True
+            else:
+                self.isCrouching = False
+        else:
+            self.GRAVITY = 300
+
+
 
     def remove(self):
         self.hitBox.remove()
