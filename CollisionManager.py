@@ -44,11 +44,13 @@ class CollisionManager(object):
                                 hitBox.right = other.left
                                 hitBox.vel.x = 0
                             hitBox._collide(other, Direction.RIGHT)
+                            other._collide(hitBox, Direction.LEFT)
                         if hitBox.left < other.right and hitBox.vel.x < 0:
                             if move:
                                 hitBox.left = other.right
                                 hitBox.vel.x = 0
                             hitBox._collide(other, Direction.LEFT)
+                            other._collide(hitBox, Direction.RIGHT)
                 hitBox.pos.y += hitBox.vel.y * dt
                 for other in near:
                     trigger = hitBox.listensToCollisionLayer(other.layer)
@@ -63,11 +65,13 @@ class CollisionManager(object):
                                 hitBox.bottom = other.top
                                 hitBox.vel.y = 0
                             hitBox._collide(other, Direction.DOWN)
+                            other._collide(hitBox, Direction.UP)
                         if hitBox.top < other.bottom and hitBox.vel.y < 0:
                             if move:
                                 hitBox.top = other.bottom
                                 hitBox.vel.y = 0
                             hitBox._collide(other, Direction.UP)
+                            other._collide(hitBox, Direction.DOWN)
             self._callCallbacks("afterUpdate", dt)
 
         def _callCallbacks(self, event, dt):

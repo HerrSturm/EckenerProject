@@ -3,6 +3,7 @@ from Character import *
 from Block import *
 from GegnerClass import *
 from Camera import *
+from Vec2 import *
 
 colors = {
     "brown": (150,80,50),
@@ -14,27 +15,40 @@ colors = {
 
 class Level:
 
-    def __init__(self, objects, characterSpawn, size, background, filename):
+    def __init__(self, objects, characterSpawn, size, background):
         self.objects = objects
-        self.filename = filename
-        self.character = Character(characterSpawn) # TODO: use characterSpawn
+        self.characterSpawn = characterSpawn * 24
+        self.character = Character(self.characterSpawn)
         self.objects.append(self.character)
-        self.camera = Camera(size * 24, background)
+        self.size = size * 24
+        self.camera = Camera(self.size, background)
         self.camera.moveToCenter(self.character.hitBox.center)
+        self.gameOver = False
 
     def loadFile(name):
         file = open(name)
-        return Level.load(json.load(file),name)
+        return Level.load(json.load(file))
 
-    def load(json, filename):
+    def load(json):
         objects = []
         level = json["level"]
         for object in level["objects"]:
+
+            #color to texture
+            if object["type"] == "block" or object["type"] == "movingBlock":
+                if object["color"] == 'green':
+                    object["texture"] = 'grass'
+                elif object["color"] == 'brown':
+                    object["texture"] = 'dirt'
+                elif object["color"] == 'grey':
+                    object["texture"] = 'stone'
+
             if object["type"] == "block":
                 objects.append(Block(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
-                    colors[object["color"]]
+                    colors[object["color"]],
+                    object["texture"]
                 ))
 
             #create a simple platform with a grass surface
@@ -42,12 +56,14 @@ class Level:
                 objects.append(Block(
                     Vec2(*object["position"]),
                     Vec2(*[object["size"][0],1]),
-                    colors["green"]
+                    colors["green"],
+                    'grass'
                 ))
                 objects.append(Block(
                     Vec2(*[object["position"][0], object["position"][1]+1]),
                     Vec2(*[object["size"][0],object["size"][1]-1]),
-                    colors["brown"]
+                    colors["brown"],
+                    'dirt'
                 ))
 
             #creating an EndBlock object
@@ -71,21 +87,27 @@ class Level:
                     Vec2(*object["size"]),
                     object["range"][0],
                     object["range"][1],
-                    colors[object["color"]]
+                    colors[object["color"]],
+                    object["texture"]
                 ))
 
         characterSpawn = Vec2(*level["characterSpawn"])
         size = Vec2(*level["size"])
         background = tuple(level["background"])
-        return Level(objects, characterSpawn, size, background, filename)
+        return Level(objects, characterSpawn, size, background)
 
-    def update(self, dt):
+    def update(self, game, dt):
         for object in self.objects:
-            object.update(dt)
-        if self.death() or self.character.lives <= 0:
-            self.restore()
+            object.update(game, dt)
         self.camera.glideCenter(self.character.hitBox.center, dt)
         CollisionManager().update(dt)
+        self.checkCharacterFallDeath()
+
+    def checkCharacterFallDeath(self):
+        if self.character.hitBox.top > self.size.y:
+            self.character.loseLife()
+            self.character.hitBox.setPos(self.characterSpawn)
+            self.character.hitBox.vel = Vec2()
 
     def draw(self):
         for object in self.objects:
@@ -98,21 +120,3 @@ class Level:
     def remove(self):
         for object in self.objects:
             object.remove()
-
-    def restore(self):
-        file = open(self.filename)
-        map = json.load(file)
-        objects = []
-        level = map["level"]
-        characterSpawn = Vec2(*level["characterSpawn"])
-        self.character.hitBox.pos.values = characterSpawn * 24
-        self.character.lives = 3
-
-
-    def death(self):
-        if self.character.hitBox.pos.y > 50*24:
-            self.character.lives -= 1
-            if self.character.lives<=0:
-                return True
-            else:
-                return False
