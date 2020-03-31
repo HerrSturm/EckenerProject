@@ -63,12 +63,16 @@ class EndBlock(object):
         self.color = color
         self.screen = pygame.display.get_surface()
         self.hitBox = HitBox(position * 24, size * 24, True, Layer("end"))
+        self.spriteCount = 1
+        self.image = endBlockSprites(self.spriteCount)
 
     def update(self, game, dt):
-        pass
+        self.spriteCount = (self.spriteCount+1)%9
+        self.image = endBlockSprites(self.spriteCount)
 
     def draw(self, surface):
-        pygame.draw.rect(surface, self.color, [self.hitBox.pos.values, self.hitBox.size.values])
+        #pygame.draw.rect(surface, self.color, [self.hitBox.pos.values, self.hitBox.size.values])
+        surface.blit(self.image, (self.hitBox.pos.x-40, self.hitBox.pos.y-85))
 
     def remove(self):
         self.hitBox.remove()
