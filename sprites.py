@@ -46,14 +46,14 @@ def attackSprites(x):
 def endBlockSprites(x):
     a = 120
     b = 120
-    EndBlockSprites =  [pygame.transform.scale(pygame.image.load(pathEnd+"portal0.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal1.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal2.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal3.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal4.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal5.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal6.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal7.png"), (a, b)),
-                        pygame.transform.scale(pygame.image.load(pathEnd+"portal8.png"), (a, b)),
+    EndBlockSprites =  [pygame.transform.scale(pygame.image.load(pathEnd+"portal0.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal1.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal2.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal3.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal4.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal5.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal6.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal7.png"), (a, b)).convert_alpha(),
+                        pygame.transform.scale(pygame.image.load(pathEnd+"portal8.png"), (a, b)).convert_alpha(),
                         ]
     return EndBlockSprites[x]
