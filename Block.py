@@ -5,6 +5,7 @@
 import sys, pygame
 from Vec2 import Vec2
 from HitBox import *
+from sprites import endBlockSprites
 
 class Block(object):
     def __init__(self, position, size, color, graphicID = "grass"):
@@ -80,7 +81,7 @@ class MovingBlock(object):
         self.color = color
         self.mainScreen = pygame.display.get_surface()
         self.graphicID = graphicID
-        
+
         if graphicID == "grass":
             self.graphicLeft = pygame.image.load("Graphics/Blocks/grass/leftCorner.png").convert_alpha()
             self.graphicLeft = pygame.transform.scale(self.graphicLeft, (24, 24))
