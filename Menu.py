@@ -17,9 +17,9 @@ class Menu(object):
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 300, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 400, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 500, 400, 50))
-        self.mainScreen.blit(textButton1,(595, 320))
-        self.mainScreen.blit(textButton2,(580, 420))
-        self.mainScreen.blit(textButton3,(560, 520))
+        self.mainScreen.blit(textButton1,(645, 315))
+        self.mainScreen.blit(textButton2,(653, 415))
+        self.mainScreen.blit(textButton3,(640, 515))
 
     def update(self, game):
         pygame.display.flip()
