@@ -1,5 +1,7 @@
 import pygame, HitBox, Vec2
 from HitBox import *
+
+
 class Gegner(object):
     def __init__(self, pos, size, startRange, endRange):
         pos *= 24
@@ -33,7 +35,7 @@ class Gegner(object):
 
     def draw(self,surface):
         #pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
-        self.enemy = self.LaufAnimationGoblin[(self.frame//50)%len(self.LaufAnimationGoblin)-2]
+        self.enemy = self.LaufAnimationGoblin[(self.frame//50)%len(self.LaufAnimationGoblin)-4]
         if self.hitBox.vel.x < 0:
             self.enemy = pygame.transform.flip(self.enemy,True,False)
         surface.blit(self.enemy,((self.hitBox.pos.x) -8,self.hitBox.pos.y))
@@ -42,14 +44,18 @@ class Gegner(object):
         if self.startRange < self.endRange:
             if self.hitBox.pos.x < self.startRange:
                 self.hitBox.vel.x = 100
-            self.frame = self.frame + 2
+            self.frame = self.frame + 4
             if self.hitBox.pos.x > self.endRange:
                 self.hitBox.vel.x = -100
-            self.frame = self.frame + 2
+            self.frame = self.frame + 4
+            if self.hitBox.vel.x <= 0:
+                self.hitBox.vel.x = -100
         if self.startRange > self.endRange:
             if self.hitBox.pos.x > self.startRange:
                 self.hitBox.vel.x = -100
-            self.frame = self.frame + 2
+            self.frame = self.frame + 4
             if self.hitBox.pos.x < self.endRange:
                 self.hitBox.vel.x = 100
-            self.frame = self.frame + 2
+            self.frame = self.frame + 4
+            if self.hitBox.vel.x <= 0:
+                self.hitBox.vel.x = -100
