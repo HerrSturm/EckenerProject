@@ -18,6 +18,7 @@ class Gegner(object):
             #pygame.image.load("Graphics/EnemyGraphics/observer/AnimationLinks/observerLeft1.png").convert_alpha()]
         self.img = 0
 
+        #lädt Grafiken des Gegners
         self.LaufAnimationGoblin = [pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame1.png"), (70, 55)),
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame2.png"), (70, 55)),
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame3.png"), (70, 55)),
@@ -27,12 +28,14 @@ class Gegner(object):
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame7.png"), (70, 55)),
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Goblin/GoblinFrames/runRight/frame8.png"), (70, 55))]
 
+    #führt move Methode wiederholt durch
     def update(self, game, dt):
-        self.move()
+        self.move(game)
 
     def remove(self):
         self.hitBox.remove()
 
+    #legt Grafik für Gegner fest
     def draw(self,surface):
         #pygame.draw.rect(surface, (255, 255, 255), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         self.enemy = self.LaufAnimationGoblin[(self.frame//50)%len(self.LaufAnimationGoblin)-4]
@@ -40,7 +43,8 @@ class Gegner(object):
             self.enemy = pygame.transform.flip(self.enemy,True,False)
         surface.blit(self.enemy,((self.hitBox.pos.x) -8,self.hitBox.pos.y))
 
-    def move(self):
+    #Funktion damit der Gegner sich bewegt
+    def move(self, game):
         if self.startRange < self.endRange:
             if self.hitBox.pos.x < self.startRange:
                 self.hitBox.vel.x = 100
@@ -48,8 +52,11 @@ class Gegner(object):
             if self.hitBox.pos.x > self.endRange:
                 self.hitBox.vel.x = -100
             self.frame = self.frame + 4
-            if self.hitBox.vel.x <= 0:
-                self.hitBox.vel.x = -100
+            if self.hitBox.vel.x == 0:
+                if self.hitBox.pos.x > game.currentLevel.character.hitBox.pos.x:
+                    self.hitBox.vel.x = 100
+                if self.hitBox.pos.x < game.currentLevel.character.hitBox.pos.x:
+                    self.hitBox.vel.x = -100
         if self.startRange > self.endRange:
             if self.hitBox.pos.x > self.startRange:
                 self.hitBox.vel.x = -100
@@ -57,5 +64,8 @@ class Gegner(object):
             if self.hitBox.pos.x < self.endRange:
                 self.hitBox.vel.x = 100
             self.frame = self.frame + 4
-            if self.hitBox.vel.x <= 0:
-                self.hitBox.vel.x = -100
+            if self.hitBox.vel.x == 0:
+                if self.hitBox.pos.x > game.currentLevel.character.hitBox.pos.x:
+                    self.hitBox.vel.x = 100
+                if self.hitBox.pos.x < game.currentLevel.character.hitBox.pos.x:
+                    self.hitBox.vel.x = -100
