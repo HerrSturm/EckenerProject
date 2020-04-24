@@ -4,43 +4,51 @@
         "type": "block",
         "size": [10, 10],
         "position":[0,26],
-        "color": "brown"
+        "color": "brown",
+        "texture": "dirt"
       }, {
         "type": "block",
         "size": [10, 1],
         "position":[0,25],
-        "color": "green"
+        "color": "green",
+        "texture": "grass"
       }, {
         "type": "block",
         "size": [10, 20],
         "position":[14,22],
-        "color": "brown"
+        "color": "brown",
+        "texture": "dirt"
       }, {
         "type": "block",
         "size": [10, 1],
         "position":[14,21],
-        "color": "green"
+        "color": "green",
+        "texture": "grass"
       }, {
         "type": "block",
         "size": [5, 1],
         "position":[30,19],
-        "color": "brown"
+        "color": "brown",
+        "texture": "dirt"
       }, {
         "type": "block",
         "size": [5, 1],
         "position":[30,18],
-        "color": "green"
+        "color": "green",
+        "texture": "grass"
       }, {
         "type": "block",
         "size": [25, 20],
         "position":[37,23],
-        "color": "brown"
+        "color": "brown",
+        "texture": "dirt"
       }, {
         "type": "block",
         "size": [25, 1],
         "position":[37,22],
-        "color": "green"
-      },{
+        "color": "green",
+        "texture": "grass"
+      }, {
         "type": "endBlock",
         "size": [3, 1],
         "position":[53,21],

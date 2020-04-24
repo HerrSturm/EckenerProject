@@ -33,11 +33,22 @@ class Level:
         objects = []
         level = json["level"]
         for object in level["objects"]:
+
+            #color to texture
+            if object["type"] == "block" or object["type"] == "movingBlock":
+                if object["color"] == 'green':
+                    object["texture"] = 'grass'
+                elif object["color"] == 'brown':
+                    object["texture"] = 'dirt'
+                elif object["color"] == 'grey':
+                    object["texture"] = 'stone'
+
             if object["type"] == "block":
                 objects.append(Block(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
-                    colors[object["color"]]
+                    colors[object["color"]],
+                    object["texture"]
                 ))
 
             #create a simple platform with a grass surface
@@ -45,12 +56,14 @@ class Level:
                 objects.append(Block(
                     Vec2(*object["position"]),
                     Vec2(*[object["size"][0],1]),
-                    colors["green"]
+                    colors["green"],
+                    'grass'
                 ))
                 objects.append(Block(
                     Vec2(*[object["position"][0], object["position"][1]+1]),
                     Vec2(*[object["size"][0],object["size"][1]-1]),
-                    colors["brown"]
+                    colors["brown"],
+                    'dirt'
                 ))
 
             #creating an EndBlock object
@@ -74,7 +87,8 @@ class Level:
                     Vec2(*object["size"]),
                     object["range"][0],
                     object["range"][1],
-                    colors[object["color"]]
+                    colors[object["color"]],
+                    object["texture"]
                 ))
 
         characterSpawn = Vec2(*level["characterSpawn"])
