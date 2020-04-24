@@ -4,6 +4,7 @@ from Block import *
 from GegnerClass import *
 from Camera import *
 from Vec2 import *
+from FollowingEnemy import *
 
 colors = {
     "brown": (150,80,50),
@@ -75,7 +76,7 @@ class Level:
                 ))
 
             if object["type"] == "enemy":
-                objects.append(TeleportingChicken(
+                objects.append(FollowingEnemy(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
                     object["range"][0],
