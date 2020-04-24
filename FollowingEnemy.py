@@ -1,4 +1,5 @@
-import pygame, HitBox, Vec2, GegnerClass
+import pygame, HitBox, Vec2
+from GegnerClass import *
 from HitBox import *
 
 class FollowingEnemy(Gegner):
