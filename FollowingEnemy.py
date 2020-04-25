@@ -5,8 +5,7 @@ from HitBox import *
 class FollowingEnemy(Gegner):
     def __init__(self, pos, size, startrange, endrange):
         super().__init__(pos, size, startrange, endrange)
-        #pos.y += 400
-        self.hitBox = HitBox(pos, Vec2(55,40), False, Layer("deadly"), Vec2(100,0))
+        self.hitBox = HitBox(pos*24, Vec2(53,40), False, Layer("deadly"), Vec2(100,0))
         self.FlugAnimationBat = [pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Bat/BatFrames/BatFrame1.png"), (120, 105)),
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Bat/BatFrames/BatFrame2.png"), (120, 105)),
                             pygame.transform.scale(pygame.image.load("Graphics/EnemyGraphics/Bat/BatFrames/BatFrame3.png"), (120, 105)),
