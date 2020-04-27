@@ -76,12 +76,21 @@ class Level:
                 ))
 
             if object["type"] == "enemy":
+                objects.append(Gegner(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1]
+                ))
+                
+            if object["type"] == "FollowingEnemy":
                 objects.append(FollowingEnemy(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
                     object["range"][0],
                     object["range"][1]
                 ))
+
             if object["type"] == "movingBlock":
                 objects.append(MovingBlock(
                     Vec2(*object["position"]),
