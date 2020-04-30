@@ -3,6 +3,8 @@ from HitBox import*
 from Direction import Direction
 from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
+pygame.mixer.init(22100, -16, 2, 64)
+sliding = pygame.mixer.Sound("Sounds/slidingwav.wav")
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -19,6 +21,7 @@ class Character():
         self.isCrouching = False
         self.health = 1
         self.isSliding = False
+        self.wasSliding = False
         size = Vec2(40,58)
         self.lives = 3
         self.protection = 3 #in sekunden nach Lebensverlust angegeben
@@ -52,10 +55,6 @@ class Character():
             self.isCrouching = True
         else:
             self.isCrouching = False
-        if keys[pygame.K_s]:
-            self.GRAVITY = 1200
-        else:
-            self.GRAVITY = 300
         #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
@@ -107,6 +106,21 @@ class Character():
         else:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
+        if self.isSliding == True:
+            self.GRAVITY = 1
+        elif keys[pygame.K_s]:
+            self.GRAVITY = 1200
+        else:
+            self.GRAVITY = 300
+        if self.isSliding and self.wasSliding == False:
+            pygame.mixer.music.set_volume(0.25)
+            sliding.play(-1)
+        elif self.isSliding == False and self.wasSliding:
+            sliding.stop()
+        if self.isSliding == True:
+            self.wasSliding = True
+        else:
+            self.wasSliding = False
     #updates the player
     def update(self, game, dt):
         self.protectionCorrection(dt)
@@ -129,6 +143,7 @@ class Character():
     def afterCollisionManager(self, dt):
         #after col update
         self.isGrounded = self.isGrounded_
+    #def playsound(self):
 
     def updateKeys(self):
         keys = pygame.key.get_pressed()
@@ -169,7 +184,7 @@ class Character():
 
     #makes the player jump:only when grounded
     def jump(self):
-        if self.isGrounded :
+        if self.isGrounded:
             self.hitBox.vel.y = 0
             self.hitBox.vel += Vec2(0, -self.JUMPVEL)
 
