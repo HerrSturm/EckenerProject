@@ -52,10 +52,6 @@ class Character():
             self.isCrouching = True
         else:
             self.isCrouching = False
-        if keys[pygame.K_s]:
-            self.GRAVITY = 1200
-        else:
-            self.GRAVITY = 300
         #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
@@ -107,6 +103,14 @@ class Character():
         else:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
+        if self.isSliding and keys[pygame.K_s]:
+            self.GRAVITY = 360
+        elif self.isSliding == True:
+            self.GRAVITY = 90
+        elif keys[pygame.K_s]:
+            self.GRAVITY = 1200
+        else:
+            self.GRAVITY = 300
     #updates the player
     def update(self, game, dt):
         self.protectionCorrection(dt)
