@@ -58,6 +58,12 @@
         "type": "cannon",
         "size": [2,2],
         "position": [45, 20]
+      },
+      {
+        "type": "cannonBall",
+        "size": [2,2],
+        "position": [45, 20],
+        "range": [45, 20]
       }
     ],
     "characterSpawn": [2, 20],

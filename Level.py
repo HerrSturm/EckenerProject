@@ -90,6 +90,14 @@ class Level:
                     Vec2(*object["size"])
                 ))
 
+            if object["type"] == "cannonBall":
+                objects.append(CannonBall(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1]
+                ))
+                
             if object["type"] == "FollowingEnemy":
                 objects.append(FollowingEnemy(
                     Vec2(*object["position"]),
