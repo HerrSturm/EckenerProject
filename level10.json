@@ -1,0 +1,7 @@
+{"level": { "objects": [
+{"type": "block","size": [23,1],"position":[7,12],"color": "brown"},
+{"type": "enemy","size": [1,1],"position":[12,12],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[19,12],"range": [1,-1]},
+{"type": "enemy","size": [1,1],"position":[24,11],"range": [1,-1]},
+{"type": "endBlock","size": [1,1],"position":[29,11],"color": "goal"}
+],"characterSpawn": [7.0, 8.0],"size": [200, 200],"background": [80, 150, 255]}}

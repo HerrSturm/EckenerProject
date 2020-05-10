@@ -5,7 +5,7 @@ from HitBox import *
 class PowerUps(object):
         def __init__(self, pos, size):
             pos *= 24
-            pos.x -= 8
+            pos.y -= 8
             size *= 24
             self.hitBox = HitBox(pos, size, False, Layer("powerUps"))
             self.ShieldImage = pygame.image.load('Graphics/PowerUpGraphics/ShieldFrames/Shield.png')

@@ -154,11 +154,11 @@ def flipType(button):
         type = 'stone'
         button[5] = (125,125,125)
     elif type == 'stone':
-        type = 'enemy'
-        button[5] = (255,0,0)
-    elif type == 'powerUps':
         type = 'powerUps'
         button[5] = (255,20,147)
+    elif type == 'powerUps':
+        type = 'enemy'
+        button[5] = (255,0,0)
     elif type == 'enemy':
         type = 'endBlock'
         button[5] = (212,175,55)
