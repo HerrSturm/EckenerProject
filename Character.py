@@ -29,6 +29,7 @@ class Character():
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
+        self.hitBox.onCollide(self.gainLife, Layer("powerUps"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
@@ -183,6 +184,10 @@ class Character():
         self.lives -= 1
         self.protection = 3
 
+    def gainLife(self):
+        self.lives += 1
+        self.protection = 3
+        
     def protectionCorrection(self, dt):
         self.protection -= dt
         if self.protection < 0:
