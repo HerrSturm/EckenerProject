@@ -3,7 +3,7 @@ from HitBox import *
 
 
 class PowerUps(object):
-        def __init__(self, pos, size):
+        def __init__(self, pos, size, color):
             pos *= 24
             pos.y -= 8
             size *= 24
