@@ -1,7 +1,6 @@
 import pygame, HitBox, Vec2
 from GegnerClass import *
 from HitBox import *
-from Character import *
 
 #Cannon Klasse durch Oberklasse erstellt
 class Cannon(object):
@@ -15,7 +14,6 @@ class Cannon(object):
 
     def update(self, game, dt):
         self.move(game)
-
 
     def remove(self):
         self.hitBox.remove()
@@ -33,10 +31,12 @@ class CannonBall(object):
     def __init__(self, pos, size, startRange, endRange):
         pos *= 24
         size *= 24
-        #pos.x -= 50
-        #pos.y += 10
+        pos.x -= 50
+        pos.y += 10
         self.startPos = pos
         self.hitBox = HitBox(pos, Vec2(31,31), False, Layer("deadly"))
+        self.hitBox.onCollide(self.respawn, Layer("player"))
+        self.hitBox.onCollide(self.respawn, Layer("solid"))
         self.startRange = startRange * 24
         self.endRange = endRange * 24
         self.halfRange = (self.startRange/2 + self.endRange/2)
@@ -46,7 +46,6 @@ class CannonBall(object):
 
     def update(self, game, dt):
         self.move(game)
-
 
     def remove(self):
         self.hitBox.remove()
@@ -63,10 +62,9 @@ class CannonBall(object):
         print(self.startPos)
         if self.hitBox.pos.x > self.halfRange:
             self.hitBox.vel = Vec2(-100, -100)
-            #print("up")
         if self.hitBox.pos.x < self.halfRange and self.hitBox.pos.x > self.endRange:
             self.hitBox.vel = Vec2(-100, 100)
-            #print("down")
-        if self.hitBox.vel.x == 0 or self.hitBox.vel.y == 0:# or self.protection <= 0: #or self.hitBox.pos == game.currentLevel.character.hitBox.pos:
-            self.hitBox.pos = self.startPos
-            #print("respawn")
+
+    def respawn(self, hitbox, other, dir, layer):
+        self.hitBox.pos.x = self.startPos.x
+        self.hitBox.pos.y = self.startPos.y
