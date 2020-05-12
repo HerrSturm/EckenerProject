@@ -119,7 +119,7 @@ class Character():
         #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
-    #SLIDING
+    #SLIDE
         if self.isSliding and keys[pygame.K_a]:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
         elif self.isSliding and keys[pygame.K_d]:
