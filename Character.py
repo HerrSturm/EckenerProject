@@ -1,10 +1,17 @@
 import pygame
 from HitBox import*
+from random import randint
 from Direction import Direction
 from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 pygame.mixer.init(22100, -16, 2, 64)
 sliding = pygame.mixer.Sound("Sounds/slidingwav.wav")
+bgmusic = pygame.mixer.Sound("Sounds/backgroundmusic.wav")
+screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
+
+bgmusic.set_volume(0.1)
+sliding.set_volume(0.1)
+bgmusic.play(-1)
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -197,7 +204,7 @@ class Character():
     def loseLife(self):
         self.lives -= 1
         self.protection = 3
-
+        screams[randint(0,len(screams)-1)].play()
     def protectionCorrection(self, dt):
         self.protection -= dt
         if self.protection < 0:
