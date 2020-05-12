@@ -4,10 +4,11 @@ from random import randint
 from Direction import Direction
 from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
-pygame.mixer.init(22100, -16, 2, 64)
+pygame.mixer.init(48000, -16, 2, 512)
 sliding = pygame.mixer.Sound("Sounds/slidingwav.wav")
 bgmusic = pygame.mixer.Sound("Sounds/backgroundmusic.wav")
 screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
+runSound = pygame.mixer.Sound("Sounds/runSound.wav")
 
 bgmusic.set_volume(0.1)
 sliding.set_volume(0.1)
@@ -29,6 +30,8 @@ class Character():
         self.health = 1
         self.isSliding = False
         self.wasSliding = False
+        self.isRunning = False
+        self.wasRunning = False
         size = Vec2(40,58)
         self.lives = 3
         self.protection = 3 #in sekunden nach Lebensverlust angegeben
@@ -58,17 +61,21 @@ class Character():
         keys = pygame.key.get_pressed()
         self.isSliding = False
         #checks if the "s" button is pressed and the character is therefore "crouching"
+    #CROUCH
         if keys[pygame.K_s] and self.isGrounded:
             self.isCrouching = True
         else:
             self.isCrouching = False
         #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        self.isRunning = False
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #IDLE
         elif self.isGrounded == True and self.hitBox.vel.x == 0:
             self.imageoriginal = idleSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #SLIDE
         elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_a]:
             self.imageoriginal = wallSlideSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -77,9 +84,11 @@ class Character():
             self.imageoriginal = wallSlideSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
             self.isSliding = True
+    #CROUCH
         elif self.isGrounded == True and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #IDLE & RUN
         elif self.isGrounded == True:
             if self.hitBox.vel.x == self.movingSolid and not self.updateKeys():
                 self.imageoriginal = idleSprites(self.spriteCount)
@@ -87,9 +96,12 @@ class Character():
             else:
                 self.imageoriginal = runSprites(self.spriteCount)
                 self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+                self.isRunning = True
+    #CROUCH
         elif self.isGrounded == True and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #JUMP
         elif self.isGrounded == False and self.hitBox.vel.y <= -20:
             self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -99,6 +111,7 @@ class Character():
         elif self.isGrounded == False:
             self.imageoriginal = fallSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #HEADING
         if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
             self.heading = 1
         elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
@@ -106,6 +119,7 @@ class Character():
         #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
+    #SLIDING
         if self.isSliding and keys[pygame.K_a]:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
         elif self.isSliding and keys[pygame.K_d]:
@@ -119,6 +133,7 @@ class Character():
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
+        print(self.isRunning)
         if self.isSliding and self.wasSliding == False:
             pygame.mixer.music.set_volume(0.25)
             sliding.play(-1)
@@ -128,6 +143,15 @@ class Character():
             self.wasSliding = True
         else:
             self.wasSliding = False
+    #RUN
+        if self.isRunning and self.wasRunning == False:
+            runSound.play(-1)
+        if self.isRunning == False and self.wasRunning:
+            runSound.stop()
+        if self.isRunning == True:
+            self.wasRunning = True
+        else:
+            self.wasRunning = False
     #updates the player
     def update(self, game, dt):
         self.protectionCorrection(dt)
