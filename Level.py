@@ -80,7 +80,7 @@ class Level:
                 objects.append(PowerUps(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
-                    colors["pink"],
+                    colors[object["color"]],
                 ))
 
             if object["type"] == "enemy":

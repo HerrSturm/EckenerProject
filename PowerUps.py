@@ -19,4 +19,4 @@ class PowerUps(object):
             self.hitBox.remove()
 
         def draw(self,surface):
-            surface.blit(self.powerUps((self.hitBox.pos.x) -8,self.hitBox.pos.y))
+            surface.blit(self.ShieldImage,((self.hitBox.pos.x),self.hitBox.pos.y))
