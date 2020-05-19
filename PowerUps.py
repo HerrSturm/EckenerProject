@@ -8,15 +8,15 @@ class PowerUps(object):
             pos.y -= 8
             size *= 24
             self.hitBox = HitBox(pos, size, False, Layer("powerUps"))
-            self.ShieldImage = pygame.image.load('Graphics/PowerUpGraphics/ShieldFrames/Shield.png')
-            self.frame = 0
-            self.mainScreen = pygame.display.get_surface()
+            self.ShieldImage = pygame.image.load('Graphics/GUI/shield.png')
 
         def update(self, game, dt):
-            self.move()
+            pass
 
         def remove(self):
-            self.hitBox.remove()
+            if self.powerUpUsed == True:
+                self.hitBox.remove()
+                self.ShieldImage.remove()
 
         def draw(self,surface):
             surface.blit(self.ShieldImage,((self.hitBox.pos.x),self.hitBox.pos.y))
