@@ -10,13 +10,15 @@ class PowerUps(object):
             self.hitBox = HitBox(pos, size, False, Layer("powerUps"))
             self.ShieldImage = pygame.image.load('Graphics/GUI/shield.png')
             self.hitBox.onCollide(self.remove, Layer("player"))
+            self.remove = False
 
         def update(self, game, dt):
-            pass
+            if self.remove:
+                game.currentLevel.objects.remove(self)
+                self.hitBox.remove()
 
         def remove(self, hitbox, other, dir, layer, game):
-            self.hitBox.remove()
-            game.currentLevel.powerUps.remove(self)
+            self.powerUpUsed = True
 
         def draw(self,surface):
             surface.blit(self.ShieldImage,((self.hitBox.pos.x),self.hitBox.pos.y))
