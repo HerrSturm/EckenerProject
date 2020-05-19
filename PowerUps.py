@@ -18,7 +18,7 @@ class PowerUps(object):
                 self.hitBox.remove()
 
         def remove(self, hitbox, other, dir, layer, game):
-            self.powerUpUsed = True
+            self.remove = True
 
         def draw(self,surface):
             surface.blit(self.ShieldImage,((self.hitBox.pos.x),self.hitBox.pos.y))
