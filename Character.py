@@ -129,6 +129,10 @@ class Character():
         self.spriteCount = self.spriteCount + 1
         if self.isSliding == True:
             self.GRAVITY = 1
+        if self.isSliding and keys[pygame.K_s]:
+            self.GRAVITY = 360
+        elif self.isSliding == True:
+            self.GRAVITY = 90
         elif keys[pygame.K_s]:
             self.GRAVITY = 1200
         else:
@@ -151,6 +155,8 @@ class Character():
             self.wasRunning = True
         else:
             self.wasRunning = False
+=======
+>>>>>>> master
     #updates the player
     def update(self, game, dt):
         self.protectionCorrection(dt)
