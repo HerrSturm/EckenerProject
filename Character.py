@@ -127,16 +127,30 @@ class Character():
         else:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
+<<<<<<< HEAD
         if self.isSliding == True:
             self.GRAVITY = 1
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> c9213c709d741fcb778b7fe6da6656dd9464c42b
         if self.isSliding and keys[pygame.K_s]:
             self.GRAVITY = 360
         elif self.isSliding == True:
             self.GRAVITY = 90
+<<<<<<< HEAD
+=======
+>>>>>>> master
+>>>>>>> c9213c709d741fcb778b7fe6da6656dd9464c42b
         elif keys[pygame.K_s]:
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        print(self.isRunning)
+>>>>>>> c9213c709d741fcb778b7fe6da6656dd9464c42b
         if self.isSliding and self.wasSliding == False:
             pygame.mixer.music.set_volume(0.25)
             sliding.play(-1)
