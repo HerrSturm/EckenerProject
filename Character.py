@@ -133,7 +133,6 @@ class Character():
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
-        print(self.isRunning)
         if self.isSliding and self.wasSliding == False:
             pygame.mixer.music.set_volume(0.25)
             sliding.play(-1)
