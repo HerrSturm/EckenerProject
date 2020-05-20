@@ -4,6 +4,7 @@ from Block import *
 from GegnerClass import *
 from Camera import *
 from Vec2 import *
+from FollowingEnemy import *
 
 colors = {
     "brown": (150,80,50),
@@ -81,6 +82,15 @@ class Level:
                     object["range"][0],
                     object["range"][1]
                 ))
+                
+            if object["type"] == "FollowingEnemy":
+                objects.append(FollowingEnemy(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1]
+                ))
+
             if object["type"] == "movingBlock":
                 objects.append(MovingBlock(
                     Vec2(*object["position"]),
