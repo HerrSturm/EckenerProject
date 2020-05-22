@@ -31,8 +31,8 @@ class CannonBall(object):
     def __init__(self, pos, size, startRange, endRange):
         pos *= 24
         size *= 24
-        pos.x -= 50
-        pos.y += 10
+        pos.x -= 30
+        pos.y -= 20
         self.startPos = pos
         self.hitBox = HitBox(pos, Vec2(31,31), False, Layer("deadly"))
         self.hitBox.onCollide(self.respawn, Layer("player"))
@@ -57,13 +57,14 @@ class CannonBall(object):
 
     def move(self, game):
         #print(self.startRange, self.halfRange, self.endRange)
-        #print(game.currentLevel.character.hitBox.pos.x)
+        #print(game.currentLevel.character.hitBox.pos)
         #print(self.hitBox.vel.x)
+        #print(self.hitBox.pos)
         print(self.startPos)
         if self.hitBox.pos.x > self.halfRange:
-            self.hitBox.vel = Vec2(-100, -100)
+            self.hitBox.vel = Vec2(-150, -125)
         if self.hitBox.pos.x < self.halfRange and self.hitBox.pos.x > self.endRange:
-            self.hitBox.vel = Vec2(-100, 100)
+            self.hitBox.vel = Vec2(-150, 125)
 
     def respawn(self, hitbox, other, dir, layer):
         self.hitBox.pos.x = self.startPos.x
