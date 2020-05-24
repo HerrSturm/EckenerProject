@@ -1,5 +1,7 @@
 import pygame, HitBox, Vec2
 from HitBox import *
+from Direction import Direction
+#from Character import loseLife
 
 
 class Gegner(object):
@@ -38,8 +40,11 @@ class Gegner(object):
                 self.hitBox.remove()
 
     def hitRemove(self, hitBox, other, dir, layer):
-        #if Direction == up:
-        self.hitRemove = True
+        if dir == Direction.UP:
+            self.hitRemove = True
+            #game.currentLevel.character.lives += 1
+            #character.lives += 1
+
 
     def remove (self):
         self.hitBox.remove()
