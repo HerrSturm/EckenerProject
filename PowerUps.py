@@ -17,7 +17,7 @@ class PowerUps(object):
                 game.currentLevel.objects.remove(self)
                 self.hitBox.remove()
 
-        def remove(self, hitbox, other, dir, layer, game):
+        def remove(self, hitbox, other, dir, layer):
             self.remove = True
 
         def draw(self,surface):

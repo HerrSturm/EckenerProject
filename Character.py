@@ -190,7 +190,6 @@ class Character():
         if self.powerUpUsed == False:
             self.lives += 1
             self.protection = 3
-            self.powerUpUsed = True
 
     def protectionCorrection(self, dt):
         self.protection -= dt
