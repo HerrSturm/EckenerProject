@@ -38,12 +38,12 @@ class Gegner(object):
         if self.hitRemove == True:
                 game.currentLevel.objects.remove(self)
                 self.hitBox.remove()
+                game.currentLevel.character.lives += 1
 
     def hitRemove(self, hitBox, other, dir, layer):
         if dir == Direction.UP:
             self.hitRemove = True
-            #game.currentLevel.character.lives += 1
-            #character.lives += 1
+
 
 
     def remove (self):
