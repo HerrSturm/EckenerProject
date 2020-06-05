@@ -60,11 +60,11 @@ class CannonBall(object):
         #print(game.currentLevel.character.hitBox.pos)
         #print(self.hitBox.vel.x)
         #print(self.hitBox.pos)
-        print(self.startPos)
+        #print(self.startPos)
         if self.hitBox.pos.x > self.halfRange:
-            self.hitBox.vel = Vec2(-150, -125)
+            self.hitBox.vel = Vec2(-160, -135)
         if self.hitBox.pos.x < self.halfRange and self.hitBox.pos.x > self.endRange:
-            self.hitBox.vel = Vec2(-150, 125)
+            self.hitBox.vel = Vec2(-160, 135)
 
     def respawn(self, hitbox, other, dir, layer):
         self.hitBox.pos.x = self.startPos.x
