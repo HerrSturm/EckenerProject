@@ -5,14 +5,16 @@ from Direction import Direction
 from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 pygame.mixer.init(48000, -16, 2, 512)
-screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
 sliding = pygame.mixer.Sound("Sounds/slidingwav.wav")
 bgmusic = pygame.mixer.Sound("Sounds/backgroundmusic.wav")
 runSound = pygame.mixer.Sound("Sounds/runSound.wav")
+screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
 jumps=[pygame.mixer.Sound("Sounds/jump1.wav"),pygame.mixer.Sound("Sounds/jump2.wav")]
+landing = pygame.mixer.Sound("Sounds/landing.wav")
 bgmusic.set_volume(0.1)
 sliding.set_volume(0.1)
 bgmusic.play(-1)
+landing.set_volume(0.05)
 for sound in screams :
     sound.set_volume(0.1)
 for sound in jumps :
@@ -30,6 +32,7 @@ class Character():
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
+        self.wasGrounded = False
         self.isCrouching = False
         self.health = 1
         self.isSliding = False
@@ -123,7 +126,7 @@ class Character():
         #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
-    #SLIDE
+    #SLIDE 1/2
         if self.isSliding and keys[pygame.K_a]:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
         elif self.isSliding and keys[pygame.K_d]:
@@ -141,15 +144,24 @@ class Character():
             self.GRAVITY = 1200
         else:
             self.GRAVITY = 300
+    #sliding Sound
         if self.isSliding and self.wasSliding == False:
             pygame.mixer.music.set_volume(0.25)
             sliding.play(-1)
+    #Landing Sound
+        if self.wasGrounded == False and self.isGrounded == True:
+            landing.play(0)
+    #SLIDE  2/2
         elif self.isSliding == False and self.wasSliding:
             sliding.stop()
         if self.isSliding == True:
             self.wasSliding = True
         else:
             self.wasSliding = False
+        if self.isGrounded == True:
+            self.wasGrounded = True
+        else:
+            self.wasGrounded = False
     #RUN
         if self.isRunning and self.wasRunning == False:
             runSound.play(-1)
