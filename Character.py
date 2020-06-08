@@ -5,20 +5,18 @@ from Direction import Direction
 from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
 pygame.mixer.init(48000, -16, 2, 512)
-scream1=pygame.mixer.Sound("Sounds/ahh.wav")
-scream2=pygame.mixer.Sound("Sounds/aaa.wav")
-scream3=pygame.mixer.Sound("Sounds/scream8.wav")
+screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
 sliding = pygame.mixer.Sound("Sounds/slidingwav.wav")
 bgmusic = pygame.mixer.Sound("Sounds/backgroundmusic.wav")
-screams = [scream1,scream2,scream3]
 runSound = pygame.mixer.Sound("Sounds/runSound.wav")
-
+jumps=[pygame.mixer.Sound("Sounds/jump1.wav"),pygame.mixer.Sound("Sounds/jump2.wav")]
 bgmusic.set_volume(0.1)
 sliding.set_volume(0.1)
 bgmusic.play(-1)
-scream1.set_volume(0.1)
-scream2.set_volume(0.1)
-scream3.set_volume(0.1)
+for sound in screams :
+    sound.set_volume(0.1)
+for sound in jumps :
+    sound.set_volume(0.1)
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -227,7 +225,7 @@ class Character():
         if self.isGrounded:
             self.hitBox.vel.y = 0
             self.hitBox.vel += Vec2(0, -self.JUMPVEL)
-
+            jumps[randint(0,1)].play(0)
 #010B1TC01N1000CYB3R110H4CK101
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
