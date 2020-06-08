@@ -11,6 +11,8 @@ runSound = pygame.mixer.Sound("Sounds/runSound.wav")
 screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
 jumps=[pygame.mixer.Sound("Sounds/jump1.wav"),pygame.mixer.Sound("Sounds/jump2.wav")]
 landing = pygame.mixer.Sound("Sounds/landing.wav")
+portal = pygame.mixer.Sound("Sounds/portal.wav")
+portal.set_volume(0.1)
 bgmusic.set_volume(0.1)
 sliding.set_volume(0.1)
 bgmusic.play(-1)
@@ -53,7 +55,6 @@ class Character():
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
         self.movingSolid = 0
-
     #checks if hitbox collided with ground
     def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
@@ -255,3 +256,5 @@ class Character():
 
     def end(self, hitbox, other, dir, layer):
         self.lvlUp = True
+        if self.lvlUp == True:
+            portal.play(0)
