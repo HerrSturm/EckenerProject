@@ -6,6 +6,8 @@ from Level import Level
 from enum import Enum
 from GameState import GameState
 import pygame
+portal = pygame.mixer.Sound("Sounds/portal.wav")
+portal.set_volume(0.1)
 
 class Game:
 
@@ -59,11 +61,13 @@ class Game:
                     self.state = GameState.DEATH_SCREEN
                     needStateUpdate = True
                 if self.state == GameState.NEXT_LEVEL:
+                    portal.play(0)
                     self.noLevel()
                     self.noMenu()
                     self.currentLevelIndex += 1
                     self.state = GameState.MAIN_MENU
                     needStateUpdate = True
+
             dt = self.update()
             self.draw()
 
