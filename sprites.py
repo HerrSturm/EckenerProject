@@ -9,7 +9,7 @@ def runSprites(x):
                     pygame.image.load(path+"adventurer-run-03.png").convert_alpha(),
                     pygame.image.load(path+"adventurer-run-04.png").convert_alpha(),
                     pygame.image.load(path+"adventurer-run-05.png").convert_alpha()]
-    return(SpritesRun[x//4%len(SpritesRun)-1])
+    return(SpritesRun[x//2%len(SpritesRun)-1])
 def fallSprites(x):
     SpritesFall = [pygame.image.load(path+"adventurer-fall-00.png").convert_alpha(),
                     pygame.image.load(path+"adventurer-fall-01.png").convert_alpha()]
