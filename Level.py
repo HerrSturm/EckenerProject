@@ -5,6 +5,7 @@ from GegnerClass import *
 from Camera import *
 from Vec2 import *
 from FollowingEnemy import *
+from cannon import *
 
 colors = {
     "brown": (150,80,50),
@@ -77,6 +78,20 @@ class Level:
 
             if object["type"] == "enemy":
                 objects.append(Gegner(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    object["range"][0],
+                    object["range"][1]
+                ))
+
+            if object["type"] == "cannon":
+                objects.append(Cannon(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"])
+                ))
+
+            if object["type"] == "cannonBall":
+                objects.append(CannonBall(
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
                     object["range"][0],
