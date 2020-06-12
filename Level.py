@@ -4,15 +4,18 @@ from Block import *
 from GegnerClass import *
 from Camera import *
 from Vec2 import *
+from PowerUps import *
 from FollowingEnemy import *
 from cannon import *
+
 
 colors = {
     "brown": (150,80,50),
     "blue": (80,150,255),
     "green": (50,100,50),
     "grey": (125,125,125),
-    "goal": (212,175,55)
+    "goal": (212,175,55),
+    "pink": (255,20,147)
 }
 
 class Level:
@@ -74,6 +77,13 @@ class Level:
                     Vec2(*object["position"]),
                     Vec2(*object["size"]),
                     colors[object["color"]]
+                ))
+
+            if object["type"] == "powerUps":
+                objects.append(PowerUps(
+                    Vec2(*object["position"]),
+                    Vec2(*object["size"]),
+                    colors[object["color"]],
                 ))
 
             if object["type"] == "enemy":

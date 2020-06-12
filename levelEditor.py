@@ -10,7 +10,7 @@ pygame.init()
 
 version = '0.7.12b'
 
-# Variabeln für Feldmarkierung
+# Variabeln fuer Feldmarkierung
 m1 = False
 m2 = False
 lHold = False
@@ -55,10 +55,10 @@ screen.fill((80,150,255))
 
 #Functions----------------------------------------------------------------------
 
-#Der Code für das neue Level wird in der Konsole ausgegeben
+#Der Code fur das neue Level wird in der Konsole ausgegeben
 def showLevelCode():
     print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
-    print('Bitte kopieren und in eine leere Level Datei einfügen:\n')
+    print('Bitte kopieren und in eine leere Level Datei einfugen:\n')
     clipboardText = '{"level": { "objects": [\n'
     if len(objects) > 0:
         print('{"level": { "objects": [')
@@ -100,7 +100,7 @@ def addObject(type, m1, m2):
     if sizeY < 1:
         sizeY = 1
 
-    #der neue Block wird dem Level-Editor und dem codeBuilder hinzugefügt.
+    #der neue Block wird dem Level-Editor und dem codeBuilder hinzugefugt.
     if type == 'platform':
         printObjects.append('{"type": "platform","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position": [' + str(posX) + ',' + str(posY) + ']}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, 'platform'])
@@ -113,6 +113,9 @@ def addObject(type, m1, m2):
     elif type == 'stone':
         printObjects.append('{"type": "block","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"color": "grey"}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (125,125,125)])
+    elif type == 'powerUps':
+        printObjects.append('{"type": "powerUps","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '], "color": "pink"}')
+        objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255, 20, 147)])
     elif type == 'enemy':
         printObjects.append('{"type": "enemy","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)) +']}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,0,0), enemyRange])
@@ -137,7 +140,7 @@ def addObject(type, m1, m2):
             objects.append([posX*24, posY*24, sizeX*24, 1*24, (50,100,50), enemyRange])
     showLevelCode()
 
-#Der Type Button wurde angeklickt. -> der Blocktyp wird geändert.
+#Der Type Button wurde angeklickt. -> der Blocktyp wird geandert.
 def flipType(button):
     global type
 
@@ -151,6 +154,9 @@ def flipType(button):
         type = 'stone'
         button[5] = (125,125,125)
     elif type == 'stone':
+        type = 'powerUps'
+        button[5] = (255,20,147)
+    elif type == 'powerUps':
         type = 'enemy'
         button[5] = (255,0,0)
     elif type == 'enemy':
@@ -194,7 +200,7 @@ def flipRange(i):
     if enemyRange < 1:
         enemyRange = 10
 
-#Überprüfung ob ein Button gedrückt wurde
+#Uberprufung ob ein Button gedruckt wurde
 def checkButton(x,y, lHold):
     global mousePos, background
     for button in buttons:
@@ -381,9 +387,9 @@ while True:
 #Mouse--------------------------------------------------------------------------
     #Mouse position in pixel
     mousePos = pygame.mouse.get_pos()
-    #Mouse position in blöcken
+    #Mouse position in blocken
     mouseBlockPos = (int(mousePos[0]/24), int(mousePos[1]/24))
-    #Wird eine Maustaste gedrückt?
+    #Wird eine Maustaste gedruckt?
     click = pygame.mouse.get_pressed()
     #print('Maus Position: ' + str(mouseBlockPos) + ' | Maus geklickt: ' + str(click))
 #-------------------------------------------------------------------------------

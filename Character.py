@@ -51,6 +51,9 @@ class Character():
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
+        self.powerUpUsed = False
+        if self.powerUpUsed == False:
+            self.hitBox.onCollide(self.gainLife, Layer("powerUps"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
@@ -249,6 +252,14 @@ class Character():
         self.lives -= 1
         self.protection = 3
         screams[randint(0,len(screams)-1)].play()
+
+    def gainLife(self, hitbox, other, dir, layer):
+        if self.powerUpUsed == False:
+            self.lives += 1
+            self.protection = 3
+
+
+        
     def protectionCorrection(self, dt):
         self.protection -= dt
         if self.protection < 0:
