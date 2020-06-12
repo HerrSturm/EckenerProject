@@ -3,22 +3,26 @@ from GameState import GameState
 
 class Options(object):
     def __init__(self):
+        self.button1works = False
         self.mainScreen = pygame.display.get_surface()
 
     def draw(self):
         titleFont=pygame.font.SysFont('Arial Black',70)
         buttonFont=pygame.font.SysFont('Chandas', 30)
         titleText= titleFont.render("Options", False, (255, 255 ,255))
-        textButton1= buttonFont.render("Back", False, (0, 0 ,0))
+        textButton1= buttonFont.render("Back (out of order)", False, (0, 0 ,0))
         textButton2= buttonFont.render("TODO", False, (0, 0 ,0))
         textButton3= buttonFont.render("Quit Game", False, (0, 0 ,0))
+        textButton4 = buttonFont.render("Back", False, (0, 0, 0))
         self.mainScreen.blit(titleText,(450,100))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 300, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 400, 400, 50))
         pygame.draw.rect(self.mainScreen, (255, 255, 255), (440, 500, 400, 50))
-        self.mainScreen.blit(textButton1,(595, 320))
+        pygame.draw.rect(self.mainScreen, (255, 255, 255), (590, 600, 100, 50))
+        self.mainScreen.blit(textButton1,(540, 320))
         self.mainScreen.blit(textButton2,(580, 420))
         self.mainScreen.blit(textButton3,(560, 520))
+        self.mainScreen.blit(textButton4,(595, 620))
         pygame.display.flip()
 
     def update(self, game):
@@ -27,13 +31,15 @@ class Options(object):
         pygame.event.get()
         lMouse=pygame.mouse.get_pressed()[0]
         pygame.mouse.get_pos()[coordinates]
-        if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 300 <= pygame.mouse.get_pos()[1] and 350 >= pygame.mouse.get_pos()[1]:
+        if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 300 <= pygame.mouse.get_pos()[1] and 350 >= pygame.mouse.get_pos()[1] and self.button1works:
             if lMouse:
                 game.state = GameState.MAIN_MENU
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 400 <= pygame.mouse.get_pos()[1] and 450 >= pygame.mouse.get_pos()[1]:
             if lMouse:
                 pass
         if 440 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 840 and 500 <= pygame.mouse.get_pos()[1] and 550 >= pygame.mouse.get_pos()[1]:
-
             if lMouse:
                 sys.exit()
+        if 590 <= pygame.mouse.get_pos()[0] and pygame.mouse.get_pos()[0] <= 690 and 600 <= pygame.mouse.get_pos()[1] and 650 >= pygame.mouse.get_pos()[1]:
+            if lMouse:
+                game.state = GameState.MAIN_MENU

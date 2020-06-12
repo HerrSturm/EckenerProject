@@ -64,6 +64,7 @@ class Game:
                     self.currentLevelIndex += 1
                     self.state = GameState.MAIN_MENU
                     needStateUpdate = True
+
             dt = self.update()
             self.draw()
 
