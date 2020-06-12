@@ -102,7 +102,7 @@
         "color": "goal"
       },
       {
-        "type": "enemy",
+        "type": "FollowingEnemy",
         "size": [3,2],
         "position": [23, 20],
         "range": [-3, 3]
