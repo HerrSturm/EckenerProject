@@ -1,8 +1,26 @@
 import pygame
 from HitBox import*
+from random import randint
 from Direction import Direction
 from GameState import GameState
 from sprites import runSprites, fallSprites, idleSprites, wallSlideSprites, saltoSprites, crouchSprites, attackSprites
+pygame.mixer.init(48000, -16, 2, 512)
+sliding = pygame.mixer.Sound("Sounds/slidingwav.wav")
+bgmusic = pygame.mixer.Sound("Sounds/backgroundmusic.wav")
+runSound = pygame.mixer.Sound("Sounds/runSound.wav")
+screams = [pygame.mixer.Sound("Sounds/ahh.wav"),pygame.mixer.Sound("Sounds/aaa.wav"),pygame.mixer.Sound("Sounds/scream8.wav")]
+jumps=[pygame.mixer.Sound("Sounds/jump1.wav"),pygame.mixer.Sound("Sounds/jump2.wav")]
+landing = pygame.mixer.Sound("Sounds/landing.wav")
+portal = pygame.mixer.Sound("Sounds/portal.wav")
+portal.set_volume(0.1)
+bgmusic.set_volume(0.1)
+sliding.set_volume(0.1)
+bgmusic.play(-1)
+landing.set_volume(0.05)
+for sound in screams :
+    sound.set_volume(0.1)
+for sound in jumps :
+    sound.set_volume(0.1)
 #CONST gravity
 class Character():
     GRAVITY = 300
@@ -16,9 +34,13 @@ class Character():
         self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
         self.isGrounded = False
         self.isGrounded_ = False
+        self.wasGrounded = False
         self.isCrouching = False
         self.health = 1
         self.isSliding = False
+        self.wasSliding = False
+        self.isRunning = False
+        self.wasRunning = False
         size = Vec2(40,58)
         self.lives = 3
         self.protection = 3 #in sekunden nach Lebensverlust angegeben
@@ -39,7 +61,6 @@ class Character():
         CollisionManager().onAfterUpdate(self.afterCollisionManager)
         self.mainScreen = pygame.display.get_surface()
         self.movingSolid = 0
-
     #checks if hitbox collided with ground
     def check_Grounded(self, hitbox, other, dir, layer):
         if dir == Direction.DOWN:
@@ -54,21 +75,21 @@ class Character():
         keys = pygame.key.get_pressed()
         self.isSliding = False
         #checks if the "s" button is pressed and the character is therefore "crouching"
+    #CROUCH
         if keys[pygame.K_s] and self.isGrounded:
             self.isCrouching = True
         else:
             self.isCrouching = False
-        if keys[pygame.K_s]:
-            self.GRAVITY = 1200
-        else:
-            self.GRAVITY = 300
         #pygame.draw.rect(surface, (0, 0, 0), (self.hitBox.pos.values[0], self.hitBox.pos.values[1], self.hitBox.size.values[0], self.hitBox.size.values[1]))
+        self.isRunning = False
         if self.isGrounded == True and self.hitBox.vel.x == 0 and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #IDLE
         elif self.isGrounded == True and self.hitBox.vel.x == 0:
             self.imageoriginal = idleSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #SLIDE
         elif self.isGrounded == False and self.hitBox.vel.x == 0 and self.hitBox.vel.y >= 0 and keys[pygame.K_a]:
             self.imageoriginal = wallSlideSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -77,9 +98,11 @@ class Character():
             self.imageoriginal = wallSlideSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
             self.isSliding = True
+    #CROUCH
         elif self.isGrounded == True and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #IDLE & RUN
         elif self.isGrounded == True:
             if self.hitBox.vel.x == self.movingSolid and not self.updateKeys():
                 self.imageoriginal = idleSprites(self.spriteCount)
@@ -87,9 +110,12 @@ class Character():
             else:
                 self.imageoriginal = runSprites(self.spriteCount)
                 self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+                self.isRunning = True
+    #CROUCH
         elif self.isGrounded == True and self.isCrouching:
             self.imageoriginal = crouchSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #JUMP
         elif self.isGrounded == False and self.hitBox.vel.y <= -20:
             self.imageoriginal = pygame.image.load("Graphics/aAllGraphics/Adventurer/adventurer-jump-02.png").convert_alpha()
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
@@ -99,6 +125,7 @@ class Character():
         elif self.isGrounded == False:
             self.imageoriginal = fallSprites(self.spriteCount)
             self.imagebig = pygame.transform.scale(self.imageoriginal, (125, 75))
+    #HEADING
         if self.hitBox.vel.x > 0 and not self.hitBox.vel.x == self.movingSolid:
             self.heading = 1
         elif self.hitBox.vel.x < 0 and not self.hitBox.vel.x == self.movingSolid:
@@ -106,6 +133,7 @@ class Character():
         #self.imagebig = pygame.transform.scale(saltoSprites(self.spriteCount), (125, 75))
         if self.heading == -1:
             self.imagebig = pygame.transform.flip(self.imagebig,True,False)
+    #SLIDE 1/2
         if self.isSliding and keys[pygame.K_a]:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-45,(self.hitBox.pos.y)-15))
         elif self.isSliding and keys[pygame.K_d]:
@@ -113,6 +141,43 @@ class Character():
         else:
             surface.blit(self.imagebig, ((self.hitBox.pos.x)-50,(self.hitBox.pos.y)-15))
         self.spriteCount = self.spriteCount + 1
+        if self.isSliding == True:
+            self.GRAVITY = 1
+        if self.isSliding and keys[pygame.K_s]:
+            self.GRAVITY = 360
+        elif self.isSliding == True:
+            self.GRAVITY = 90
+        elif keys[pygame.K_s]:
+            self.GRAVITY = 1200
+        else:
+            self.GRAVITY = 300
+    #sliding Sound
+        if self.isSliding and self.wasSliding == False:
+            pygame.mixer.music.set_volume(0.25)
+            sliding.play(-1)
+    #Landing Sound
+        if self.wasGrounded == False and self.isGrounded == True:
+            landing.play(0)
+    #SLIDE  2/2
+        elif self.isSliding == False and self.wasSliding:
+            sliding.stop()
+        if self.isSliding == True:
+            self.wasSliding = True
+        else:
+            self.wasSliding = False
+        if self.isGrounded == True:
+            self.wasGrounded = True
+        else:
+            self.wasGrounded = False
+    #RUN
+        if self.isRunning and self.wasRunning == False:
+            runSound.play(-1)
+        if self.isRunning == False and self.wasRunning:
+            runSound.stop()
+        if self.isRunning == True:
+            self.wasRunning = True
+        else:
+            self.wasRunning = False
     #updates the player
     def update(self, game, dt):
         self.protectionCorrection(dt)
@@ -135,6 +200,7 @@ class Character():
     def afterCollisionManager(self, dt):
         #after col update
         self.isGrounded = self.isGrounded_
+    #def playsound(self):
 
     def updateKeys(self):
         keys = pygame.key.get_pressed()
@@ -175,10 +241,10 @@ class Character():
 
     #makes the player jump:only when grounded
     def jump(self):
-        if self.isGrounded :
+        if self.isGrounded:
             self.hitBox.vel.y = 0
             self.hitBox.vel += Vec2(0, -self.JUMPVEL)
-
+            jumps[randint(0,1)].play(0)
 #010B1TC01N1000CYB3R110H4CK101
     #check enemy hurts me?
     def hurt(self, hitbox, other, dir, layer):
@@ -188,12 +254,15 @@ class Character():
     def loseLife(self):
         self.lives -= 1
         self.protection = 3
+        screams[randint(0,len(screams)-1)].play()
 
     def gainLife(self, hitbox, other, dir, layer):
         if self.powerUpUsed == False:
             self.lives += 1
             self.protection = 3
 
+
+        
     def protectionCorrection(self, dt):
         self.protection -= dt
         if self.protection < 0:
@@ -201,3 +270,5 @@ class Character():
 
     def end(self, hitbox, other, dir, layer):
         self.lvlUp = True
+        if self.lvlUp == True:
+            portal.play(0)
