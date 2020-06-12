@@ -1,5 +1,7 @@
 import pygame, HitBox, Vec2
 from HitBox import *
+from Direction import Direction
+#from Character import loseLife
 
 
 class Gegner(object):
@@ -8,6 +10,8 @@ class Gegner(object):
         pos.y -= 8
         size *= 24
         self.hitBox = HitBox(pos, Vec2(55,55), False, Layer("deadly"), Vec2(100,0))
+        self.hitBox.onCollide(self.hitRemove, Layer("player"))
+        self.hitRemove == False
         self.startRange = pos.x + startRange * 24
         self.endRange = pos.x + endRange * 24
         self.frame = 0
@@ -31,9 +35,20 @@ class Gegner(object):
     #führt move Methode wiederholt durch
     def update(self, game, dt):
         self.move(game)
+        if self.hitRemove == True:
+                game.currentLevel.objects.remove(self)
+                self.hitBox.remove()
+                game.currentLevel.character.lives += 1
 
-    def remove(self):
+    def hitRemove(self, hitBox, other, dir, layer):
+        if dir == Direction.UP:
+            self.hitRemove = True
+
+
+
+    def remove (self):
         self.hitBox.remove()
+
 
     #legt Grafik für Gegner fest
     def draw(self,surface):
