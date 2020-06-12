@@ -18,6 +18,7 @@ mHold = False
 rHold = False
 type = 'platform'
 movingType = 'platform'
+powerType = 'shield'
 enemyRange = 3
 printObjects = []
 objects = []
@@ -44,6 +45,7 @@ for fade in fader:
 buttons.append([20, 10, 40, 40, 'Material', (255,255,255), 'W'])
 buttons.append([240, 10, 40, 40, 'Range', (255, 60, 0), 'A/D'])
 buttons.append([240, -300, 40, 40, 'movingMaterial', (255,255,255), 'S'])
+buttons.append([240, -300, 40, 40, 'powerUpType', (255,255,255), 'S'])
 
 # Pygame wird initialisiert
 size = width, heigth = 1400, 800
@@ -113,9 +115,14 @@ def addObject(type, m1, m2):
     elif type == 'stone':
         printObjects.append('{"type": "block","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"color": "grey"}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (125,125,125)])
-    elif type == 'powerUps':
-        printObjects.append('{"type": "powerUps","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '], "color": "pink"}')
-        objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255, 20, 147)])
+    elif type == 'powerUp':
+        printObjects.append('{"type": "powerUp","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '], "color": "pink"}')
+        if powerType == 'shield':
+            printObjects[-1] += '],"color": "gold"}'
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,223,0)])
+        elif powerType == 'jump':
+            printObjects[-1] += '],"color": "lightGreen"}'
+            objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (127,255,80)])
     elif type == 'enemy':
         printObjects.append('{"type": "enemy","size": [' + str(sizeX) + ',' + str(sizeY) + '],"position":[' + str(posX) + ',' + str(posY) + '],"range": ['+ str(enemyRange) +','+ str(enemyRange*(-1)) +']}')
         objects.append([posX*24, posY*24, sizeX*24, sizeY*24, (255,0,0), enemyRange])
@@ -154,10 +161,16 @@ def flipType(button):
         type = 'stone'
         button[5] = (125,125,125)
     elif type == 'stone':
-        type = 'powerUps'
+        type = 'powerUp'
+        for b in buttons:
+            if b[4] == 'powerUpType':
+                b[1] = 60
         button[5] = (255,20,147)
-    elif type == 'powerUps':
+    elif type == 'powerUp':
         type = 'enemy'
+        for b in buttons:
+            if b[4] == 'powerUpType':
+                b[1] = -300
         button[5] = (255,0,0)
     elif type == 'enemy':
         type = 'endBlock'
@@ -199,6 +212,16 @@ def flipRange(i):
     else: enemyRange = 1
     if enemyRange < 1:
         enemyRange = 10
+
+def flipPowerUpType(button):
+    global powerType
+
+    if powerType == 'shield':
+        powerType = 'jump'
+        button[5] = (127,255,80)
+    elif powerType == 'jump':
+        powerType = 'shield'
+        button[5] = (255,223,0)
 
 #Uberprufung ob ein Button gedruckt wurde
 def checkButton(x,y, lHold):
@@ -334,6 +357,7 @@ def draw():
     myfont = pygame.font.SysFont('Arial', 30)
     typeText = myfont.render(type, False, (255, 255, 255))
     movingTypeText = myfont.render(movingType, False, (255, 255, 255))
+    powerTypeText = myfont.render(powerType, False, (255, 255,255))
     rangeText = myfont.render('Moving Range: ' + str(enemyRange), False, (255, 60, 0))
     backgroundColorText = myfont.render('Background: ', False, (255, 255, 255))
     myfont = pygame.font.SysFont('Arial', 16)
@@ -344,9 +368,11 @@ def draw():
     screen.blit(yb,(5,780))
     if type == 'movingBlock':
         screen.blit(movingTypeText,(300,60))
+    elif type == 'powerUp':
+        screen.blit(powerTypeText, (300,60))
     else:
         screen.blit(movingTypeText,(-300,60))
-
+        screen.blit(powerTypeText, (-300,60))
 #Pygame Event Management
 def checkEvents():
     for event in pygame.event.get():
@@ -370,6 +396,8 @@ def checkEvents():
                 for button in buttons:
                     if button[4] == 'movingMaterial':
                         flipMovingType(button)
+                    elif button[4] == 'powerUpType':
+                        flipPowerUpType(button)
                         break
             elif event.key == pygame.K_a:
                 flipRange(-1)

@@ -29,8 +29,11 @@ class Character():
         self.hitBox.onCollide(self.check_Grounded)
         self.hitBox.onCollide(self.hurt, Layer("deadly"))
         self.hitBox.onCollide(self.end, Layer("end"))
-        self.powerUpUsed = False
-        if self.powerUpUsed == False:
+        self.shieldUsed = False
+        if self.shieldUsed == True:
+            self.hitBox.onCollide(self.gainLife, Layer("powerUps"))
+        self.jumpBoostUsed = False
+        if self.jumpBoostUsed == True:
             self.hitBox.onCollide(self.gainLife, Layer("powerUps"))
         CollisionManager().onBeforeUpdate(self.beforeCollisionManager)
         CollisionManager().onAfterUpdate(self.afterCollisionManager)

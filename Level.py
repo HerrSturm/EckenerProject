@@ -9,10 +9,12 @@ from PowerUps import *
 colors = {
     "brown": (150,80,50),
     "blue": (80,150,255),
+    "lightGreen": (127,255,80),
     "green": (50,100,50),
     "grey": (125,125,125),
     "goal": (212,175,55),
-    "pink": (255,20,147)
+    "pink": (255,20,147),
+    "gold": (255,223,0)
 }
 
 class Level:
@@ -77,11 +79,10 @@ class Level:
                 ))
 
             if object["type"] == "powerUps":
-                objects.append(PowerUps(
-                    Vec2(*object["position"]),
-                    Vec2(*object["size"]),
-                    colors[object["color"]],
-                ))
+                if object["color"] == 'gold':
+                    object["power"] = 'shield'
+                elif object["color"] == 'blue':
+                    object["power"] = 'jump'
 
             if object["type"] == "enemy":
                 objects.append(Gegner(
