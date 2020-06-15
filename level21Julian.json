@@ -1,0 +1,21 @@
+{"level": { "objects": [
+{"type": "block","size": [11,1],"position":[7,7],"color": "green"},
+{"type": "block","size": [16,2],"position":[7,8],"color": "brown"},
+{"type": "block","size": [5,1],"position":[18,7],"color": "green"},
+{"type": "enemy","size": [1,1],"position":[19,6],"range": [3,-3]},
+{"type": "movingBlock","size": [3,2],"position":[36,8],"range": [7,-7],"color": "brown"},
+{"type": "movingBlock","size": [3, 1],"position":[36,8],"range": [7,-7],"color": "green"},
+{"type": "block","size": [6,1],"position":[51,19],"color": "green"},
+{"type": "block","size": [6,2],"position":[51,20],"color": "brown"},
+{"type": "movingBlock","size": [3,2],"position":[43,27],"range": [5,-5],"color": "brown"},
+{"type": "movingBlock","size": [3, 1],"position":[43,27],"range": [5,-5],"color": "green"},
+{"type": "platform","size": [9,2],"position": [24,27]},
+{"type": "powerUp","size": [1,1],"position":[28,25], "color": "pink"}],"color": "gold"},
+{"type": "enemy","size": [1,1],"position":[37,6],"range": [5,-5]},
+{"type": "endBlock","size": [1,1],"position":[5,19],"color": "goal"},
+{"type": "block","size": [1,1],"position":[8,22],"color": "grey"},
+{"type": "block","size": [1,1],"position":[11,25],"color": "grey"},
+{"type": "block","size": [1,1],"position":[14,28],"color": "grey"},
+{"type": "block","size": [1,1],"position":[17,25],"color": "grey"},
+{"type": "block","size": [1,1],"position":[20,28],"color": "grey"}
+],"characterSpawn": [7.0, 3.0],"size": [200, 200],"background": [80, 150, 255]}}
